@@ -64,18 +64,16 @@ namespace MpesaSdk.Dtos
         /// <param name="securityCredential">
         /// Base64 encoded string of the Security Credential, which is encrypted using M-Pesa public key and validates the transaction on M-Pesa Core system.
         /// </param>
-        /// <param name="commandId">A unique command passed to the M-Pesa system.</param>
         /// <param name="partyA">The shortcode of the organisation receiving the transaction.</param>
         /// <param name="identifierType">Type of the organisation receiving the transaction.</param>
         /// <param name="remarks">Comments that are sent along with the transaction.</param>
         /// <param name="queueTimeoutUrl">The timeout end-point that receives a timeout message.</param>
         /// <param name="resultUrl">The end-point that receives a successful transaction.</param>
-        public AccountBalance(string initiator, string securityCredential, string commandId, string partyA,
-            string identifierType, string remarks, string queueTimeoutUrl, string resultUrl)
+        public AccountBalance(string initiator, string securityCredential, string partyA, string identifierType, string remarks, string queueTimeoutUrl, string resultUrl)
         {
             Initiator = initiator;
             SecurityCredential = securityCredential;
-            CommandID = commandId;
+            CommandID = Transaction_Type.AccountBalance;
             PartyA = partyA;
             IdentifierType = identifierType;
             Remarks = remarks;

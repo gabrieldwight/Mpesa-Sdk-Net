@@ -98,8 +98,7 @@ namespace MpesaSdk.Dtos
         /// <param name="queueTimeoutUrl">The path that stores information of time out transaction. https://ip or domain:port/path</param>
         /// <param name="resultUrl">The path that stores information of transaction. https://ip or domain:port/path</param>
         /// <param name="occasion">Optional Parameter. (upto 100 characters)</param>
-        public MpesaTransactionStatus(string initiator, string securityCredential, string transactionId,
-            string partyA, string identifierType, string remarks, string queueTimeoutUrl, string resultUrl, string occasion)
+        public MpesaTransactionStatus(string initiator, string securityCredential, string transactionId, string partyA, string identifierType, string remarks, string queueTimeoutUrl, string resultUrl, string occasion)
         {
             Initiator = initiator;
             SecurityCredential = securityCredential;

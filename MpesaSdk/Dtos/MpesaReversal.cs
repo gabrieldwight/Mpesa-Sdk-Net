@@ -88,8 +88,7 @@ namespace MpesaSdk.Dtos
         /// <param name="queueTimeoutUrl">The path that stores information of time out transaction.</param>
         /// <param name="resultUrl">The path that stores information of transaction </param>
         /// <param name="occasion"> Optional Parameter (upto 100 characters)</param>
-        public MpesaReversal(string initiator, string securityCredential, string transactionId,
-            string receiverparty, string receiverIdentifierType, string remarks, string queueTimeoutUrl, string resultUrl, string occasion)
+        public MpesaReversal(string initiator, string securityCredential, string transactionId, string receiverparty, string receiverIdentifierType, string remarks, string queueTimeoutUrl, string resultUrl, string occasion)
         {
             Initiator = initiator;
             SecurityCredential = securityCredential;
