@@ -12,11 +12,9 @@ namespace MpesaSdk.Validators
 
             RuleFor(x => x.BusinessShortCode).NotNull().Must(x => int.TryParse(x, out i)).Length(5, 7);
             RuleFor(x => x.Amount).NotNull().NotEmpty().Must(x => int.TryParse(x, out i));
-            RuleFor(x => x.PartyA).NotNull().Must(x => int.TryParse(x, out i))
-                .SetValidator(new PhoneNumberValidator()).MaximumLength(12);
+            RuleFor(x => x.PartyA).NotNull().SetValidator(new PhoneNumberValidator()).MaximumLength(12);
             RuleFor(x => x.PartyB).NotNull().Must(x => int.TryParse(x, out i)).Length(5, 7);
-            RuleFor(x => x.PhoneNumber).NotNull().Must(x => int.TryParse(x, out i))
-                .SetValidator(new PhoneNumberValidator()).MaximumLength(12);
+            RuleFor(x => x.PhoneNumber).NotNull().SetValidator(new PhoneNumberValidator()).MaximumLength(12);
             RuleFor(x => x.CallBackURL).NotNull().Must(x => LinkMustBeAUri(x));
             RuleFor(x => x.AccountReference).NotNull().MaximumLength(12);
             RuleFor(x => x.TransactionDesc).NotNull().MaximumLength(13);
