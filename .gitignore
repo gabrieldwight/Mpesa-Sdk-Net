@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Samples/MpesaSdk.Web/wwwroot/Application_Files/MpesaResults
