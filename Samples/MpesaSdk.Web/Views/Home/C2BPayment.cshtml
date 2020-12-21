@@ -1,0 +1,36 @@
+﻿@model CustomerToBusinessViewModel
+
+@{
+    ViewData["Title"] = "Mpesa C2B Payment";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Create Mpesa C2B payment</h4>
+        </div>
+        <div class="content">
+            <hr />
+            <form asp-action="C2BPayment">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Amount</label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Account Number (Reference Number)</label>
+                    <input asp-for="PaymentReference" class="form-control" />
+                    <span asp-validation-for="PaymentReference" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Initiate Mpesa C2B Payment" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

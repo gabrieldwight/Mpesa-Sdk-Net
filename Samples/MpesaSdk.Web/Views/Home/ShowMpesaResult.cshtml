@@ -1,0 +1,43 @@
+﻿@model LipaNaMpesaOnlinePushStkResponse
+
+@{
+    ViewData["Title"] = "Mpesa Push Stk Results";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row">
+        @if (Model.ResponseCode.Equals("0"))
+        {
+            <p>
+                <i class="fas fa-4x fa-check-circle"></i>
+                <span>@Model.ResponseDescription</span>
+            </p>
+            <p>
+                Check your phone and Enter M-PESA PIN to complete transaction.
+            </p>
+            <p>
+                Your Phone Number: @Model.PhoneNumber
+            </p>
+            <p>After completing the payment on your phone click the below buton for confirmation.</p>
+
+            <form asp-action="MpesaOnlineTransactionStatus">
+                <input type="hidden" asp-for="CheckoutRequestID"/>
+                <input type="hidden" asp-for="PhoneNumber"/>
+                <div class="form-group">
+                    <input type="submit" value="Confirm Mpesa Payment" class="btn btn-primary"/>
+                </div>
+            </form>
+        }
+        else
+        {
+            <p>
+                <i class="fas fa-4x fa-times-circle"></i>
+                Something went wrong while processing request, please try again.
+            </p>
+            <p>Your Phone Number: @Model.PhoneNumber</p>
+            <p>Response Description: @Model.ResponseDescription</p>
+            <p>Customer Message: @Model.CustomerMessage</p>
+        }
+    </div>
+</div>

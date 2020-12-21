@@ -1,0 +1,28 @@
+﻿@model LipaNaMpesaQueryStkResponse 
+
+@{
+    ViewData["Title"] = "Mpesa Payment Confirmation";
+}
+
+<div class="container">
+    <div class="row">
+        @if(Model.ResultCode.Equals("0"))
+        {
+            <p>
+                <i class="fas fa-4x fa-check-circle"></i>
+                <span>@Model.ResponseDescription</span>
+                <span>Thank you for your payment!</span>
+            </p>
+        }
+        else
+        {
+            <p>
+                <i class="fas fa-4x fa-times-circle"></i>
+                <span>@Model.ResponseDescription</span>
+            </p>
+            <p>Something went wrong with the transaction. Please try again</p>
+        }
+
+        <p>Customer Phone Number: @Model.PhoneNumber</p>
+    </div>
+</div>

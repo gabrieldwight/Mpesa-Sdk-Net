@@ -1,0 +1,46 @@
+﻿@model LipaNaMpesaOnlineViewModel
+
+@{
+    ViewData["Title"] = "Mpesa Push Stk Payment";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Create Mpesa push STK payment</h4>
+        </div>
+        <div class="content">
+            <hr />
+            <form asp-action="MpesaPayment">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Amount</label>
+                    <input asp-for="Amount" class="form-control"/>
+                    <span asp-validation-for="Amount" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Account Reference</label>
+                    <input asp-for="AccountReference" class="form-control"/>
+                    <span asp-validation-for="AccountReference" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Transaction Description</label>
+                    <input asp-for="TransactionDesc" class="form-control"/>
+                    <span asp-validation-for="TransactionDesc" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Phone Number (Use format: 2547XXXXXXXX)</label>
+                    <input asp-for="PhoneNumber" placeholder="2547XXXXXXXX" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Initiate Mpesa Payment" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

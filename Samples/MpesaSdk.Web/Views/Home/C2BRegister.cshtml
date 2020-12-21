@@ -1,0 +1,43 @@
+﻿@model CustomerToBusinessRegisterViewModel
+
+@{
+    ViewData["Title"] = "Mpesa C2B Payment";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Create Mpesa C2B Register Url Callbacks</h4>
+        </div>
+        <div class="content">
+            <hr />
+            <form asp-action="C2BRegister">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Confirmation URL</label>
+                    <input asp-for="ConfirmationUrl" class="form-control" />
+                    <span asp-validation-for="ConfirmationUrl" class="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Validation URL</label>
+                    <input asp-for="ValidationUrl" class="form-control" />
+                    <span asp-validation-for="ValidationUrl" class="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Response Type: (To determine whether Mpesa to complete or cancel transaction when is not reachable)</label>
+                    <select asp-for="customerToBusinessResponse" asp-items="Html.GetEnumSelectList<CustomerToBusinessResponseType>()" class="form-control">
+                        <option selected="selected" value="">Please select</option>
+                    </select>
+                    <span asp-validation-for="customerToBusinessResponse" class="text-danger"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Initiate Mpesa C2B Register Url" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

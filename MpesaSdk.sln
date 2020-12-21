@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpesaSdk", "MpesaSdk\MpesaS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{B78EB441-F42B-4035-AEF6-26315FB47285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MpesaSdk.Web", "Samples\MpesaSdk.Web\MpesaSdk.Web.csproj", "{A46F3C23-9A56-427C-9F8E-A2A6F6DD0AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpesaSdk.Web", "Samples\MpesaSdk.Web\MpesaSdk.Web.csproj", "{A46F3C23-9A56-427C-9F8E-A2A6F6DD0AEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
