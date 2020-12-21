@@ -27,21 +27,6 @@ namespace MpesaSdk.Web.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMemoryCache _memoryCache;
 
-        //private string MpesaAccessToken
-        //{
-        //    get
-        //    {
-        //        string results = string.Empty;
-        //        Task.Run(async () => {
-        //            await RetrieveAccessToken().ContinueWith((Task<string> x) =>
-        //            {
-        //                results = x.Result;
-        //            });
-        //        });
-        //        return results;
-        //    }
-        //}
-
         public HomeController(IOptions<MpesaApiConfiguration> mpesaApiConfiguration, IMpesaClient mpesaClient, 
             ILogger<HomeController> logger, LinkGenerator linkGenerator, IHttpContextAccessor httpContextAccessor,
             IMemoryCache memoryCache)
