@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MpesaCross.Views.MpesaPushStkPage"
+             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             mvvm:ViewModelLocator.AutowireViewModel="True">
+    <NavigationPage.TitleView>
+        <Label Text="{Binding Title}"
+               FontSize="15"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="Center"/>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <StackLayout>
+                <Label Text="Amount"
+                       TextColor="#303030"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       LineHeight="1.4"
+                       Margin="8,0,8,0"/>
+                <Entry Text="{Binding Amount}"
+                       TextColor="#303030"
+                       Placeholder="Enter Amount"
+                       PlaceholderColor="#303030"
+                       BackgroundColor="Transparent"
+                       Keyboard="Numeric"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       Margin="8,4,8,0"/>
+                <Label Text="Account Reference"
+                       TextColor="#303030"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       LineHeight="1.4"
+                       Margin="8,0,8,0"/>
+                <Entry Text="{Binding AccountReference}"
+                       TextColor="#303030"
+                       Placeholder="Enter Account Reference"
+                       PlaceholderColor="#303030"
+                       BackgroundColor="Transparent"
+                       Keyboard="Text"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       Margin="8,4,8,0"/>
+                <Label Text="Transaction Description"
+                       TextColor="#303030"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       LineHeight="1.4"
+                       Margin="8,0,8,0"/>
+                <Entry Text="{Binding TransactionDescription}"
+                       TextColor="#303030"
+                       Placeholder="Enter Transaction Description"
+                       PlaceholderColor="#303030"
+                       BackgroundColor="Transparent"
+                       Keyboard="Text"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       Margin="8,4,8,0"/>
+                <Label Text="Phone Number (Use format: 2547XXXXXXXX)"
+                       TextColor="#303030"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       LineHeight="1.4"
+                       Margin="8,0,8,0"/>
+                <Entry Text="{Binding PhoneNumber}"
+                       TextColor="#303030"
+                       Placeholder="Enter Phone Number: 2547XXXXXXXX"
+                       PlaceholderColor="#303030"
+                       BackgroundColor="Transparent"
+                       Keyboard="Telephone"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       Margin="8,4,8,0"/>
+                <Button Text="Initiate Mpesa Payment"
+                        TextTransform="None"
+                        Command="{Binding MpesaStkCommand}"
+                        TextColor="White"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        CornerRadius="30"
+                        Margin="8,8,8,0"
+                        Padding="20,19">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#097985" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#E6E6E6" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
