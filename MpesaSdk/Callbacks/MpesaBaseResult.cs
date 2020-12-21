@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MpesaSdk.Callbacks
 {
@@ -22,7 +23,15 @@ namespace MpesaSdk.Callbacks
 
     public class ResultParameters
     {
-        public object ResultParameter { get; set; }
+        [JsonProperty("ResultParameter")]
+        public List<ResultParameter> ResultParameter { get; set; }
     }
 
+    public class ResultParameter
+    {
+        [JsonProperty("Key")]
+        public string Key { get; set; }
+        [JsonProperty("Value")]
+        public string Value { get; set; }
+    }
 }
