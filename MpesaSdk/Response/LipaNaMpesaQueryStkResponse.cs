@@ -42,5 +42,7 @@ namespace MpesaSdk.Response
         /// </summary>
         [JsonProperty("ResultDesc")]
         public string ResultDesc { get; set; }
+
+        public string PhoneNumber { get; set; }
     }
 }

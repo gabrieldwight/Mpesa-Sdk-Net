@@ -22,5 +22,7 @@
         /// </summary>
         /// <value>The merchant request identifier.</value>
         public string MerchantRequestID { get; set; }
+
+        public string PhoneNumber { get; set; }
     }
 }
