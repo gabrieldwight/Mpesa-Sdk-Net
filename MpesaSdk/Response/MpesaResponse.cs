@@ -12,6 +12,6 @@ namespace MpesaSdk.Response
         /// </summary>
         /// <value>The response code.</value>
         [JsonProperty("ResponseCode")]
-        public int ResponseCode { get; set; }
+        public string ResponseCode { get; set; }
     }
 }

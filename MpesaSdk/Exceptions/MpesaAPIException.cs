@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MpesaSdk.Response;
+using System;
 using System.Net;
 
 namespace MpesaSdk.Exceptions
@@ -13,9 +14,12 @@ namespace MpesaSdk.Exceptions
         /// </summary>
         public HttpStatusCode StatusCode { get; set; }
 
-        public MpesaAPIException(Exception ex, HttpStatusCode statusCode) : base (ex.Message)
+        public MpesaErrorResponse _mpesaErrorResponse { get; set; }
+
+        public MpesaAPIException(Exception ex, HttpStatusCode statusCode, MpesaErrorResponse mpesaErrorResponse) : base (ex.Message)
         {
             StatusCode = statusCode;
+            _mpesaErrorResponse = mpesaErrorResponse;
         }
     }
 }
