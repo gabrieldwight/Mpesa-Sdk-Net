@@ -5,6 +5,7 @@ using MpesaSdk.Callbacks;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MpesaSdk.Web.APIControllers
@@ -41,6 +42,12 @@ namespace MpesaSdk.Web.APIControllers
                     ResultDesc = "Transaction Rejected"
                 });
             }
+            
+            // To retrieve results from callback metadata
+
+            var result = lipaNaMpesaCallback.Body.StkCallback.LipaNaMPesaCallbackMetadata.ResultParameter.ToDictionary(x => x.Key, x => x.Value);
+
+            var test = result["MpesaReceiptNumber"];
 
             var filename = $"{requestId}.json";
 
