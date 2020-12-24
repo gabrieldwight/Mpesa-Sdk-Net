@@ -306,7 +306,7 @@ This class helps you generate the required credential to be used to authorize th
 using MpesaSdk.Extensions; // add this to your class or namespace
 
 //get path to Mpesa public certificate. There are different certs for development and for production, ensure to use the correct one)
-#If DEBUG
+#if DEBUG
   string certificate = @"..\sandbox.cer";
 #else
   string certificate = @"..\prod.cer";
