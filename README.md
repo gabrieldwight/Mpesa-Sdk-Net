@@ -59,7 +59,7 @@ void Application_Start(object sender, EventArgs e)
 void ConfigureServices(IServiceCollection services)
 {
    services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = MpesaRequestEndPoint.SandboxBaseAddress);
-   *inject services here*
+   //inject services here
 }
 	
 ```
