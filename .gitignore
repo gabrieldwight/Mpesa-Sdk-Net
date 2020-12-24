@@ -341,3 +341,5 @@ healthchecksdb
 /Samples/MpesaSdk.Web/wwwroot/Application_Files/MpesaResults
 /Samples/MpesaSdk.Web/wwwroot/Certificate
 /Samples/MpesaSdk.Web/wwwroot/Application_Files
+/Samples/MpesaSdk.Web/appsettings.json
+/Samples/MpesaSdk.Web/appsettings.Development.json
