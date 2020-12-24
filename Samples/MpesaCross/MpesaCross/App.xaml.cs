@@ -1,20 +1,17 @@
 ﻿using Acr.UserDialogs;
+using MpesaCross.ViewModels;
+using MpesaCross.Views;
+using MpesaSdk.Extensions;
 using Prism;
+using Prism.DryIoc;
 using Prism.Ioc;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MpesaCross
 {
-    public partial class App
+    public partial class App : PrismApplication
     {
-        public App() : this(null)
-        {
-
-        }
-
-        public App(IPlatformInitializer initializer) : base(initializer)
+        public App()
         {
 
         }
@@ -24,12 +21,20 @@ namespace MpesaCross
             Xamarin.Forms.Device.SetFlags(new string[] { "Shapes_Experimental" });
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("/NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("/NavigationPage/MpesaPushStkPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MpesaPushStkPage, MpesaPushStkViewModel>();
+            containerRegistry.RegisterForNavigation<MpesaResultsPage, MpesaResultsViewModel>();
+
+            containerRegistry.RegisterServices(services =>
+            {
+                // Initializing mpesaclient httpclient instance using Dependency Injection
+                services.AddMpesaService();
+            });
 
             containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
         }

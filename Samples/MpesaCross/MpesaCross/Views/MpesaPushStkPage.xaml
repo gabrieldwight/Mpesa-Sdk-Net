@@ -6,6 +6,7 @@
              mvvm:ViewModelLocator.AutowireViewModel="True">
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}"
+               TextColor="White"
                FontSize="15"
                FontAttributes="Bold"
                HorizontalTextAlignment="Start"
@@ -13,7 +14,15 @@
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView VerticalScrollBarVisibility="Never">
-            <StackLayout>
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                <Label Text="Create a M-Pesa Push STK Payment"
+                       TextColor="#303030"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       LineHeight="1.4"
+                       Margin="8,16,8,16"/>
                 <Label Text="Amount"
                        TextColor="#303030"
                        HorizontalOptions="StartAndExpand"
@@ -106,6 +115,7 @@
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
                 </Button>
+                <ActivityIndicator Color="Blue" IsRunning="{Binding IsBusy}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
