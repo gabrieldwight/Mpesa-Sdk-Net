@@ -5,7 +5,8 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Gabriel Odero</Authors>
     <Description>This is a M-Pesa SDK to allow you to integrate Safaricom M-Pesa API in net framework, .NetCore, NET5 and Net Standard projects.</Description>
-    <PackageTags>Mpesa;Safaricom;Daraja</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Mpesa;Safaricom;Daraja;Mobile-Money-Payment;Billing</PackageTags>
     <Copyright>Copyright © Gabriel Odero.  All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/gabrieldwight/Mpesa-Sdk-Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/gabrieldwight/Mpesa-Sdk-Net</RepositoryUrl>
@@ -13,10 +14,10 @@
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>  
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1' or '$(TargetFramework)' == 'net5.0' ">
     <PackageReference Include="FluentValidation" Version="9.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
