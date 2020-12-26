@@ -10,9 +10,9 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 
 ## Supported Platforms
 
-|   *Platform*   | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
-|:------------:|:---------:|:--------------:|:----:|:-----------:|:---------------:|:-----------:|:----------:|
-| *Min. Version* |    2.0    |      4.6.1     |  5.4 |    10.14    |       8.0       |     3.8     | 10.0.16299 |
+|   *Platform*   | .Net 5.0 | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
+|:--------------:|---------:|:---------:|:--------------:|:----:|:-----------:|:---------------:|:-----------:|:----------:|
+| *Min. Version* |   5      |    2.0    |      4.6.1     |  5.4 |    10.14    |       8.0       |     3.8     | 10.0.16299 |
 
 ## Installation
 - PackageManager: ```PM> Install-Package MpesaSdk```
