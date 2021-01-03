@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MpesaSdk.Interfaces;
 using Polly;
+using Polly.Extensions.Http;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -16,6 +17,15 @@ namespace MpesaSdk.Extensions
         public static void AddMpesaService(this IServiceCollection services)
         {          
             Random jitterer = new Random();
+
+            var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
+                .WaitAndRetryAsync(1, retryAttempt =>
+                {
+                    return TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(jitterer.Next(0, 100));
+                });
+
+            var noOpPolicy = Policy.NoOpAsync().AsAsyncPolicy<HttpResponseMessage>();
+
             services.AddHttpClient<IMpesaClient, MpesaClient>(options =>
             {
 #if DEBUG
@@ -35,10 +45,7 @@ namespace MpesaSdk.Extensions
                 }
 
                 return handler;
-            }).AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(1, retryAttempt =>
-            {
-                return TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(jitterer.Next(0, 100));
-            }));
+            }).AddPolicyHandler(request => request.Method.Equals(HttpMethod.Get) ? retryPolicy : noOpPolicy);
         }
     }
 }

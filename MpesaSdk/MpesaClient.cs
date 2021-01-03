@@ -5,6 +5,7 @@ using MpesaSdk.Interfaces;
 using MpesaSdk.Response;
 using Newtonsoft.Json;
 using Polly;
+using Polly.Extensions.Http;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -31,6 +32,14 @@ namespace MpesaSdk
         /// <param name="client">HttpClient Instance from httpClientFactory</param>
         public MpesaClient()
         {
+            var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
+                .WaitAndRetryAsync(1, retryAttempt =>
+                {
+                    return TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(jitterer.Next(0, 100));
+                });
+
+            var noOpPolicy = Policy.NoOpAsync().AsAsyncPolicy<HttpResponseMessage>();
+
             var services = new ServiceCollection();
             services.AddHttpClient("MpesaApiClient", client =>
             {
@@ -51,10 +60,7 @@ namespace MpesaSdk
                 }
 
                 return handler;
-            }).AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(1, retryAttempt =>
-            {
-                return TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(jitterer.Next(0, 100));
-            }));
+            }).AddPolicyHandler(request => request.Method.Equals(HttpMethod.Get) ? retryPolicy : noOpPolicy);
 
             var serviceProvider = services.BuildServiceProvider();
 
