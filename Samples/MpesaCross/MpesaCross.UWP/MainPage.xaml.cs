@@ -21,7 +21,7 @@ namespace MpesaCross.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new MpesaCross.App());
+            LoadApplication(new MpesaCross.App(new UWPInitializer()));
         }
     }
 }

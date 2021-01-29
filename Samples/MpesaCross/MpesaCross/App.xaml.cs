@@ -1,9 +1,7 @@
 ﻿using Acr.UserDialogs;
 using MpesaCross.ViewModels;
 using MpesaCross.Views;
-using MpesaSdk.Extensions;
 using Prism;
-using Prism.DryIoc;
 using Prism.Ioc;
 using Xamarin.Forms;
 
@@ -11,7 +9,12 @@ namespace MpesaCross
 {
     public partial class App : PrismApplication
     {
-        public App()
+        public App() : this(null)
+        {
+
+        }
+
+        public App(IPlatformInitializer initializer) : base(initializer)
         {
 
         }
@@ -29,12 +32,6 @@ namespace MpesaCross
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MpesaPushStkPage, MpesaPushStkViewModel>();
             containerRegistry.RegisterForNavigation<MpesaResultsPage, MpesaResultsViewModel>();
-
-            containerRegistry.RegisterServices(services =>
-            {
-                // Initializing mpesaclient httpclient instance using Dependency Injection
-                services.AddMpesaService();
-            });
 
             containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
         }
