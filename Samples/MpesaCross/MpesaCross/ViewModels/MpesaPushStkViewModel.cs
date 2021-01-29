@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Prism.Navigation;
 using ReactiveUI;
 using System;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -126,17 +127,19 @@ namespace MpesaCross.ViewModels
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         _dialogs.Alert(new AlertConfig()
-                            .SetMessage(validationResults.Errors.ToString())
+                            .SetMessage(string.Join(Environment.NewLine, validationResults.Errors.Select(x => x.ErrorMessage.ToString())))
                             .SetTitle("Validation Error"));
                     });
                 }
+                else
+                {
+                    var stkResults = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
+                    stkResults.PhoneNumber = PhoneNumber;
 
-                var stkResults = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
-                stkResults.PhoneNumber = PhoneNumber;
-                
-                var navigationParams = new NavigationParameters();
-                navigationParams.Add("PushSTKResponse", JsonConvert.SerializeObject(stkResults));
-                await _navigationService.NavigateAsync("MpesaResultsPage", navigationParams);
+                    var navigationParams = new NavigationParameters();
+                    navigationParams.Add("PushSTKResponse", JsonConvert.SerializeObject(stkResults));
+                    await _navigationService.NavigateAsync("MpesaResultsPage", navigationParams);
+                }
             }
             catch (MpesaAPIException ex)
             {
