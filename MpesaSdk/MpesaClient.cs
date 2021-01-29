@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Polly;
 using Polly.Extensions.Http;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -25,6 +26,7 @@ namespace MpesaSdk
         private static readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private static CancellationToken _token = new CancellationToken();
         Random jitterer = new Random();
+        private JsonSerializer _serializer = new JsonSerializer();
 
         /// <summary>
         /// MpesaClient that creates a client using httpclientfactory
@@ -369,18 +371,22 @@ namespace MpesaSdk
 
             if (response.IsSuccessStatusCode)
             {
-                await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+                await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
-                    result = JsonConvert.DeserializeObject<T>(x.Result);
-                }, _token);
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    result = _serializer.Deserialize<T>(json);
+                }, _tokenSource.Token);
             }
             else
             {
                 MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
-                await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+                await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
-                    mpesaErrorResponse = JsonConvert.DeserializeObject<MpesaErrorResponse>(x.Result);
-                }, _token);
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    mpesaErrorResponse = _serializer.Deserialize<MpesaErrorResponse>(json);
+                }, _tokenSource.Token);
                 throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
             }
             return result;
@@ -402,18 +408,22 @@ namespace MpesaSdk
             var response = await _client.GetAsync(mpesaRequestEndpoint, _token).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+                await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
-                    result = JsonConvert.DeserializeObject<MpesaAccessTokenResponse>(x.Result);
-                }, _token);
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    result = _serializer.Deserialize<MpesaAccessTokenResponse>(json);
+                }, _tokenSource.Token);
             }
             else
             {
                 MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
-                await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+                await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
-                    mpesaErrorResponse = JsonConvert.DeserializeObject<MpesaErrorResponse>(x.Result);
-                }, _token);
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    mpesaErrorResponse = _serializer.Deserialize<MpesaErrorResponse>(json);
+                }, _tokenSource.Token);
                 throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
             }
             return result.AccessToken;
