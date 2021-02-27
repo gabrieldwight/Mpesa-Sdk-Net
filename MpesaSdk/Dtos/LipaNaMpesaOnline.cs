@@ -29,8 +29,13 @@ namespace MpesaSdk.Dtos
         /// This is the transaction type that is used to identify the transaction when sending the request to M-Pesa. 
         /// The transaction type for M-Pesa Express is "CustomerPayBillOnline" 
         /// </summary>
+#if DEBUG
         [JsonProperty("TransactionType")]
         public string TransactionType { get; private set; } = Transaction_Type.CustomerPayBillOnline;
+#else
+        [JsonProperty("TransactionType")]
+        public string TransactionType { get; private set; }
+#endif
 
         /// <summary>
         /// This is the Amount transacted, normally a numeric value. Money that customer pays to the Shorcode. 
