@@ -36,6 +36,11 @@
         public const string CustomerPayBillOnline = "CustomerPayBillOnline";
 
         /// <summary>
+        /// Used to simulate a transaction taking place in the case of C2B Simulate Transaction or to initiate a transaction on behalf of the customer (STK Push).
+        /// </summary>
+        public const string CustomerBuyGoodsOnline = "CustomerBuyGoodsOnline";
+
+        /// <summary>
         /// Used to query the details of a transaction.
         /// </summary>
         public const string TransactionStatusQuery = "TransactionStatusQuery";
