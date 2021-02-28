@@ -1,7 +1,4 @@
 ﻿using FluentValidation.Validators;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MpesaSdk.Validators
 {
@@ -16,7 +13,7 @@ namespace MpesaSdk.Validators
         {
             var phoneNumberValue = context.PropertyValue as string;
 
-            if (!phoneNumberValue.StartsWith("254"))
+            if (!phoneNumberValue?.StartsWith("254") ?? false)
             {
                 return false;
             }
