@@ -8,7 +8,6 @@ using MpesaSdk.Dtos;
 using MpesaSdk.Exceptions;
 using MpesaSdk.Interfaces;
 using MpesaSdk.Response;
-using MpesaSdk.Validators;
 using MpesaSdk.Web.Extensions.Alerts;
 using MpesaSdk.Web.Models;
 using MpesaSdk.Web.ViewModels;
@@ -53,7 +52,6 @@ namespace MpesaSdk.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MpesaPayment(LipaNaMpesaOnlineViewModel lipaNaMpesaOnline)
         {
-            var validator = new LipaNaMpesaOnlineValidator();
             LipaNaMpesaOnlinePushStkResponse mpesaPaymentRequest;
 
             try
@@ -82,12 +80,6 @@ namespace MpesaSdk.Web.Controllers
                     passkey: _mpesaApiConfiguration.PassKey
                 );
 
-                var results = await validator.ValidateAsync(mpesaPayment);
-
-                if (!results.IsValid)
-                {
-                    return View();
-                }
                 mpesaPaymentRequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
             }
             catch (MpesaAPIException ex)
@@ -106,7 +98,6 @@ namespace MpesaSdk.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MpesaOnlineTransactionStatus(LipaNaMpesaOnlinePushStkResponse response)
         {
-            var validator = new LipaNaMpesaQueryValidator();
             LipaNaMpesaQueryStkResponse queryResult;
 
             try
@@ -118,13 +109,6 @@ namespace MpesaSdk.Web.Controllers
                     timeStamp: DateTime.Now,
                     checkoutRequestId: response.CheckoutRequestID
                 );
-
-                var results = await validator.ValidateAsync(LipaNaMpesaOnlineQuery);
-
-                if (!results.IsValid)
-                {
-                    return View();
-                }
 
                 queryResult = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken(), MpesaRequestEndpoint.QueryLipaNaMpesaOnlineTransaction);
             }
@@ -185,7 +169,6 @@ namespace MpesaSdk.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> C2BRegister(CustomerToBusinessRegisterViewModel customerToBusinessRegisterViewModel)
         {
-            var validator = new CustomerToBusinessRegisterUrlValidator();
             MpesaResponse c2BRegisterResults;
 
             try
@@ -197,13 +180,6 @@ namespace MpesaSdk.Web.Controllers
                         confirmationUrl: customerToBusinessRegisterViewModel.ConfirmationUrl,
                         validationUrl: customerToBusinessRegisterViewModel.ValidationUrl
                     );
-
-                var results = await validator.ValidateAsync(c2BRegisterCallback);
-
-                if (!results.IsValid)
-                {
-                    return View();
-                }
 
                 c2BRegisterResults = await _mpesaClient.RegisterC2BUrlAsync(c2BRegisterCallback, await RetrieveAccessToken(), MpesaRequestEndpoint.RegisterC2BUrl);
             }
@@ -225,7 +201,6 @@ namespace MpesaSdk.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> C2BPayment(CustomerToBusinessViewModel customerToBusinessViewModel)
         {
-            var validator = new CustomerToBusinessSimulateTransactionValidator();
             MpesaResponse c2BResults;
 
             try
@@ -238,13 +213,6 @@ namespace MpesaSdk.Web.Controllers
                     msisdn: _mpesaApiConfiguration.C2BMSISDNTest,
                     billReferenceNumber: customerToBusinessViewModel.PaymentReference
                 );
-
-                var results = await validator.ValidateAsync(c2BPayment);
-
-                if (!results.IsValid)
-                {
-                    return View();
-                }
 
                 c2BResults = await _mpesaClient.MakeC2BPaymentAsync(c2BPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.CustomerToBusinessSimulate);
             }

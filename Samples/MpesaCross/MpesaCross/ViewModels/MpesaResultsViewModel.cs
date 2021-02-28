@@ -5,7 +5,6 @@ using MpesaSdk.Dtos;
 using MpesaSdk.Exceptions;
 using MpesaSdk.Interfaces;
 using MpesaSdk.Response;
-using MpesaSdk.Validators;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using ReactiveUI;
@@ -95,8 +94,6 @@ namespace MpesaCross.ViewModels
 
         private async Task ExecuteMpesaStkQueryCommand(LipaNaMpesaOnlinePushStkResponse response)
         {
-            var validator = new LipaNaMpesaQueryValidator();
-
             try
             {
                 var LipaNaMpesaOnlineQuery = new LipaNaMpesaQuery
@@ -107,42 +104,28 @@ namespace MpesaCross.ViewModels
                         checkoutRequestId: response.CheckoutRequestID
                     );
 
-                var validationResults = await validator.ValidateAsync(LipaNaMpesaOnlineQuery);
+                var stkQueryResults = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken(), MpesaRequestEndpoint.QueryLipaNaMpesaOnlineTransaction);
 
-                if (!validationResults.IsValid)
+                if (stkQueryResults.ResultCode.Equals("0"))
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         _dialogs.Alert(new AlertConfig()
-                            .SetMessage(string.Join(Environment.NewLine, validationResults.Errors.Select(x => x.ErrorMessage.ToString())))
-                            .SetTitle("Validation Error"));
+                            .SetMessage("Thank you for your payment!")
+                            .SetTitle(stkQueryResults.ResponseDescription)
+                            .SetAction(async () => await _navigationService.NavigateAsync("/NavigationPage/MpesaPushStkPage")));
                     });
                 }
                 else
                 {
-                    var stkQueryResults = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken(), MpesaRequestEndpoint.QueryLipaNaMpesaOnlineTransaction);
-
-                    if (stkQueryResults.ResultCode.Equals("0"))
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            _dialogs.Alert(new AlertConfig()
-                                .SetMessage("Thank you for your payment!")
-                                .SetTitle(stkQueryResults.ResponseDescription)
-                                .SetAction(async () => await _navigationService.NavigateAsync("/NavigationPage/MpesaPushStkPage")));
-                        });
-                    }
-                    else
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            _dialogs.Alert(new AlertConfig()
-                                .SetMessage("Something went wrong with the transaction. Please try again")
-                                .SetTitle(stkQueryResults.ResponseDescription)
-                                .SetAction(async () => await _navigationService.NavigateAsync("/NavigationPage/MpesaPushStkPage")));
-                        });
-                    }
-                }                
+                        _dialogs.Alert(new AlertConfig()
+                            .SetMessage("Something went wrong with the transaction. Please try again")
+                            .SetTitle(stkQueryResults.ResponseDescription)
+                            .SetAction(async () => await _navigationService.NavigateAsync("/NavigationPage/MpesaPushStkPage")));
+                    });
+                }
             }
             catch (MpesaAPIException ex)
             {

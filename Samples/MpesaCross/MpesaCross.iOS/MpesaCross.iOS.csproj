@@ -128,15 +128,15 @@
       <Version>7.1.0.475</Version>
     </PackageReference>
     <PackageReference Include="Prism.DryIoc.Extensions">
-      <Version>8.0.48</Version>
+      <Version>8.0.62</Version>
     </PackageReference>
     <PackageReference Include="Prism.Forms.Extended">
-      <Version>8.0.48</Version>
+      <Version>8.0.62</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

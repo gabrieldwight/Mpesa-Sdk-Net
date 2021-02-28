@@ -4,12 +4,10 @@ using MpesaSdk;
 using MpesaSdk.Dtos;
 using MpesaSdk.Exceptions;
 using MpesaSdk.Interfaces;
-using MpesaSdk.Validators;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using ReactiveUI;
 using System;
-using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -101,8 +99,6 @@ namespace MpesaCross.ViewModels
 
         private async Task ExecuteMpesaStkCommand()
         {
-            var validator = new LipaNaMpesaOnlineValidator();
-
             try
             {
                 var mpesaPayment = new LipaNaMpesaOnline
@@ -120,26 +116,12 @@ namespace MpesaCross.ViewModels
                         passkey: mpesaAPIConfiguration.PassKey
                     );
 
-                var validationResults = await validator.ValidateAsync(mpesaPayment);
+                var stkResults = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
+                stkResults.PhoneNumber = PhoneNumber;
 
-                if (!validationResults.IsValid)
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        _dialogs.Alert(new AlertConfig()
-                            .SetMessage(string.Join(Environment.NewLine, validationResults.Errors.Select(x => x.ErrorMessage.ToString())))
-                            .SetTitle("Validation Error"));
-                    });
-                }
-                else
-                {
-                    var stkResults = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
-                    stkResults.PhoneNumber = PhoneNumber;
-
-                    var navigationParams = new NavigationParameters();
-                    navigationParams.Add("PushSTKResponse", JsonConvert.SerializeObject(stkResults));
-                    await _navigationService.NavigateAsync("MpesaResultsPage", navigationParams);
-                }
+                var navigationParams = new NavigationParameters();
+                navigationParams.Add("PushSTKResponse", JsonConvert.SerializeObject(stkResults));
+                await _navigationService.NavigateAsync("MpesaResultsPage", navigationParams);
             }
             catch (MpesaAPIException ex)
             {
