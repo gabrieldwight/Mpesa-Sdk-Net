@@ -16,6 +16,16 @@ namespace MpesaSdk.Exceptions
 
         public MpesaErrorResponse _mpesaErrorResponse { get; set; }
 
+        public MpesaAPIException()
+        {
+
+        }
+
+        public MpesaAPIException(HttpStatusCode statusCode, string message) : base(message)
+        {
+            StatusCode = statusCode;
+        }
+
         public MpesaAPIException(Exception ex, HttpStatusCode statusCode, MpesaErrorResponse mpesaErrorResponse) : base (ex.Message)
         {
             StatusCode = statusCode;
