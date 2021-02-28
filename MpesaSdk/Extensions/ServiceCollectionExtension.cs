@@ -5,6 +5,7 @@ using Polly.Extensions.Http;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 
 namespace MpesaSdk.Extensions
 {
@@ -74,8 +75,10 @@ namespace MpesaSdk.Extensions
                 options.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
                 options.Timeout = TimeSpan.FromMinutes(10);
 #endif
-            }).ConfigurePrimaryHttpMessageHandler<THandler>()
-            .AddPolicyHandler(request => request.Method.Equals(HttpMethod.Get) ? retryPolicy : noOpPolicy);
+            })
+                .SetHandlerLifetime(Timeout.InfiniteTimeSpan)
+                .ConfigurePrimaryHttpMessageHandler<THandler>()
+                .AddPolicyHandler(request => request.Method.Equals(HttpMethod.Get) ? retryPolicy : noOpPolicy);
         }
     }
 }
