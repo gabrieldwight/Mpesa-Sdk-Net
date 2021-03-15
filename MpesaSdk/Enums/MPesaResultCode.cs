@@ -3,7 +3,7 @@
     /// <summary>
     /// This is codes obtained from the Mpesa Results.
     /// </summary>
-    public enum MPesaResultCode
+    public enum MpesaResultCode
     {
         Success = 0,
         InsufficientFunds = 1,
