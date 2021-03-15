@@ -32,8 +32,12 @@ namespace MpesaSdk.Web
                 Configuration.GetSection("MpesaApiConfiguration").Bind(options);
             });
 
-            // Initializing mpesaclient httpclient instance using Dependency Injection
-            services.AddMpesaService();
+            // Initializing mpesaclient httpclient instance using Dependency Injection and specify the environment configuration
+#if DEBUG
+            services.AddMpesaService(Enums.Environment.Sandbox);
+#else
+            services.AddMpesaService(Enums.Environment.Live);
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
