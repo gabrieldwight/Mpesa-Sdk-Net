@@ -15,7 +15,7 @@ namespace MpesaSdk.Extensions
         /// Creating a mpesa service collection to be used in projects that support dependency injection.
         /// </summary>
         /// <param name="services"></param>
-        public static void AddMpesaService(this IServiceCollection services)
+        public static void AddMpesaService(this IServiceCollection services, Enums.Environment environment)
         {          
             Random jitterer = new Random();
 
@@ -29,13 +29,21 @@ namespace MpesaSdk.Extensions
 
             services.AddHttpClient<IMpesaClient, MpesaClient>(options =>
             {
-#if DEBUG
-                options.BaseAddress = MpesaRequestEndpoint.SandboxBaseAddress;
-                options.Timeout = TimeSpan.FromMinutes(10);
-#else
-                options.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
-                options.Timeout = TimeSpan.FromMinutes(10);
-#endif
+                switch (environment)
+                {
+                    case Enums.Environment.Sandbox:
+                        options.BaseAddress = MpesaRequestEndpoint.SandboxBaseAddress;
+                        options.Timeout = TimeSpan.FromMinutes(10);
+                        break;
+
+                    case Enums.Environment.Live:
+                        options.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
+                        options.Timeout = TimeSpan.FromMinutes(10);
+                        break;
+
+                    default:
+                        break;
+                }
             }).ConfigurePrimaryHttpMessageHandler(messageHandler =>
             {
                 var handler = new HttpClientHandler();
@@ -54,7 +62,7 @@ namespace MpesaSdk.Extensions
         /// </summary>
         /// Type parameter THandler to pass native implementations of HttpmessageHandler
         /// <param name="services"></param>
-        public static void AddMpesaService<THandler>(this IServiceCollection services) where THandler : HttpMessageHandler
+        public static void AddMpesaService<THandler>(this IServiceCollection services, Enums.Environment environment) where THandler : HttpMessageHandler
         {
             Random jitterer = new Random();
 
@@ -68,13 +76,21 @@ namespace MpesaSdk.Extensions
 
             services.AddHttpClient<IMpesaClient, MpesaClient>(options =>
             {
-#if DEBUG
-                options.BaseAddress = MpesaRequestEndpoint.SandboxBaseAddress;
-                options.Timeout = TimeSpan.FromMinutes(10);
-#else
-                options.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
-                options.Timeout = TimeSpan.FromMinutes(10);
-#endif
+                switch (environment)
+                {
+                    case Enums.Environment.Sandbox:
+                        options.BaseAddress = MpesaRequestEndpoint.SandboxBaseAddress;
+                        options.Timeout = TimeSpan.FromMinutes(10);
+                        break;
+
+                    case Enums.Environment.Live:
+                        options.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
+                        options.Timeout = TimeSpan.FromMinutes(10);
+                        break;
+
+                    default:
+                        break;
+                }
             })
                 .SetHandlerLifetime(Timeout.InfiniteTimeSpan)
                 .ConfigurePrimaryHttpMessageHandler<THandler>()
