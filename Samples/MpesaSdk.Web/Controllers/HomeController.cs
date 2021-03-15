@@ -60,8 +60,8 @@ namespace MpesaSdk.Web.Controllers
                 var generatedCallBackUrl = _mpesaApiConfiguration.CallBackUrl.Replace("{requestId}", Guid.NewGuid().ToString());
 #else
                 var generatedCallBackUrl = _linkGenerator.GetUriByAction(_httpContextAccessor.HttpContext, 
-                    action: nameof(APIControllers.MpesaCallbackController.LipaNaMpesaCallback), 
-                    controller: nameof(APIControllers.MpesaCallbackController).Replace("Controller", ""),
+                    action: nameof(APIControllers.PaymentCallbackController.LipaNaMpesaCallback), 
+                    controller: nameof(APIControllers.PaymentCallbackController).Replace("Controller", ""),
                     values: new { requestId = Guid.NewGuid() },
                     scheme: Request.Scheme);
 #endif
