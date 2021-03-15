@@ -8,7 +8,11 @@ namespace MpesaCross.Extension
     {
         public static void AddNativeHandlerMpesaService<THandler>(this IServiceCollection services) where THandler : HttpMessageHandler
         {
-            services.AddMpesaService<THandler>();
+#if DEBUG
+            services.AddMpesaService<THandler>(MpesaSdk.Enums.Environment.Sandbox);
+#else
+            services.AddMpesaService<THandler>(MpesaSdk.Enums.Environment.Live);
+#endif
         }
     }
 }
