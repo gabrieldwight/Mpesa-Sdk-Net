@@ -32,7 +32,7 @@ namespace MpesaSdk
         /// MpesaClient that creates a client using httpclientfactory
         /// </summary>
         /// <param name="client">HttpClient Instance from httpClientFactory</param>
-        public MpesaClient()
+        public MpesaClient(Enums.Environment environment)
         {
             var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
                 .WaitAndRetryAsync(1, retryAttempt =>
@@ -45,13 +45,21 @@ namespace MpesaSdk
             var services = new ServiceCollection();
             services.AddHttpClient("MpesaApiClient", client =>
             {
-#if DEBUG
-                client.BaseAddress = MpesaRequestEndpoint.SandboxBaseAddress;
-                client.Timeout = TimeSpan.FromMinutes(10);
-#else
-                client.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
-                client.Timeout = TimeSpan.FromMinutes(10);
-#endif
+                switch (environment)
+                {
+                    case Enums.Environment.Sandbox:
+                        client.BaseAddress = MpesaRequestEndpoint.SandboxBaseAddress;
+                        client.Timeout = TimeSpan.FromMinutes(10);
+                        break;
+
+                    case Enums.Environment.Live:
+                        client.BaseAddress = MpesaRequestEndpoint.LiveBaseAddress;
+                        client.Timeout = TimeSpan.FromMinutes(10);
+                        break;
+
+                    default:
+                        break;
+                }
             }).ConfigurePrimaryHttpMessageHandler(messageHandler =>
             {
                 var handler = new HttpClientHandler();
