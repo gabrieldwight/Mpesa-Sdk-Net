@@ -96,7 +96,7 @@ services.Configure<MpesaApiConfiguration>(options =>
             {
                 Configuration.GetSection("MpesaApiConfiguration").Bind(options);
             });
-services.AddMpesaService();
+services.AddMpesaService(Enums.Environment.Sandbox);
 ```
 
 
