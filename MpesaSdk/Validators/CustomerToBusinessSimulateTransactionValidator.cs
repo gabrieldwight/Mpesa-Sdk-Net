@@ -27,7 +27,7 @@ namespace MpesaSdk.Validators
             RuleFor(x => x.Msisdn)
                 .NotNull()
                 .WithMessage("{PropertyName} - The mobile number is required.")
-                .SetValidator(new PhoneNumberValidator())
+                .SetValidator(new PhoneNumberValidator<CustomerToBusinessSimulate, string>())
                 .WithMessage("{PropertyName} - The mobile number should start with 2547XXXX.")
                 .MaximumLength(12)
                 .WithMessage("{PropertyName} - The mobile number should be 12 digit.");

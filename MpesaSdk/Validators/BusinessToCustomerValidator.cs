@@ -39,7 +39,7 @@ namespace MpesaSdk.Validators
             RuleFor(x => x.PartyB)
                 .NotNull()
                 .WithMessage("{PropertyName} - The receiving mobile number is required.")
-                .SetValidator(new PhoneNumberValidator())
+                .SetValidator(new PhoneNumberValidator<BusinessToCustomer, string>())
                 .WithMessage("{PropertyName} - The receiving mobile number should start with 2547XXXX.")
                 .MaximumLength(12)
                 .WithMessage("{PropertyName} - The receiving mobile number should be 12 digit.");
