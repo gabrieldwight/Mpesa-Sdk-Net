@@ -11,10 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.481" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.483" />
     <PackageReference Include="Prism.DryIoc.Extensions" Version="8.0.62" />
     <PackageReference Include="Prism.Forms.Extended" Version="8.0.62" />
-    <PackageReference Include="ReactiveUI.XamForms" Version="13.2.2" />
+    <PackageReference Include="ReactiveUI.XamForms" Version="13.2.18" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
