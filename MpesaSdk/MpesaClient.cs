@@ -389,6 +389,44 @@ namespace MpesaSdk
         }
 
         /// <summary>
+        /// To make a pull of the missed transactions. Populate the request body with the following parameters.
+        /// NB: This API pulls transactions for a period not exceeding 48hrs.
+        /// </summary>
+        /// <param name="pullTransactionQuery">Pull Transaction data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.QueryMpesaTransactionStatus</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        public PullTransactionResponse QueryPullTransaction(PullTransactionQuery pullTransactionQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+        {
+            var validator = new PullTransactionQueryValidator();
+            var results = validator.Validate(pullTransactionQuery);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : MpesaPostRequestAsync<PullTransactionResponse>(pullTransactionQuery, accesstoken, mpesaRequestEndpoint, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// To make a pull of the missed transactions. Populate the request body with the following parameters.
+        /// NB: This API pulls transactions for a period not exceeding 48hrs.
+        /// </summary>
+        /// <param name="pullTransactionQuery">Pull Transaction data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.QueryMpesaTransactionStatus</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        public async Task<PullTransactionResponse> QueryPullTransactionAsync(PullTransactionQuery pullTransactionQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+        {
+            var validator = new PullTransactionQueryValidator();
+            var results = await validator.ValidateAsync(pullTransactionQuery);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : await MpesaPostRequestAsync<PullTransactionResponse>(pullTransactionQuery, accesstoken, mpesaRequestEndpoint, cancellationToken);
+        }
+
+        /// <summary>
         /// Registers Customer to Business Confirmation and Validation URLs.
         /// </summary>
         /// <param name="customerToBusinessRegisterUrl">C2B Register URLs data transfer object.</param>
@@ -422,6 +460,26 @@ namespace MpesaSdk
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
                 : await MpesaPostRequestAsync<MpesaResponse>(customerToBusinessRegisterUrl, accesstoken, mpesaRequestEndpoint, cancellationToken);
+        }
+
+        public PullTransactionRegisterResponse RegisterPullTransaction(PullTransactionRegisterUrl pullTransactionRegisterUrl, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+        {
+            var validator = new PullTransactionRegisterUrlValidator();
+            var results = validator.Validate(pullTransactionRegisterUrl);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : MpesaPostRequestAsync<PullTransactionRegisterResponse>(pullTransactionRegisterUrl, accesstoken, mpesaRequestEndpoint, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        public async Task<PullTransactionRegisterResponse> RegisterPullTransactionAsync(PullTransactionRegisterUrl pullTransactionRegisterUrl, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+        {
+            var validator = new PullTransactionRegisterUrlValidator();
+            var results = validator.Validate(pullTransactionRegisterUrl);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : await MpesaPostRequestAsync<PullTransactionRegisterResponse>(pullTransactionRegisterUrl, accesstoken, mpesaRequestEndpoint, cancellationToken);
         }
 
         /// <summary>
