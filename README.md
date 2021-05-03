@@ -7,6 +7,7 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 - [End User License](https://github.com/gabrieldwight/Mpesa-Sdk-Net/blob/master/LICENSE)
 - [NuGet Package](https://www.nuget.org/packages/MpesaSdk/)
 - [Mpesa Daraja Portal](https://developer.safaricom.co.ke/)
+- [Pull Transaction API](https://documenter.getpostman.com/view/1724456/SVtTy8sd#intro)
 
 ## Supported Platforms
 
@@ -257,6 +258,31 @@ var TransactionStatusObject = new MpesaTransactionStatus
 );
 
 var transactionrequest = await _mpesaClient.QueryMpesaTransactionStatusAsync(TransactionStatusObject, accesstoken, MpesaRequestEndPoint.QueryMpesaTransactionStatus);
+```
+## Pull Transaction Register Url Request
+```C#
+var pullTransactionRegisterObject = new PullTransactionRegisterUrl
+(
+  ShortCode: "ShortCode",
+  RequestType: "RequestType",
+  NominatedNumber: "NominatedNumber",
+  CallBackURL: "CallBackUrl"
+);
+
+var pullTransactionRegisterRequest = await _mpesaClient.RegisterPullTransactionAsync(pullTransactionRegisterObject, accesstoken, MpesaRequestEndpoint.PullMpesaTransactionRegisterUrl);
+```
+
+## Pull Transaction Query Request
+```C#
+var pullTransactionQueryObject = new PullTransactionQuery
+(
+  ShortCode: "ShortCode",
+  StartDate: "StartDate",
+  EndDate: "EndDate",
+  OffSetValue: "OffSetValue"
+);
+
+var pullTransactionRequest = await _mpesaClient.QueryPullTransactionAsync(pullTransactionQueryObject, accesstoken, MpesaRequestEndpoint.PullMpesaTransaction);
 ```
 
 ## Account Balance Query Request
