@@ -66,5 +66,15 @@ namespace MpesaSdk
         /// Transaction Status API checks the status of a B2B, B2C and C2B APIs transactions.
         /// </summary>
         public static string QueryMpesaTransactionStatus { get; set; } = "mpesa/transactionstatus/v1/query";
+
+        /// <summary>
+        /// Register Url to recieve pull transaction callback
+        /// </summary>
+        public static string PullMpesaTransactionRegisterUrl { get; set; } = "pulltransactions/v1/register";
+
+        /// <summary>
+        /// Pull Transaction API checks for the missed transactions that are not send in the C2B callback.
+        /// </summary>
+        public static string PullMpesaTransaction { get; set; } = "pulltransactions/v1/query";
     }
 }
