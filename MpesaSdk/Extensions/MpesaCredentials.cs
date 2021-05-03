@@ -52,11 +52,7 @@ namespace MpesaSdk.Extensions
         /// </returns>
         private static byte[] ReadCertificateFile(string certificateFileName)
         {
-            FileStream f = new FileStream(certificateFileName, FileMode.Open, FileAccess.Read);
-            int size = (int)f.Length;
-            byte[] data = new byte[size];
-            f.Close();
-            return data;
+            return File.ReadAllBytes(certificateFileName);
         }
     }
 }
