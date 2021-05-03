@@ -28,7 +28,7 @@ namespace MpesaSdk.Response
         public DateTime trxDate { get; set; }
 
         [JsonProperty("msisdn")]
-        public int msisdn { get; set; }
+        public long msisdn { get; set; }
 
         [JsonProperty("sender")]
         public string sender { get; set; }
