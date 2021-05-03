@@ -261,5 +261,47 @@ namespace MpesaSdk.Interfaces
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
         MpesaResponse QueryMpesaTransactionStatus(MpesaTransactionStatus mpesaTransactionStatus, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// To make use of pull, a user will need to register their urls and shortcode. The shortcode used must be for a user who has gone live and is on production
+        /// </summary>
+        /// <param name="pullTransactionRegisterUrl">Pull Transaction Register Url data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.QueryMpesaTransactionStatus</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        Task<PullTransactionRegisterResponse> RegisterPullTransactionAsync(PullTransactionRegisterUrl pullTransactionRegisterUrl, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// To make use of pull, a user will need to register their urls and shortcode. The shortcode used must be for a user who has gone live and is on production
+        /// </summary>
+        /// <param name="pullTransactionRegisterUrl">Pull Transaction Register Url data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.QueryMpesaTransactionStatus</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        PullTransactionRegisterResponse RegisterPullTransaction(PullTransactionRegisterUrl pullTransactionRegisterUrl, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// To make a pull of the missed transactions. Populate the request body with the following parameters.
+        /// NB: This API pulls transactions for a period not exceeding 48hrs.
+        /// </summary>
+        /// <param name="pullTransactionQuery">Pull Transaction data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.QueryMpesaTransactionStatus</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        Task<PullTransactionResponse> QueryPullTransactionAsync(PullTransactionQuery pullTransactionQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// To make a pull of the missed transactions. Populate the request body with the following parameters.
+        /// NB: This API pulls transactions for a period not exceeding 48hrs.
+        /// </summary>
+        /// <param name="pullTransactionQuery">Pull Transaction data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.QueryMpesaTransactionStatus</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        PullTransactionResponse QueryPullTransaction(PullTransactionQuery pullTransactionQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
     }
 }
