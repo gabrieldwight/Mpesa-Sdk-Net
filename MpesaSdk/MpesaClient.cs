@@ -25,8 +25,8 @@ namespace MpesaSdk
     public class MpesaClient : IMpesaClient
     {
         private readonly HttpClient _client;
-        Random jitterer = new Random();
-        private JsonSerializer _serializer = new JsonSerializer();
+        readonly Random jitterer = new Random();
+        private readonly JsonSerializer _serializer = new JsonSerializer();
 
         /// <summary>
         /// MpesaClient that creates a client using httpclientfactory
@@ -175,7 +175,7 @@ namespace MpesaSdk
         public async Task<MpesaResponse> MakeB2CPaymentAsync(BusinessToCustomer businessToCustomer, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new BusinessToCustomerValidator();
-            var results = await validator.ValidateAsync(businessToCustomer);
+            var results = await validator.ValidateAsync(businessToCustomer, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -221,7 +221,7 @@ namespace MpesaSdk
         public async Task<MpesaResponse> MakeC2BPaymentAsync(CustomerToBusinessSimulate customerToBusinessSimulate, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new CustomerToBusinessSimulateTransactionValidator();
-            var results = await validator.ValidateAsync(customerToBusinessSimulate);
+            var results = await validator.ValidateAsync(customerToBusinessSimulate, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -261,7 +261,7 @@ namespace MpesaSdk
         public async Task<LipaNaMpesaOnlinePushStkResponse> MakeLipaNaMpesaOnlinePaymentAsync(LipaNaMpesaOnline lipaNaMpesaOnline, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new LipaNaMpesaOnlineValidator();
-            var results = await validator.ValidateAsync(lipaNaMpesaOnline);
+            var results = await validator.ValidateAsync(lipaNaMpesaOnline, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -297,7 +297,7 @@ namespace MpesaSdk
         public async Task<MpesaResponse> QueryAccountBalanceAsync(AccountBalance accountBalance, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new AccountBalanceValidator();
-            var results = await validator.ValidateAsync(accountBalance);
+            var results = await validator.ValidateAsync(accountBalance, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -345,7 +345,7 @@ namespace MpesaSdk
         public async Task<LipaNaMpesaQueryStkResponse> QueryLipaNaMpesaTransactionAsync(LipaNaMpesaQuery lipaNaMpesaQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new LipaNaMpesaQueryValidator();
-            var results = await validator.ValidateAsync(lipaNaMpesaQuery);
+            var results = await validator.ValidateAsync(lipaNaMpesaQuery, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -381,7 +381,7 @@ namespace MpesaSdk
         public async Task<MpesaResponse> QueryMpesaTransactionStatusAsync(MpesaTransactionStatus mpesaTransactionStatus, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new MpesaTransactionStatusValidator();
-            var results = await validator.ValidateAsync(mpesaTransactionStatus);
+            var results = await validator.ValidateAsync(mpesaTransactionStatus, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -419,7 +419,7 @@ namespace MpesaSdk
         public async Task<PullTransactionResponse> QueryPullTransactionAsync(PullTransactionQuery pullTransactionQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new PullTransactionQueryValidator();
-            var results = await validator.ValidateAsync(pullTransactionQuery);
+            var results = await validator.ValidateAsync(pullTransactionQuery, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -455,7 +455,7 @@ namespace MpesaSdk
         public async Task<MpesaResponse> RegisterC2BUrlAsync(CustomerToBusinessRegisterUrl customerToBusinessRegisterUrl, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new CustomerToBusinessRegisterUrlValidator();
-            var results = await validator.ValidateAsync(customerToBusinessRegisterUrl);
+            var results = await validator.ValidateAsync(customerToBusinessRegisterUrl, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -511,7 +511,7 @@ namespace MpesaSdk
         public async Task<MpesaResponse> ReverseMpesaTransactionAsync(MpesaReversal mpesaReversal, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             var validator = new MpesaReversalValidator();
-            var results = await validator.ValidateAsync(mpesaReversal);
+            var results = await validator.ValidateAsync(mpesaReversal, cancellationToken);
 
             return !results.IsValid
                 ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
@@ -537,16 +537,36 @@ namespace MpesaSdk
 
             if (response.IsSuccessStatusCode)
             {
+#if NET5_0_OR_GREATER
+                await response.Content.ReadAsStreamAsync(cancellationToken).ContinueWith((Task<Stream> stream) =>
+                {
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    result = _serializer.Deserialize<T>(json);
+                }, cancellationToken);
+#endif
+#if NETSTANDARD2_0_OR_GREATER
                 await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
                     using var reader = new StreamReader(stream.Result);
                     using var json = new JsonTextReader(reader);
                     result = _serializer.Deserialize<T>(json);
                 }, cancellationToken);
+#endif
             }
             else
             {
                 MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
+#if NET5_0_OR_GREATER
+                await response.Content.ReadAsStreamAsync(cancellationToken).ContinueWith((Task<Stream> stream) =>
+                {
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    mpesaErrorResponse = _serializer.Deserialize<MpesaErrorResponse>(json);
+                }, cancellationToken);
+                throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+#endif
+#if NETSTANDARD2_0_OR_GREATER
                 await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
                     using var reader = new StreamReader(stream.Result);
@@ -554,6 +574,7 @@ namespace MpesaSdk
                     mpesaErrorResponse = _serializer.Deserialize<MpesaErrorResponse>(json);
                 }, cancellationToken);
                 throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+#endif
             }
             return result;
         }
@@ -576,16 +597,36 @@ namespace MpesaSdk
             var response = await _client.GetAsync(mpesaRequestEndpoint, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
+#if NET5_0_OR_GREATER
+                await response.Content.ReadAsStreamAsync(cancellationToken).ContinueWith((Task<Stream> stream) =>
+                {
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    result = _serializer.Deserialize<MpesaAccessTokenResponse>(json);
+                }, cancellationToken);
+#endif
+#if NETSTANDARD2_0_OR_GREATER
                 await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
                     using var reader = new StreamReader(stream.Result);
                     using var json = new JsonTextReader(reader);
                     result = _serializer.Deserialize<MpesaAccessTokenResponse>(json);
                 }, cancellationToken);
+#endif
             }
             else
             {
                 MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
+#if NET5_0_OR_GREATER
+                await response.Content.ReadAsStreamAsync(cancellationToken).ContinueWith((Task<Stream> stream) =>
+                {
+                    using var reader = new StreamReader(stream.Result);
+                    using var json = new JsonTextReader(reader);
+                    mpesaErrorResponse = _serializer.Deserialize<MpesaErrorResponse>(json);
+                }, cancellationToken);
+                throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+#endif
+#if NETSTANDARD2_0_OR_GREATER
                 await response.Content.ReadAsStreamAsync().ContinueWith((Task<Stream> stream) =>
                 {
                     using var reader = new StreamReader(stream.Result);
@@ -593,6 +634,7 @@ namespace MpesaSdk
                     mpesaErrorResponse = _serializer.Deserialize<MpesaErrorResponse>(json);
                 }, cancellationToken);
                 throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+#endif
             }
             return result.AccessToken;
         }
