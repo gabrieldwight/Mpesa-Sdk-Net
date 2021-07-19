@@ -19,7 +19,7 @@ namespace MpesaSdk.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private MpesaApiConfiguration _mpesaApiConfiguration;
+        private readonly MpesaApiConfiguration _mpesaApiConfiguration;
         private readonly IMpesaClient _mpesaClient;
         private readonly ILogger<HomeController> _logger;
         private readonly LinkGenerator _linkGenerator;
