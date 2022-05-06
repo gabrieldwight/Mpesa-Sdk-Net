@@ -303,5 +303,25 @@ namespace MpesaSdk.Interfaces
         /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
         PullTransactionResponse QueryPullTransaction(PullTransactionQuery pullTransactionQuery, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have smartphones and use LIPA NA M-PESA as their preferred mode of payment, to scan a QR (Quick Response) code, to capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.
+        /// </summary>
+        /// <param name="dynamicMpesaQR">Dynamic Mpesa QR data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.DynamicMpesaQR</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        Task<DynamicMpesaQRResponse> GenerateDynamicMpesaQRAsync(DynamicMpesaQR dynamicMpesaQR, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have smartphones and use LIPA NA M-PESA as their preferred mode of payment, to scan a QR (Quick Response) code, to capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.
+        /// </summary>
+        /// <param name="dynamicMpesaQR">Dynamic Mpesa QR data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.DynamicMpesaQR</c></param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        DynamicMpesaQRResponse GenerateDynamicMpesaQR(DynamicMpesaQR dynamicMpesaQR, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default);
     }
 }

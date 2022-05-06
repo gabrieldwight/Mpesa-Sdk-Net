@@ -88,15 +88,35 @@ namespace MpesaSdk
             _client = client;
         }
 
-        /// <summary>
-        /// GetAuthTokenAsync is an asynchronous method that requests for and returns an accesstoken from MPESA API Server.
-        /// </summary>
-        /// <param name="consumerKey">ConsumerKey provided by Safaricom in Daraja Portal.</param>
-        /// <param name="consumerSecret">ConsumerSecret provided by Safaricom in Daraja Portal.</param>
-        /// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.AuthToken</c></param>
-        /// <param name="cancellationToken">Cancellation Token</param>
-        /// <returns>A string of characters representing the accesstoken.</returns>
-        public string GetAuthToken(string consumerKey, string consumerSecret, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+		public DynamicMpesaQRResponse GenerateDynamicMpesaQR(DynamicMpesaQR dynamicMpesaQR, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+		{
+            var validator = new DynamicMpesaQRValidator();
+            var results = validator.Validate(dynamicMpesaQR);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : MpesaPostRequestAsync<DynamicMpesaQRResponse>(dynamicMpesaQR, accesstoken, mpesaRequestEndpoint, cancellationToken).GetAwaiter().GetResult();
+        }
+
+		public async Task<DynamicMpesaQRResponse> GenerateDynamicMpesaQRAsync(DynamicMpesaQR dynamicMpesaQR, string accesstoken, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
+		{
+            var validator = new DynamicMpesaQRValidator();
+            var results = await validator.ValidateAsync(dynamicMpesaQR, cancellationToken);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : await MpesaPostRequestAsync<DynamicMpesaQRResponse>(dynamicMpesaQR, accesstoken, mpesaRequestEndpoint, cancellationToken);
+        }
+
+		/// <summary>
+		/// GetAuthTokenAsync is an asynchronous method that requests for and returns an accesstoken from MPESA API Server.
+		/// </summary>
+		/// <param name="consumerKey">ConsumerKey provided by Safaricom in Daraja Portal.</param>
+		/// <param name="consumerSecret">ConsumerSecret provided by Safaricom in Daraja Portal.</param>
+		/// <param name="mpesaRequestEndpoint">Set to <c>MpesaRequestEndpoint.AuthToken</c></param>
+		/// <param name="cancellationToken">Cancellation Token</param>
+		/// <returns>A string of characters representing the accesstoken.</returns>
+		public string GetAuthToken(string consumerKey, string consumerSecret, string mpesaRequestEndpoint, CancellationToken cancellationToken = default)
         {
             return RequestAccessTokenAsync(consumerKey, consumerSecret, mpesaRequestEndpoint, cancellationToken).GetAwaiter().GetResult();
         }

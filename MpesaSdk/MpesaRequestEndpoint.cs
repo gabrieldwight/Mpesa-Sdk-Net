@@ -76,5 +76,10 @@ namespace MpesaSdk
         /// Pull Transaction API checks for the missed transactions that are not send in the C2B callback.
         /// </summary>
         public static string PullMpesaTransaction { get; set; } = "pulltransactions/v1/query";
+
+        /// <summary>
+        /// Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have smartphones and use LIPA NA M-PESA as their preferred mode of payment, to scan a QR (Quick Response) code, to capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.
+        /// </summary>
+        public static string DynamicMpesaQR { get; set; } = "mpesa/qrcode/v1/generate";
     }
 }
