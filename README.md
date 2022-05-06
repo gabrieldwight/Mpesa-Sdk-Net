@@ -11,9 +11,9 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 
 ## Supported Platforms
 
-|   *Platform*   | .Net 5.0 | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
-|:--------------:|---------:|:---------:|:--------------:|:----:|:-----------:|:---------------:|:-----------:|:----------:|
-| *Min. Version* |    5     |    2.0    |      4.6.1     |  5.4 |    10.14    |       8.0       |     3.8     | 10.0.16299 |
+|   *Platform*   | .Net 6.0 | .Net 5.0 | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
+|:--------------:|---------:|---------:|:---------:|:--------------:|:----:|:-----------:|:---------------:|:-----------:|:----------:|
+| *Min. Version* |    6     |    5     |    2.0    |      4.6.1     |  5.4 |    10.14    |       8.0       |     3.8     | 10.0.16299 |
 
 ## Installation
 - PackageManager: ```PM> Install-Package MpesaSdk```
@@ -342,6 +342,20 @@ using MpesaSdk.Extensions; // add this to your class or namespace
 
 var SecutityCredential = Credentials.EncryptPassword(certificate, "Initiator Password");
 
+```
+
+## Dynamic Mpesa QR Request
+```c#
+DynamicMpesaQR dynamicMpesaQR = new DynamicMpesaQR(qrVersion: "01",
+                qrFormat: 1, // 1, 2, 3 or 4
+                qrType: "D", // D or S
+                merchantName: dynamicQR.MerchantName,
+                refNo: dynamicQR.Reference,
+                amount: dynamicQR.Amount,
+                trxCode: "PB", // BG, WA, PB, SM or SB
+                cpi: dynamicQR.CPI);
+		
+DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, accessToken, MpesaRequestEndpoint.DynamicMpesaQR);
 ```
 
 ## Error handling
