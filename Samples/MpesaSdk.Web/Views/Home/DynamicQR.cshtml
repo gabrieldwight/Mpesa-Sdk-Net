@@ -1,0 +1,77 @@
+﻿@model DynamicQRViewModel
+
+@{
+    ViewData["Title"] = "Mpesa Dynamic QR";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Create Mpesa Dynamic QR</h4>
+        </div>
+        <div class="content">
+            <p class="text-body">You can only test the Mpesa dynamic QR generation on production environment and make sure the api product is added to your app</p>
+            <hr />
+            <form asp-action="DynamicQR">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Merchant Name</label>
+                    <input asp-for="MerchantName" class="form-control" />
+                    <span asp-validation-for="MerchantName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">CPI (Till Number, Paybill Number, phone number, Business number)</label>
+                    <input asp-for="CPI" class="form-control" />
+                    <span asp-validation-for="CPI" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Amount</label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Reference Number</label>
+                    <input asp-for="Reference" class="form-control" />
+                    <span asp-validation-for="Reference" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">QR Type</label>
+                    <select class="form-control form-select form-select-lg mb-3" asp-for="SelectedQRType" asp-items="@Model.QRType"></select>
+                    <span asp-validation-for="SelectedQRType" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">QR Format</label>
+                    <select class="form-control form-select form-select-lg mb-3" asp-for="SelectedQRFormat" asp-items="@Model.QRFormat"></select>
+                    <span asp-validation-for="SelectedQRFormat" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">QR Transaction Code</label>
+                    <select class="form-control form-select form-select-lg mb-3" asp-for="SelectedTransactionCode" asp-items="@Model.TransactionCode"></select>
+                    <span asp-validation-for="SelectedTransactionCode" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Generate Mpesa Dynamic QR Code" class="btn btn-primary" />
+                </div>
+            </form>
+             @{
+                    if (Model != null)
+                    {
+                        if (Model.GeneratedQRCode != null)
+                        {
+                            <div class="text-center">
+                                <h3>QR Code Successfully Generated</h3>
+                                @if (Model.GeneratedQRFileExtension.Equals("png"))
+                                {
+                                    <img class="img-thumbnail" width="300" height="300" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.GeneratedQRFileImage))" />
+                                }
+                            </div>
+                        }
+                    }
+                }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

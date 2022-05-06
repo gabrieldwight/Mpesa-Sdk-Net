@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MpesaSdk.Dtos;
+using MpesaSdk.Enums;
 using MpesaSdk.Exceptions;
 using MpesaSdk.Interfaces;
 using MpesaSdk.Response;
@@ -12,7 +14,9 @@ using MpesaSdk.Web.Extensions.Alerts;
 using MpesaSdk.Web.Models;
 using MpesaSdk.Web.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace MpesaSdk.Web.Controllers
@@ -46,6 +50,75 @@ namespace MpesaSdk.Web.Controllers
         public IActionResult MpesaPayment()
         {
             return View();
+        }
+
+        public IActionResult DynamicQR()
+        {
+            DynamicQRViewModel dynamicQRView = new DynamicQRViewModel();
+            dynamicQRView.QRType = new List<SelectListItem>()
+            {
+                new SelectListItem() { Text = "Dynamic", Value = QRType.Dynamic },
+                new SelectListItem() { Text = "Static", Value = QRType.Static }
+            };
+
+            dynamicQRView.QRFormat = new List<SelectListItem>()
+            {
+                new SelectListItem() { Text = "Image Format", Value = ((int)QRFormat.ImageFormat).ToString() },
+                new SelectListItem() { Text = "QR String Format", Value = ((int)QRFormat.QRStringFormat).ToString() },
+                new SelectListItem() { Text = "Binary Data Format", Value = ((int)QRFormat.BinaryDataFormat).ToString() },
+                new SelectListItem() { Text = "PDF Format", Value = ((int)QRFormat.PDFFormat).ToString() },
+            };
+
+            dynamicQRView.TransactionCode = new List<SelectListItem>()
+            {
+                new SelectListItem() { Text = "Pay Merchant (Buy Goods)", Value = QRTransactionType.PayMerchant },
+                new SelectListItem() { Text = "Withdraw Cash at Agent Till", Value = QRTransactionType.WithdrawCash },
+                new SelectListItem() { Text = "Paybill or Business Number", Value = QRTransactionType.PayBill },
+                new SelectListItem() { Text = "Send Money(Mobile number)", Value = QRTransactionType.SendMoney },
+                new SelectListItem() { Text = "Sent to Business. Business number CPI in MSISDN format", Value = QRTransactionType.SendBusiness }
+            };
+
+            return View(dynamicQRView);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DynamicQR(DynamicQRViewModel dynamicQR)
+        {
+            DynamicMpesaQR dynamicMpesaQR = new DynamicMpesaQR(qrVersion: "01",
+                qrFormat: Convert.ToInt32(dynamicQR.SelectedQRFormat),
+                qrType: dynamicQR.SelectedQRType,
+                merchantName: dynamicQR.MerchantName,
+                refNo: dynamicQR.Reference,
+                amount: dynamicQR.Amount,
+                trxCode: dynamicQR.SelectedTransactionCode,
+                cpi: dynamicQR.CPI);
+
+            try
+            {
+                DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, await RetrieveAccessToken(), MpesaRequestEndpoint.DynamicMpesaQR);
+
+                if (dynamicMpesaQRResponse.ResponseCode.Equals("00"))
+                {
+                    dynamicQR.GeneratedQRCode = dynamicMpesaQRResponse.QRCode;
+
+                    if (dynamicQR.GeneratedQRFileExtension.Equals("png"))
+                    {
+                        return View(dynamicQR).WithSuccess("Success", "Mpesa QR Code generated successfully");
+                    }
+                    else if (dynamicQR.GeneratedQRFileExtension.Equals("pdf"))
+                    {
+                        var stream = new FileStream(@"generatedMpesaQR.pdf", FileMode.Open);
+                        return new FileStreamResult(stream, "application/pdf");
+                    }
+                }
+            }
+            catch (MpesaAPIException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return RedirectToAction(nameof(DynamicQR)).WithDanger("Error", ex.Message);
+            }
+            return RedirectToAction(nameof(DynamicQR));
         }
 
         [HttpPost]
