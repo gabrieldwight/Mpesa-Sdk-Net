@@ -9,6 +9,10 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 - [Mpesa Daraja Portal](https://developer.safaricom.co.ke/)
 - [Pull Transaction API](https://documenter.getpostman.com/view/1724456/SVtTy8sd#intro)
 
+## Required API Products Need To be enabled by api support to your mpesa applications
+- Pull Transaction API
+- Dynamic Mpesa QR
+
 ## Supported Platforms
 
 |   *Platform*   | .Net 6.0 | .Net 5.0 | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
@@ -145,7 +149,7 @@ var RegisterC2BUrlObject = new CustomerToBusinessRegisterUrl
 var c2bRegisterUrlrequest = await _mpesaClient.RegisterC2BUrlAsync(RegisterC2BUrlObject, accesstoken, MpesaRequestEndPoint.RegisterC2BUrl);
 ```
 
-## C2B Payment Request
+## C2B Payment Request (For Sandbox Environment Only)
 ```c#
 //C2B Object
 Var CustomerToBusinessSimulateObject = new CustomerToBusinessSimulate
@@ -203,7 +207,7 @@ var stkpushquery = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(QueryLipa
 var BusinessToCustomerObject = new BusinessToCustomer
 (
     InitiatorName: "InitiatorName", // Test data for initiator like safaricom.x or api_xxx
-    SecurityCredential: "SecurityCredential",
+    SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
     CommandID: "CommandID", // Please use the correct command -usage depends on what is enabled for your shortcode. More info 
     Amount: "Amount",
     PartyA: "PartyA", // Test for Party A 603047
@@ -224,7 +228,7 @@ var b2crequest = await _mpesaClient.MakeB2CPaymentAsync(BusinessToCustomerObject
 var BusinessToBusinessObject = new BusinessToBusinessDto
 ( 
   InitiatorName: "InitiatorName", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Please use the correct command -usage depends on what is enabled for your shortcode. More info
   SenderIdentifierType: "SenderIdentifierType", // Test for paybill identifiertype 4
   RecieverIdentifierType: "RecieverIdentifierType", // Test for paybill identifiertype 4. Read on receiver identifier types from daraja
@@ -246,7 +250,7 @@ var b2brequest = await _mpesaClient.MakeB2BPaymentAsync(BusinessToBusinessObject
 var TransactionStatusObject = new MpesaTransactionStatus
 (  
   Initiator: "Initiator", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "TransactionStatusQuery"
   TransactionID: "TransactionID", // TransactionID from the Mpesa reference that is tied to the short code that performed either a B2C, C2B or B2B
   PartyA: "PartyA", // Test for Party A 603047. Organization/MSISDN receiving the transaction
@@ -290,7 +294,7 @@ var pullTransactionRequest = await _mpesaClient.QueryPullTransactionAsync(pullTr
 var AccountBalanceObject = new AccountBalance
 (	
   Initiator: "Initiator", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "AccountBalance"
   PartyA: "PartyA", // Test for Party A 603047. Organization/MSISDN receiving the transaction
   IdentifierType: "IdentifierType"
@@ -308,7 +312,7 @@ var accountbalancerequest = await _mpesaClient.QueryAccountBalanceAsync(AccountB
 var TransactionReversalObject = new Reversal
 (
   Initiator: "Initiator", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "TransactionReversal"
   TransactionID: "TransactionID", // TransactionID from the Mpesa reference that is tied to the short code that performed either a C2B or B2B.
   ReceiverParty: "ReceiverParty", // Test for Party A 603047. Organization/MSISDN receiving the transaction
