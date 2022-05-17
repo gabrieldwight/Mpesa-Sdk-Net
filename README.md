@@ -211,7 +211,7 @@ var BusinessToCustomerObject = new BusinessToCustomer
     CommandID: "CommandID", // Please use the correct command -usage depends on what is enabled for your shortcode. More info 
     Amount: "Amount",
     PartyA: "PartyA", // Test for Party A 603047
-    PartyB: "PartyB", // Test for Party B 600000 
+    PartyB: "PartyB", // Receipient Phone Number (07XXXX123) 
     Remarks: "Remarks",
     QueueTimeOutURL: "QueueTimeOutURL", // URL to send the B2C timeout results
     ResultURL: "ResultURL" // URL to send the B2C callback results
@@ -253,7 +253,7 @@ var TransactionStatusObject = new MpesaTransactionStatus
   SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "TransactionStatusQuery"
   TransactionID: "TransactionID", // TransactionID from the Mpesa reference that is tied to the short code that performed either a B2C, C2B or B2B
-  PartyA: "PartyA", // Test for Party A 603047. Organization/MSISDN receiving the transaction
+  PartyA: "PartyA", // Test for Party A 603047 OR 07XXXX123. Organization/MSISDN receiving the transaction
   IdentifierType: "IdentifierType"
   Remarks: "Remarks",
   QueueTimeOutURL: "QueueTimeOutURL", // URL to send the TransactionStatus timeout results
