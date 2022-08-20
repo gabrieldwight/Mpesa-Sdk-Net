@@ -9,11 +9,15 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 - [Mpesa Daraja Portal](https://developer.safaricom.co.ke/)
 - [Pull Transaction API](https://documenter.getpostman.com/view/1724456/SVtTy8sd#intro)
 
+## Required API Products Need To be enabled by api support to your mpesa applications
+- Pull Transaction API
+- Dynamic Mpesa QR
+
 ## Supported Platforms
 
-|   *Platform*   | .Net 5.0 | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
-|:--------------:|---------:|:---------:|:--------------:|:----:|:-----------:|:---------------:|:-----------:|:----------:|
-| *Min. Version* |    5     |    2.0    |      4.6.1     |  5.4 |    10.14    |       8.0       |     3.8     | 10.0.16299 |
+|   *Platform*   | .Net 6.0 | .Net 5.0 | .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Android | Xamarin.Mac |     UWP    |
+|:--------------:|---------:|---------:|:---------:|:--------------:|:----:|:-----------:|:---------------:|:-----------:|:----------:|
+| *Min. Version* |    6     |    5     |    2.0    |      4.6.1     |  5.4 |    10.14    |       8.0       |     3.8     | 10.0.16299 |
 
 ## Installation
 - PackageManager: ```PM> Install-Package MpesaSdk```
@@ -145,7 +149,7 @@ var RegisterC2BUrlObject = new CustomerToBusinessRegisterUrl
 var c2bRegisterUrlrequest = await _mpesaClient.RegisterC2BUrlAsync(RegisterC2BUrlObject, accesstoken, MpesaRequestEndPoint.RegisterC2BUrl);
 ```
 
-## C2B Payment Request
+## C2B Payment Request (For Sandbox Environment Only)
 ```c#
 //C2B Object
 Var CustomerToBusinessSimulateObject = new CustomerToBusinessSimulate
@@ -203,11 +207,11 @@ var stkpushquery = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(QueryLipa
 var BusinessToCustomerObject = new BusinessToCustomer
 (
     InitiatorName: "InitiatorName", // Test data for initiator like safaricom.x or api_xxx
-    SecurityCredential: "SecurityCredential",
+    SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
     CommandID: "CommandID", // Please use the correct command -usage depends on what is enabled for your shortcode. More info 
     Amount: "Amount",
     PartyA: "PartyA", // Test for Party A 603047
-    PartyB: "PartyB", // Test for Party B 600000 
+    PartyB: "PartyB", // Receipient Phone Number (07XXXX123) 
     Remarks: "Remarks",
     QueueTimeOutURL: "QueueTimeOutURL", // URL to send the B2C timeout results
     ResultURL: "ResultURL" // URL to send the B2C callback results
@@ -224,7 +228,7 @@ var b2crequest = await _mpesaClient.MakeB2CPaymentAsync(BusinessToCustomerObject
 var BusinessToBusinessObject = new BusinessToBusinessDto
 ( 
   InitiatorName: "InitiatorName", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Please use the correct command -usage depends on what is enabled for your shortcode. More info
   SenderIdentifierType: "SenderIdentifierType", // Test for paybill identifiertype 4
   RecieverIdentifierType: "RecieverIdentifierType", // Test for paybill identifiertype 4. Read on receiver identifier types from daraja
@@ -246,10 +250,10 @@ var b2brequest = await _mpesaClient.MakeB2BPaymentAsync(BusinessToBusinessObject
 var TransactionStatusObject = new MpesaTransactionStatus
 (  
   Initiator: "Initiator", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "TransactionStatusQuery"
   TransactionID: "TransactionID", // TransactionID from the Mpesa reference that is tied to the short code that performed either a B2C, C2B or B2B
-  PartyA: "PartyA", // Test for Party A 603047. Organization/MSISDN receiving the transaction
+  PartyA: "PartyA", // Test for Party A 603047 OR 07XXXX123. Organization/MSISDN receiving the transaction
   IdentifierType: "IdentifierType"
   Remarks: "Remarks",
   QueueTimeOutURL: "QueueTimeOutURL", // URL to send the TransactionStatus timeout results
@@ -290,7 +294,7 @@ var pullTransactionRequest = await _mpesaClient.QueryPullTransactionAsync(pullTr
 var AccountBalanceObject = new AccountBalance
 (	
   Initiator: "Initiator", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "AccountBalance"
   PartyA: "PartyA", // Test for Party A 603047. Organization/MSISDN receiving the transaction
   IdentifierType: "IdentifierType"
@@ -308,7 +312,7 @@ var accountbalancerequest = await _mpesaClient.QueryAccountBalanceAsync(AccountB
 var TransactionReversalObject = new Reversal
 (
   Initiator: "Initiator", // Test data for initiator like safaricom.x or api_xxx
-  SecurityCredential: "SecurityCredential", // Use MpesaSdk.Extensions.MpesaCredentials
+  SecurityCredential: "SecurityCredential", // Password credential used in mpesa portal (Use MpesaSdk.Extensions.MpesaCredentials)
   CommandID: "CommandID", // Command set to "TransactionReversal"
   TransactionID: "TransactionID", // TransactionID from the Mpesa reference that is tied to the short code that performed either a C2B or B2B.
   ReceiverParty: "ReceiverParty", // Test for Party A 603047. Organization/MSISDN receiving the transaction
@@ -342,6 +346,20 @@ using MpesaSdk.Extensions; // add this to your class or namespace
 
 var SecutityCredential = Credentials.EncryptPassword(certificate, "Initiator Password");
 
+```
+
+## Dynamic Mpesa QR Request
+```c#
+DynamicMpesaQR dynamicMpesaQR = new DynamicMpesaQR(qrVersion: "01",
+                qrFormat: 1, // 1, 2, 3 or 4
+                qrType: "D", // D or S
+                merchantName: dynamicQR.MerchantName,
+                refNo: dynamicQR.Reference,
+                amount: dynamicQR.Amount,
+                trxCode: "PB", // BG, WA, PB, SM or SB
+                cpi: dynamicQR.CPI);
+		
+DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, accessToken, MpesaRequestEndpoint.DynamicMpesaQR);
 ```
 
 ## Error handling
