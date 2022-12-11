@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MpesaSdk.Dtos;
-using System;
 
 namespace MpesaSdk.Validators
 {
@@ -8,24 +7,6 @@ namespace MpesaSdk.Validators
     {
         public DynamicMpesaQRValidator()
         {
-            RuleFor(x => x.QRVersion)
-                .NotNull()
-                .WithMessage("{PropertyName} - Version number of QR is required.")
-                .NotEmpty()
-                .WithMessage("{PropertyName} - Version number of QR should not be empty.");
-
-            RuleFor(x => x.QRFormat)
-                .NotNull()
-                .WithMessage("{PropertyName} - Format of QR output is required.")
-                .NotEmpty()
-                .WithMessage("{PropertyName} - Format of QR output should not be empty.");
-
-            RuleFor(x => x.QRType)
-                .NotNull()
-                .WithMessage("{PropertyName} - QR Type is required.")
-                .NotEmpty()
-                .WithMessage("{PropertyName} - QR Type should not be empty.");
-
             RuleFor(x => x.MerchantName)
                 .NotNull()
                 .WithMessage("{PropertyName} - Merchant name is required.")

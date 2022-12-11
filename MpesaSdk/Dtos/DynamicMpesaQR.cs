@@ -8,24 +8,6 @@ namespace MpesaSdk.Dtos
 	public class DynamicMpesaQR
 	{
 		/// <summary>
-		/// Version number of the QR.
-		/// </summary>
-		[JsonProperty("QRVersion")]
-		public string QRVersion { get; private set; }
-
-		/// <summary>
-		/// Format of QR output:
-		/// </summary>
-		[JsonProperty("QRFormat")]
-		public int QRFormat { get; private set; }
-
-		/// <summary>
-		/// The type of QR being used
-		/// </summary>
-		[JsonProperty("QRType")]
-		public string QRType { get; private set; }
-
-		/// <summary>
 		/// Name of the Company/M-Pesa Merchant Name
 		/// </summary>
 		[JsonProperty("MerchantName")]
@@ -55,11 +37,8 @@ namespace MpesaSdk.Dtos
 		[JsonProperty("CPI")]
 		public string CPI { get; private set; }
 
-		public DynamicMpesaQR(string qrVersion, int qrFormat, string qrType, string merchantName, string refNo, int amount, string trxCode, string cpi)
+		public DynamicMpesaQR(string merchantName, string refNo, int amount, string trxCode, string cpi)
         {
-			QRVersion = qrVersion;
-			QRFormat = qrFormat;
-			QRType = qrType;
 			MerchantName = merchantName;
 			RefNo = refNo;
 			Amount = amount;
