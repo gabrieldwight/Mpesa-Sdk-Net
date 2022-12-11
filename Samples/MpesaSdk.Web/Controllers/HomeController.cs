@@ -85,10 +85,7 @@ namespace MpesaSdk.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DynamicQR(DynamicQRViewModel dynamicQR)
         {
-            DynamicMpesaQR dynamicMpesaQR = new DynamicMpesaQR(qrVersion: "01",
-                qrFormat: Convert.ToInt32(dynamicQR.SelectedQRFormat),
-                qrType: dynamicQR.SelectedQRType,
-                merchantName: dynamicQR.MerchantName,
+            DynamicMpesaQR dynamicMpesaQR = new DynamicMpesaQR(merchantName: dynamicQR.MerchantName,
                 refNo: dynamicQR.Reference,
                 amount: dynamicQR.Amount,
                 trxCode: dynamicQR.SelectedTransactionCode,
