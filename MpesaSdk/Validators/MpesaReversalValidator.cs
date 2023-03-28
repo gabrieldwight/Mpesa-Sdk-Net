@@ -59,7 +59,15 @@ namespace MpesaSdk.Validators
                 .WithMessage("{PropertyName} - The Mpesa transactionID is required.")
                 .NotEmpty()
                 .WithMessage("{PropertyName} - The Mpesa transactionID should not be empty.");
-        }
+
+            RuleFor(x => x.Amount)
+				.NotNull()
+				.WithMessage("{PropertyName} - Amount is required.")
+				.NotEmpty()
+				.WithMessage("{PropertyName} - Amount must not be empty")
+				.Must(x => int.TryParse(x, out int value))
+				.WithMessage("{PropertyName} - The amount should be in numeric value.");
+		}
 
         private static bool LinkMustBeAUri(string link)
         {

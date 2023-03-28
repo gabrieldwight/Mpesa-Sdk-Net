@@ -33,10 +33,18 @@ namespace MpesaSdk.Dtos
         [JsonProperty("TransactionID")]
         public string TransactionID { get; private set; }
 
-        /// <summary>
-        /// Organization receiving the transaction (Shortcode)
-        /// </summary>
-        [JsonProperty("ReceiverParty")]
+
+		/// <summary>
+		/// This is the Amount transacted, normally a numeric value. Money that customer pays to the Shorcode. 
+		/// Only whole numbers are supported.
+		/// </summary>
+		[JsonProperty("Amount")]
+		public string Amount { get; private set; }
+
+		/// <summary>
+		/// Organization receiving the transaction (Shortcode)
+		/// </summary>
+		[JsonProperty("ReceiverParty")]
         public string ReceiverParty { get; private set; }
 
         /// <summary>
@@ -79,6 +87,7 @@ namespace MpesaSdk.Dtos
         /// Use <c>Credentials.EncryptPassword</c> method available under MpesaLib.Helpers to encrypt the password.
         /// </param>
         /// <param name="transactionId">Unique identifier to identify a transaction on M-Pesa. e.g LKXXXX1234</param>
+        /// <param name="amount">The amount used to pay for the transaction.</param>
         /// <param name="receiverparty">Organization receiving the transaction (Shortcode)</param>
         /// <param name="receiverIdentifierType">
         /// Type of organization receiving the transaction.
@@ -88,12 +97,13 @@ namespace MpesaSdk.Dtos
         /// <param name="queueTimeoutUrl">The path that stores information of time out transaction.</param>
         /// <param name="resultUrl">The path that stores information of transaction </param>
         /// <param name="occasion"> Optional Parameter (upto 100 characters)</param>
-        public MpesaReversal(string initiator, string securityCredential, string transactionId, string receiverparty, string receiverIdentifierType, string remarks, string queueTimeoutUrl, string resultUrl, string occasion)
+        public MpesaReversal(string initiator, string securityCredential, string transactionId, string amount, string receiverparty, string receiverIdentifierType, string remarks, string queueTimeoutUrl, string resultUrl, string occasion)
         {
             Initiator = initiator;
             SecurityCredential = securityCredential;
             CommandID = Transaction_Type.TransactionReversal;
             TransactionID = transactionId;
+            Amount = amount;
             ReceiverParty = receiverparty;
             RecieverIdentifierType = receiverIdentifierType;
             Remarks = remarks;
