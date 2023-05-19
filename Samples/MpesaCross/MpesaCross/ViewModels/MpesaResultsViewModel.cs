@@ -104,7 +104,7 @@ namespace MpesaCross.ViewModels
                         checkoutRequestId: response.CheckoutRequestID
                     );
 
-                var stkQueryResults = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken(), MpesaRequestEndpoint.QueryLipaNaMpesaOnlineTransaction);
+                var stkQueryResults = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken());
 
                 if (stkQueryResults.ResultCode.Equals("0"))
                 {
@@ -150,7 +150,7 @@ namespace MpesaCross.ViewModels
         // To-Do refresh access token after every one hour
         private async Task<string> RetrieveAccessToken()
         {
-            return await _mpesaClient.GetAuthTokenAsync(mpesaAPIConfiguration.ConsumerKey, mpesaAPIConfiguration.ConsumerSecret, MpesaRequestEndpoint.AuthToken);
+            return await _mpesaClient.GetAuthTokenAsync(mpesaAPIConfiguration.ConsumerKey, mpesaAPIConfiguration.ConsumerSecret);
         }
         #endregion
     }

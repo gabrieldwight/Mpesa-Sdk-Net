@@ -116,7 +116,7 @@ namespace MpesaCross.ViewModels
                         passkey: mpesaAPIConfiguration.PassKey
                     );
 
-                var stkResults = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
+                var stkResults = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken());
                 stkResults.PhoneNumber = PhoneNumber;
 
                 var navigationParams = new NavigationParameters();
@@ -146,7 +146,7 @@ namespace MpesaCross.ViewModels
         // To-Do refresh access token after every one hour
         private async Task<string> RetrieveAccessToken()
         {
-            return await _mpesaClient.GetAuthTokenAsync(mpesaAPIConfiguration.ConsumerKey, mpesaAPIConfiguration.ConsumerSecret, MpesaRequestEndpoint.AuthToken);
+            return await _mpesaClient.GetAuthTokenAsync(mpesaAPIConfiguration.ConsumerKey, mpesaAPIConfiguration.ConsumerSecret);
         }
         #endregion
     }

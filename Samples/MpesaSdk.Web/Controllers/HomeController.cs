@@ -93,7 +93,7 @@ namespace MpesaSdk.Web.Controllers
 
             try
             {
-                DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, await RetrieveAccessToken(), MpesaRequestEndpoint.DynamicMpesaQR);
+                DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, await RetrieveAccessToken());
 
                 if (dynamicMpesaQRResponse.ResponseCode.Equals("00"))
                 {
@@ -150,10 +150,14 @@ namespace MpesaSdk.Web.Controllers
                     passkey: _mpesaApiConfiguration.PassKey
                 );
 
-                mpesaPaymentRequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.LipaNaMpesaOnline);
+                mpesaPaymentRequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(mpesaPayment, await RetrieveAccessToken());
             }
             catch (MpesaAPIException ex)
             {
+                if (ex.Message.Contains("Invalid Access Token"))
+                {
+					_memoryCache.Remove("MpesaAccessToken");
+				}
                 _logger.LogError(ex, ex.Message);
                 return View().WithDanger("Error", ex.Message);
             }
@@ -180,7 +184,7 @@ namespace MpesaSdk.Web.Controllers
                     checkoutRequestId: response.CheckoutRequestID
                 );
 
-                queryResult = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken(), MpesaRequestEndpoint.QueryLipaNaMpesaOnlineTransaction);
+                queryResult = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LipaNaMpesaOnlineQuery, await RetrieveAccessToken());
             }
             catch (MpesaAPIException ex)
             {
@@ -218,7 +222,7 @@ namespace MpesaSdk.Web.Controllers
             else
             {
                 _logger.LogInformation("Getting token from Mpesa Server...");
-                mpesaAccessToken = await _mpesaClient.GetAuthTokenAsync(_mpesaApiConfiguration.ConsumerKey, _mpesaApiConfiguration.ConsumerSecret, MpesaRequestEndpoint.AuthToken);
+                mpesaAccessToken = await _mpesaClient.GetAuthTokenAsync(_mpesaApiConfiguration.ConsumerKey, _mpesaApiConfiguration.ConsumerSecret);
 
                 // Set cache options
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(59));
@@ -251,7 +255,7 @@ namespace MpesaSdk.Web.Controllers
                         validationUrl: customerToBusinessRegisterViewModel.ValidationUrl
                     );
 
-                c2BRegisterResults = await _mpesaClient.RegisterC2BUrlAsync(c2BRegisterCallback, await RetrieveAccessToken(), MpesaRequestEndpoint.RegisterC2BUrl);
+                c2BRegisterResults = await _mpesaClient.RegisterC2BUrlAsync(c2BRegisterCallback, await RetrieveAccessToken());
             }
             catch (MpesaAPIException ex)
             {
@@ -284,7 +288,7 @@ namespace MpesaSdk.Web.Controllers
                     billReferenceNumber: customerToBusinessViewModel.PaymentReference
                 );
 
-                c2BResults = await _mpesaClient.MakeC2BPaymentAsync(c2BPayment, await RetrieveAccessToken(), MpesaRequestEndpoint.CustomerToBusinessSimulate);
+                c2BResults = await _mpesaClient.MakeC2BPaymentAsync(c2BPayment, await RetrieveAccessToken());
             }
             catch (MpesaAPIException ex)
             {
