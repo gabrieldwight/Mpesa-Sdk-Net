@@ -129,7 +129,7 @@ Mpesa APIs require authorization to use the APIs. The accesstoken (auth token) h
 
 ```c# 
 //Async Method
-var accesstoken = await _mpesaClient.GetAuthTokenAsync(ConsumerKey, ConsumerSecret, MpesaRequestEndPoint.AuthToken);
+var accesstoken = await _mpesaClient.GetAuthTokenAsync(ConsumerKey, ConsumerSecret);
 
 ```
 
@@ -146,7 +146,7 @@ var RegisterC2BUrlObject = new CustomerToBusinessRegisterUrl
   ValidationURL: "ValidationURL"
 );
 
-var c2bRegisterUrlrequest = await _mpesaClient.RegisterC2BUrlAsync(RegisterC2BUrlObject, accesstoken, MpesaRequestEndPoint.RegisterC2BUrl);
+var c2bRegisterUrlrequest = await _mpesaClient.RegisterC2BUrlAsync(RegisterC2BUrlObject, accesstoken);
 ```
 
 ## C2B Payment Request (For Sandbox Environment Only)
@@ -161,7 +161,7 @@ Var CustomerToBusinessSimulateObject = new CustomerToBusinessSimulate
   BillRefNumber: "BillRefNumber"
 );
 
-var c2brequest = await _mpesaClient.MakeC2BPaymentAsync(CustomerToBusinessSimulateObject, accesstoken, MpesaRequestEndPoint.CustomerToBusinessSimulate);
+var c2brequest = await _mpesaClient.MakeC2BPaymentAsync(CustomerToBusinessSimulateObject, accesstoken);
 ```
 
 ## LipaNaMpesaOnline/MpesaExpress (STK Push) Payment Request
@@ -184,7 +184,7 @@ var MpesaExpressObject = new LipaNaMpesaOnline
 );
 
 //Make payment request 
-var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject, accesstoken, MpesaRequestEndPoint.LipaNaMpesaOnline));
+var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject, accesstoken));
 
 ```
 
@@ -198,7 +198,7 @@ var QueryLipaNaMpesaTransactionObject = new LipaNaMpesaQuery
 	 timestamp: "Timestamp"
 );
 
-var stkpushquery = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(QueryLipaNaMpesaTransactionObject, accesstoken, MpesaRequestEndPoint.QueryLipaNaMpesaOnlieTransaction);
+var stkpushquery = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(QueryLipaNaMpesaTransactionObject, accesstoken);
 ```
 
 ## B2C Payment Request
@@ -218,7 +218,7 @@ var BusinessToCustomerObject = new BusinessToCustomer
     Occasion: "Occasion"
 );
 
-var b2crequest = await _mpesaClient.MakeB2CPaymentAsync(BusinessToCustomerObject, accesstoken, MpesaRequestEndPoint.BusinessToCustomer);
+var b2crequest = await _mpesaClient.MakeB2CPaymentAsync(BusinessToCustomerObject, accesstoken);
 
 ```
 
@@ -241,7 +241,7 @@ var BusinessToBusinessObject = new BusinessToBusinessDto
   ResultURL: "ResultURL" // URL to send the B2B callback results
 );
 
-var b2brequest = await _mpesaClient.MakeB2BPaymentAsync(BusinessToBusinessObject, accesstoken, MpesaRequestEndPoint.BusinessToBusiness);
+var b2brequest = await _mpesaClient.MakeB2BPaymentAsync(BusinessToBusinessObject, accesstoken);
 
 ```
 
@@ -261,7 +261,7 @@ var TransactionStatusObject = new MpesaTransactionStatus
   Occassion: "Occasion"
 );
 
-var transactionrequest = await _mpesaClient.QueryMpesaTransactionStatusAsync(TransactionStatusObject, accesstoken, MpesaRequestEndPoint.QueryMpesaTransactionStatus);
+var transactionrequest = await _mpesaClient.QueryMpesaTransactionStatusAsync(TransactionStatusObject, accesstoken);
 ```
 ## Pull Transaction Register Url Request
 ```C#
@@ -273,7 +273,7 @@ var pullTransactionRegisterObject = new PullTransactionRegisterUrl
   CallBackURL: "CallBackUrl"
 );
 
-var pullTransactionRegisterRequest = await _mpesaClient.RegisterPullTransactionAsync(pullTransactionRegisterObject, accesstoken, MpesaRequestEndpoint.PullMpesaTransactionRegisterUrl);
+var pullTransactionRegisterRequest = await _mpesaClient.RegisterPullTransactionAsync(pullTransactionRegisterObject, accesstoken);
 ```
 
 ## Pull Transaction Query Request
@@ -286,7 +286,7 @@ var pullTransactionQueryObject = new PullTransactionQuery
   OffSetValue: "OffSetValue"
 );
 
-var pullTransactionRequest = await _mpesaClient.QueryPullTransactionAsync(pullTransactionQueryObject, accesstoken, MpesaRequestEndpoint.PullMpesaTransaction);
+var pullTransactionRequest = await _mpesaClient.QueryPullTransactionAsync(pullTransactionQueryObject, accesstoken);
 ```
 
 ## Account Balance Query Request
@@ -303,7 +303,7 @@ var AccountBalanceObject = new AccountBalance
   ResultURL: "ResultURL", // URL to send the AccountBalance callback results
 );
 
-var accountbalancerequest = await _mpesaClient.QueryAccountBalanceAsync(AccountBalanceObject, accesstoken, MpesaRequestEndPoint.QueryAccountBalance); //async method
+var accountbalancerequest = await _mpesaClient.QueryAccountBalanceAsync(AccountBalanceObject, accesstoken); //async method
 
 ```
 
@@ -323,7 +323,7 @@ var TransactionReversalObject = new Reversal
   Occasion: "Occasion"
 );
 
-var reversalrequest = await _mpesaClient.ReverseMpesaTransactionAsync(TransactionReversalObject, accesstoken, MpesaRequestEndPoint.ReverseMpesaTransaction);
+var reversalrequest = await _mpesaClient.ReverseMpesaTransactionAsync(TransactionReversalObject, accesstoken);
 
 ```
 
@@ -359,7 +359,7 @@ DynamicMpesaQR dynamicMpesaQR = new DynamicMpesaQR(qrVersion: "01",
                 trxCode: "PB", // BG, WA, PB, SM or SB
                 cpi: dynamicQR.CPI);
 		
-DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, accessToken, MpesaRequestEndpoint.DynamicMpesaQR);
+DynamicMpesaQRResponse dynamicMpesaQRResponse = await _mpesaClient.GenerateDynamicMpesaQRAsync(dynamicMpesaQR, accessToken);
 ```
 
 ## Error handling
@@ -372,7 +372,7 @@ using MpesaSdk.Exceptions; // add this to you class or namespace
 
 try
 {	
-	return await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaPayment, accesstoken, MpesaRequestEndPoint.LipaNaMpesaOnline);
+	return await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaPayment, accesstoken);
 }
 catch (MpesaApiException e)
 {
