@@ -94,5 +94,10 @@
         /// AgencyFloatAdvance Command ID
         /// </summary>
         public const string AgencyFloatAdvance = "AgencyFloatAdvance";
+
+        /// <summary>
+        /// PayTaxToKRA Command ID
+        /// </summary>
+        public const string PayTaxToKRA = "PayTaxToKRA";
     }
 }

@@ -483,14 +483,34 @@ namespace MpesaSdk
 				: await MpesaPostRequestAsync<PullTransactionRegisterResponse>(pullTransactionRegisterUrl, accesstoken, MpesaRequestEndpoint.PullMpesaTransactionRegisterUrl, cancellationToken);
 		}
 
-		/// <summary>
-		/// Reverses a B2B, B2C or C2B M-Pesa transaction.
-		/// </summary>
-		/// <param name="mpesaReversal">Reversal data transfer object.</param>
-		/// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
-		/// <param name="cancellationToken">Cancellation Token</param>
-		/// <returns>A JSON string containing data from MPESA API reposnse.</returns>
-		public MpesaResponse ReverseMpesaTransaction(MpesaReversal mpesaReversal, string accesstoken, CancellationToken cancellationToken = default)
+        public MpesaResponse RemitTax(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default)
+        {
+            var validator = new TaxRemittanceValidator();
+            var results = validator.Validate(taxRemittanceRequest);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : MpesaPostRequestAsync<MpesaResponse>(taxRemittanceRequest, accesstoken, MpesaRequestEndpoint.TaxRemittance, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        public async Task<MpesaResponse> RemitTaxAsync(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default)
+        {
+			var validator = new TaxRemittanceValidator();
+			var results = validator.Validate(taxRemittanceRequest);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : await MpesaPostRequestAsync<MpesaResponse>(taxRemittanceRequest, accesstoken, MpesaRequestEndpoint.TaxRemittance, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reverses a B2B, B2C or C2B M-Pesa transaction.
+        /// </summary>
+        /// <param name="mpesaReversal">Reversal data transfer object.</param>
+        /// <param name="accesstoken">Acccesstoken retrieved by the <c>GetAuthTokenAsync</c> method.</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns>A JSON string containing data from MPESA API reposnse.</returns>
+        public MpesaResponse ReverseMpesaTransaction(MpesaReversal mpesaReversal, string accesstoken, CancellationToken cancellationToken = default)
 		{
 			var validator = new MpesaReversalValidator();
 			var results = validator.Validate(mpesaReversal);

@@ -81,5 +81,10 @@ namespace MpesaSdk
         /// Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have smartphones and use LIPA NA M-PESA as their preferred mode of payment, to scan a QR (Quick Response) code, to capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.
         /// </summary>
         public static string DynamicMpesaQR { get; set; } = "mpesa/qrcode/v1/generate";
+
+        /// <summary>
+        /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
+        /// </summary>
+        public static string TaxRemittance { get; set; } = "mpesa/b2b/v1/remittax";
     }
 }

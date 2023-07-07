@@ -297,5 +297,23 @@ namespace MpesaSdk.Interfaces
 		/// <param name="cancellationToken">The cancellation token to cancel operation.</param>
 		/// <returns>A JSON string containing data from MPESA API reposnse.</returns>
 		DynamicMpesaQRResponse GenerateDynamicMpesaQR(DynamicMpesaQR dynamicMpesaQR, string accesstoken, CancellationToken cancellationToken = default);
-	}
+
+        /// <summary>
+        /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
+        /// </summary>
+        /// <param name="taxRemittanceRequest"></param>
+        /// <param name="accesstoken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<MpesaResponse> RemitTaxAsync(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
+        /// </summary>
+        /// <param name="taxRemittanceRequest"></param>
+        /// <param name="accesstoken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        MpesaResponse RemitTax(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default);
+    }
 }
