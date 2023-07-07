@@ -14,9 +14,9 @@
     <PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
     <PackageReference Include="Prism.DryIoc.Extensions" Version="8.0.62" />
     <PackageReference Include="Prism.Forms.Extended" Version="8.0.62" />
-    <PackageReference Include="ReactiveUI.XamForms" Version="18.4.44" />
+    <PackageReference Include="ReactiveUI.XamForms" Version="19.2.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.7" />
   </ItemGroup>
 
   <ItemGroup>
