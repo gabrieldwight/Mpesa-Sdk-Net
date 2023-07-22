@@ -86,5 +86,30 @@ namespace MpesaSdk
         /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
         /// </summary>
         public static string TaxRemittance { get; set; } = "mpesa/b2b/v1/remittax";
-    }
+
+		/// <summary>
+		/// This is the first API used to opt you as a biller to our bill manager features. Once you integrate to this API and send a request with a success response, your shortcode is whitelisted and you are able to integrate with all the other remaining bill manager APIs.
+		/// </summary>
+		public static string BusinessManagerOnboarding { get; set; } = "v1/billmanager-invoice/optin";
+
+        /// <summary>
+        /// Bill Manager invoicing service enables you to create and send e-invoices to your customers. Single invoicing functionality will allow you to send out customized individual e-invoices. Your customers will receive this notification(s) via an SMS to the Safaricom phone number specified while creating the invoice.
+        /// </summary>
+        public static string BusinessManagerSingleInvoicing { get; set; } = "v1/billmanager-invoice/single-invoicing";
+
+		/// <summary>
+		/// Bill Manager invoicing service enables you to create and send e-invoices to your customers. Bulk invoicing allows you to send multiple invoices. Your customers will receive this notification(s) via an SMS to the Safaricom phone number specified while creating the invoice.
+		/// </summary>
+		public static string BusinessManagerBulkInvoicing { get; set; } = "v1/billmanager-invoice/bulk-invoicing";
+
+		/// <summary>
+		/// The bill manager payment feature enables your customers to receive e-receipts for payments made to your paybill account.
+		/// </summary>
+		public static string BusinessManagerPaymentAndReconcilliation { get; set; } = "v1/billmanager-invoice/reconciliation";
+
+		/// <summary>
+		/// Update invoice API allows you to alter invoice items by using the external reference previously used to create the invoice you want to update. Any other update on the invoice can be done by using the Cancel Invoice API which will recall the invoice, then a new invoice can be created.
+		/// </summary>
+		public static string BusinessManagerSingleInvoicingUpdate { get; set; } = "/v1/billmanager-invoice/update/single-invoicing";
+	}
 }

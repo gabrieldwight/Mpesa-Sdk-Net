@@ -125,5 +125,10 @@ namespace MpesaSdk.Dtos
             QueueTimeOutURL = queueTimeoutUrl;
             ResultURL = resultUrl;
         }
+
+        protected BusinessToBusiness()
+        {
+
+        }
     }
 }

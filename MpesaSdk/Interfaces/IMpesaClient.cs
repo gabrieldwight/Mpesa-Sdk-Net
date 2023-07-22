@@ -1,5 +1,6 @@
 ﻿using MpesaSdk.Dtos;
 using MpesaSdk.Response;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -298,22 +299,148 @@ namespace MpesaSdk.Interfaces
 		/// <returns>A JSON string containing data from MPESA API reposnse.</returns>
 		DynamicMpesaQRResponse GenerateDynamicMpesaQR(DynamicMpesaQR dynamicMpesaQR, string accesstoken, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
-        /// </summary>
-        /// <param name="taxRemittanceRequest"></param>
-        /// <param name="accesstoken"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<MpesaResponse> RemitTaxAsync(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default);
+		/// <summary>
+		/// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
+		/// </summary>
+		/// <param name="taxRemittanceRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<MpesaResponse> RemitTaxAsync(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
-        /// </summary>
-        /// <param name="taxRemittanceRequest"></param>
-        /// <param name="accesstoken"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        MpesaResponse RemitTax(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default);
-    }
+		/// <summary>
+		/// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
+		/// </summary>
+		/// <param name="taxRemittanceRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		MpesaResponse RemitTax(TaxRemittanceRequest taxRemittanceRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This API enables you to pay bills directly from your business account to a pay bill number, or a paybill store. You can use this API to pay on behalf of a consumer/requester. The transaction moves money from your MMF/Working account to the recipient’s utility account.
+		/// </summary>
+		/// <param name="businessPayBillRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<MpesaResponse> BusinessPayBillAsync(BusinessPayBillRequest businessPayBillRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This API enables you to pay bills directly from your business account to a pay bill number, or a paybill store. You can use this API to pay on behalf of a consumer/requester. The transaction moves money from your MMF/Working account to the recipient’s utility account.
+		/// </summary>
+		/// <param name="businessPayBillRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		MpesaResponse BusinessPayBill(BusinessPayBillRequest businessPayBillRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This API enables you to pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO. You can also use this API to pay a merchant on behalf of a consumer/requestor. The transaction moves money from your MMF/Working account to the recipient’s merchant account.
+		/// </summary>
+		/// <param name="businessBuyGoodsRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<MpesaResponse> BusinessBuyGoodsAsync(BusinessBuyGoodsRequest businessBuyGoodsRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This API enables you to pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO. You can also use this API to pay a merchant on behalf of a consumer/requestor. The transaction moves money from your MMF/Working account to the recipient’s merchant account.
+		/// </summary>
+		/// <param name="businessBuyGoodsRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		MpesaResponse BusinessBuyGoods(BusinessBuyGoodsRequest businessBuyGoodsRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This is the first API used to opt you as a biller to our bill manager features. Once you integrate to this API and send a request with a success response, your shortcode is whitelisted and you are able to integrate with all the other remaining bill manager APIs.
+		/// </summary>
+		/// <param name="billManagerOnboardingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<BillManagerResponse> BillManagerOnboardingAsync(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This is the first API used to opt you as a biller to our bill manager features. Once you integrate to this API and send a request with a success response, your shortcode is whitelisted and you are able to integrate with all the other remaining bill manager APIs.
+		/// </summary>
+		/// <param name="billManagerOnboardingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		BillManagerResponse BillManagerOnboarding(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Bill Manager invoicing service enables you to create and send e-invoices to your customers. Single invoicing functionality will allow you to send out customized individual e-invoices. Your customers will receive this notification(s) via an SMS to the Safaricom phone number specified while creating the invoice.
+		/// </summary>
+		/// <param name="billManagerInvoicingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<BillManagerResponse> BillManagerSingleInvoiceAsync(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Bill Manager invoicing service enables you to create and send e-invoices to your customers. Single invoicing functionality will allow you to send out customized individual e-invoices. Your customers will receive this notification(s) via an SMS to the Safaricom phone number specified while creating the invoice.
+		/// </summary>
+		/// <param name="billManagerInvoicingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		BillManagerResponse BillManagerSingleInvoice(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Bill Manager invoicing service enables you to create and send e-invoices to your customers. Bulk invoicing allows you to send multiple invoices. Your customers will receive this notification(s) via an SMS to the Safaricom phone number specified while creating the invoice.
+		/// </summary>
+		/// <param name="billManagerInvoicingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<BillManagerResponse> BillManagerBulkInvoiceAsync(List<BillManagerInvoicingRequest> billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Bill Manager invoicing service enables you to create and send e-invoices to your customers. Bulk invoicing allows you to send multiple invoices. Your customers will receive this notification(s) via an SMS to the Safaricom phone number specified while creating the invoice.
+		/// </summary>
+		/// <param name="billManagerInvoicingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		BillManagerResponse BillManagerBulkInvoice(List<BillManagerInvoicingRequest> billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// The bill manager payment feature enables your customers to receive e-receipts for payments made to your paybill account.
+		/// </summary>
+		/// <param name="billManagerPaymentReconcilliationRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<BillManagerResponse> BillManagerPaymentReconcilliationAsync(BillManagerPaymentReconcilliationRequest billManagerPaymentReconcilliationRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// The bill manager payment feature enables your customers to receive e-receipts for payments made to your paybill account.
+		/// </summary>
+		/// <param name="billManagerPaymentReconcilliationRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		BillManagerResponse BillManagerPaymentReconcilliation(BillManagerPaymentReconcilliationRequest billManagerPaymentReconcilliationRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Update invoice API allows you to alter invoice items by using the external reference previously used to create the invoice you want to update. Any other update on the invoice can be done by using the Cancel Invoice API which will recall the invoice, then a new invoice can be created.
+		/// </summary>
+		/// <param name="billManagerInvoicingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<BillManagerResponse> BillManagerUpdateInvoiceAsync(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Update invoice API allows you to alter invoice items by using the external reference previously used to create the invoice you want to update. Any other update on the invoice can be done by using the Cancel Invoice API which will recall the invoice, then a new invoice can be created.
+		/// </summary>
+		/// <param name="billManagerInvoicingRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		BillManagerResponse BillManagerUpdateInvoice(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+	}
 }

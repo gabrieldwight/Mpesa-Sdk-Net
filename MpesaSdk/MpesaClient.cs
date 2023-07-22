@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using MpesaSdk.Dtos;
 using MpesaSdk.Exceptions;
 using MpesaSdk.Interfaces;
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 using Polly;
 using Polly.Extensions.Http;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -86,6 +88,168 @@ namespace MpesaSdk
 		public MpesaClient(HttpClient client)
 		{
 			_client = client;
+		}
+
+		public async Task<BillManagerResponse> BillManagerOnboardingAsync(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerOnboardingValidator();
+			var results = await validator.ValidateAsync(billManagerOnboardingRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<BillManagerResponse>(billManagerOnboardingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerOnboarding, cancellationToken);
+		}
+
+		public BillManagerResponse BillManagerOnboarding(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerOnboardingValidator();
+			var results = validator.Validate(billManagerOnboardingRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<BillManagerResponse>(billManagerOnboardingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerOnboarding, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BillManagerResponse> BillManagerSingleInvoiceAsync(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerInvoicingValidator();
+			var results = await validator.ValidateAsync(billManagerInvoicingRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<BillManagerResponse>(billManagerInvoicingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerSingleInvoicing, cancellationToken);
+		}
+
+		public BillManagerResponse BillManagerSingleInvoice(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerInvoicingValidator();
+			var results = validator.Validate(billManagerInvoicingRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<BillManagerResponse>(billManagerInvoicingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerSingleInvoicing, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BillManagerResponse> BillManagerBulkInvoiceAsync(List<BillManagerInvoicingRequest> billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			int validationErrorCount = 0;
+			string validationErrorMessage = string.Empty;
+			foreach (BillManagerInvoicingRequest invoicingRequest in billManagerInvoicingRequest)
+			{
+				var validator = new BillManagerInvoicingValidator();
+				var results = validator.Validate(invoicingRequest);
+
+				if (!results.IsValid)
+				{
+					validationErrorCount++;
+					validationErrorMessage += string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString()));
+				}
+			}
+
+			return (validationErrorCount > 0)
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, validationErrorMessage)
+				: await MpesaPostRequestAsync<BillManagerResponse>(billManagerInvoicingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerBulkInvoicing, cancellationToken);
+		}
+
+		public BillManagerResponse BillManagerBulkInvoice(List<BillManagerInvoicingRequest> billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			int validationErrorCount = 0;
+			string validationErrorMessage = string.Empty;
+			foreach (BillManagerInvoicingRequest invoicingRequest in billManagerInvoicingRequest)
+			{
+				var validator = new BillManagerInvoicingValidator();
+				var results = validator.Validate(invoicingRequest);
+
+				if (!results.IsValid)
+				{
+					validationErrorCount++;
+					validationErrorMessage += string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString()));
+				}
+			}
+
+			return (validationErrorCount > 0)
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, validationErrorMessage)
+				: MpesaPostRequestAsync<BillManagerResponse>(billManagerInvoicingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerBulkInvoicing, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BillManagerResponse> BillManagerPaymentReconcilliationAsync(BillManagerPaymentReconcilliationRequest billManagerPaymentReconcilliationRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerPaymentReconcilliationValidator();
+			var results = await validator.ValidateAsync(billManagerPaymentReconcilliationRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<BillManagerResponse>(billManagerPaymentReconcilliationRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerPaymentAndReconcilliation, cancellationToken);
+		}
+
+		public BillManagerResponse BillManagerPaymentReconcilliation(BillManagerPaymentReconcilliationRequest billManagerPaymentReconcilliationRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerPaymentReconcilliationValidator();
+			var results = validator.Validate(billManagerPaymentReconcilliationRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<BillManagerResponse>(billManagerPaymentReconcilliationRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerPaymentAndReconcilliation, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BillManagerResponse> BillManagerUpdateInvoiceAsync(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerInvoicingValidator();
+			var results = await validator.ValidateAsync(billManagerInvoicingRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<BillManagerResponse>(billManagerInvoicingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerSingleInvoicingUpdate, cancellationToken);
+		}
+
+		public BillManagerResponse BillManagerUpdateInvoice(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BillManagerInvoicingValidator();
+			var results = validator.Validate(billManagerInvoicingRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<BillManagerResponse>(billManagerInvoicingRequest, accesstoken, MpesaRequestEndpoint.BusinessManagerSingleInvoicingUpdate, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public MpesaResponse BusinessPayBill(BusinessPayBillRequest businessPayBillRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BusinessPayBillValidator();
+			var results = validator.Validate(businessPayBillRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<MpesaResponse>(businessPayBillRequest, accesstoken, MpesaRequestEndpoint.BusinessToBusiness, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<MpesaResponse> BusinessPayBillAsync(BusinessPayBillRequest businessPayBillRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BusinessPayBillValidator();
+			var results = await validator.ValidateAsync(businessPayBillRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<MpesaResponse>(businessPayBillRequest, accesstoken, MpesaRequestEndpoint.BusinessToBusiness, cancellationToken);
+		}
+
+		public MpesaResponse BusinessBuyGoods(BusinessBuyGoodsRequest businessBuyGoodsRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BusinessBuyGoodsValidator();
+			var results = validator.Validate(businessBuyGoodsRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<MpesaResponse>(businessBuyGoodsRequest, accesstoken, MpesaRequestEndpoint.BusinessToBusiness, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<MpesaResponse> BusinessBuyGoodsAsync(BusinessBuyGoodsRequest businessBuyGoodsRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BusinessBuyGoodsValidator();
+			var results = await validator.ValidateAsync(businessBuyGoodsRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<MpesaResponse>(businessBuyGoodsRequest, accesstoken, MpesaRequestEndpoint.BusinessToBusiness, cancellationToken);
 		}
 
 		public DynamicMpesaQRResponse GenerateDynamicMpesaQR(DynamicMpesaQR dynamicMpesaQR, string accesstoken, CancellationToken cancellationToken = default)
