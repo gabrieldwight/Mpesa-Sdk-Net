@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace MpesaSdk.Callbacks
 {
-    public class TaxRemittanceCallbackMetadata
+    public class BaseReferenceCallbackMetadata
     {
-        [JsonProperty("ResultParameter")]
-        public List<TaxRemittanceCallbackMetadataItem> ResultParameter { get; set; }
+        [JsonProperty("ReferenceItem")]
+        public List<BaseReferenceCallbackMetadataItem> ReferenceItem { get; set; }
     }
 
-    public class TaxRemittanceCallbackMetadataItem
+    public class BaseReferenceCallbackMetadataItem
     {
         [JsonProperty("Name")]
         public string Key { get; set; }
