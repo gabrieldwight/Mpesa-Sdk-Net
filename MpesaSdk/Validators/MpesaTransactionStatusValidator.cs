@@ -51,12 +51,6 @@ namespace MpesaSdk.Validators
                 .WithMessage("{PropertyName} - The result url is required.")
                 .Must(x => LinkMustBeAUri(x))
                 .WithMessage("{PropertyName} - The result url should be a valid secure url.");
-
-            RuleFor(x => x.TransactionID)
-                .NotNull()
-                .WithMessage("{PropertyName} - The Mpesa transactionID is required.")
-                .NotEmpty()
-                .WithMessage("{PropertyName} - The Mpesa transactionID should not be empty.");
         }
 
         private static bool LinkMustBeAUri(string link)
