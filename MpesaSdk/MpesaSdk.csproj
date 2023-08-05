@@ -14,7 +14,7 @@
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <Version>1.0.20</Version>
+    <Version>1.0.21</Version>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'netstandard2.0'">

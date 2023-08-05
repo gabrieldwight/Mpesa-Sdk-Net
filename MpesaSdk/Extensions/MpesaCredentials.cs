@@ -44,6 +44,27 @@ namespace MpesaSdk.Extensions
         }
 
         /// <summary>
+        /// Encrypts Mpesa API Security Credential password
+        /// </summary>
+        /// <param name="certificateDetails"></param>
+        /// <param name="password"></param>
+        /// <returns>
+        /// Encrypted Password
+        /// </returns>
+        public static string EncryptPasswordWithoutCertFile(string certificateDetails, string password)
+        {
+            var certificateDataResult = Encoding.UTF8.GetBytes(certificateDetails);
+
+            X509Certificate2 x509Certificate2 = new X509Certificate2(certificateDataResult);
+
+            using RSA rsa = x509Certificate2.GetRSAPublicKey();
+
+            var data = rsa.Encrypt(Encoding.UTF8.GetBytes(password), RSAEncryptionPadding.Pkcs1);
+
+            return Convert.ToBase64String(data);
+        }
+
+        /// <summary>
         /// Reads and returns certificate data in bytes
         /// </summary>
         /// <param name="certificateFileName">The file name of the certifcate: test.cer or prod.cer</param>
