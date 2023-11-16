@@ -17,13 +17,11 @@ namespace MpesaMaui.ViewModels
 		private readonly IMpesaClient _mpesaClient;
 
 		[ObservableProperty]
-		[NotifyCanExecuteChangedFor(nameof(MpesaStkQueryCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SendMpesaStkQueryCommand))]
 		public LipaNaMpesaOnlinePushStkResponse _pushStKResponse;
 
 		[ObservableProperty]
 		private string _mpesaResultStatus;
-
-		public IAsyncRelayCommand MpesaStkQueryCommand { get; }
 
 		protected IUserDialogs _dialogs { get; }
 
@@ -44,10 +42,6 @@ namespace MpesaMaui.ViewModels
 			{
 				MpesaResultStatus = $"Something went wrong while processing request, please try again{Environment.NewLine}Customer Phone Number: {PushStKResponse.PhoneNumber}{Environment.NewLine}Response Description: {PushStKResponse.ResponseDescription}{Environment.NewLine}Customer Message: {PushStKResponse.CustomerMessage}";
 			}
-
-			MpesaStkQueryCommand = new AsyncRelayCommand(x => SendMpesaStkQueryAsync(PushStKResponse));
-
-			this.BindBusy(MpesaStkQueryCommand);
 		}
 
 		private bool CanSendQuery()

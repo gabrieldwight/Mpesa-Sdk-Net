@@ -16,22 +16,20 @@ namespace MpesaMaui.ViewModels
 		private readonly IMpesaClient _mpesaClient;
 
 		[ObservableProperty]
-		[NotifyCanExecuteChangedFor(nameof(MpesaStkCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SendMpesaStkCommand))]
 		private string _amount;
 
 		[ObservableProperty]
-		[NotifyCanExecuteChangedFor(nameof(MpesaStkCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SendMpesaStkCommand))]
 		private string _accountReference;
 
 		[ObservableProperty]
-		[NotifyCanExecuteChangedFor(nameof(MpesaStkCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SendMpesaStkCommand))]
 		private string _transactionDescription;
 
 		[ObservableProperty]
-		[NotifyCanExecuteChangedFor(nameof(MpesaStkCommand))]
+		[NotifyCanExecuteChangedFor(nameof(SendMpesaStkCommand))]
 		private string _phoneNumber;
-
-		public IAsyncRelayCommand MpesaStkCommand { get; }
 
 		protected IUserDialogs _dialogs { get; }
 
@@ -44,10 +42,6 @@ namespace MpesaMaui.ViewModels
 			Title = "Mpesa Push Stk Payment";
 			_mpesaClient = mpesaClient;
 			_dialogs = dialogs;
-
-			MpesaStkCommand = new AsyncRelayCommand(SendMpesaStkAsync);
-
-			this.BindBusy(MpesaStkCommand);
 		}
 
 		private bool CanSendPrompt()

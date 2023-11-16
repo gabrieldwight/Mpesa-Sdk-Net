@@ -37,11 +37,6 @@ namespace MpesaMaui.ViewModels
 			Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
 		}
 
-		protected void BindBusy(IAsyncRelayCommand asyncRelayCommand)
-		{
-			IsBusy = asyncRelayCommand.IsRunning;
-		}
-
 		void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
 		{
 			ToastConfig toastConfig = new ToastConfig();

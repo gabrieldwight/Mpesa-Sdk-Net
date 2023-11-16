@@ -73,7 +73,7 @@
                    Margin="8,4,8,0" />
             <Button Text="Initiate Mpesa Payment"
                     TextTransform="None"
-                    Command="{Binding MpesaStkCommand}"
+                    Command="{Binding SendMpesaStkCommand}"
                     TextColor="White"
                     FontSize="13"
                     FontAttributes="Bold"
@@ -100,7 +100,10 @@
                 </VisualStateManager.VisualStateGroups>
             </Button>
             <ActivityIndicator Color="Blue"
-                               IsRunning="{Binding IsBusy}" />
+                               Margin="0,8"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               IsRunning="{Binding SendMpesaStkCommand.IsRunning}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
