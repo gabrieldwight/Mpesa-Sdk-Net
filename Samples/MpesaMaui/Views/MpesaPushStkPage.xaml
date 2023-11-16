@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MpesaMaui.Views.MpesaPushStkPage"
+             xmlns:viewmodels="clr-namespace:MpesaMaui.ViewModels"
+             x:DataType="viewmodels:MpesaPushStkViewModel"
+             Title="{Binding Title}">
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
+            <Label Text="Create a M-Pesa Push STK Payment"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   LineHeight="1.4"
+                   Margin="8,16,8,16" />
+            <Label Text="Amount"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   LineHeight="1.4"
+                   Margin="8,0,8,0" />
+            <Entry Text="{Binding Amount}"
+                   Placeholder="Enter Amount"
+                   BackgroundColor="Transparent"
+                   Keyboard="Numeric"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   Margin="8,4,8,0" />
+            <Label Text="Account Reference"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   LineHeight="1.4"
+                   Margin="8,0,8,0" />
+            <Entry Text="{Binding AccountReference}"
+                   Placeholder="Enter Account Reference"
+                   BackgroundColor="Transparent"
+                   Keyboard="Text"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   Margin="8,4,8,0" />
+            <Label Text="Transaction Description"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   LineHeight="1.4"
+                   Margin="8,0,8,0" />
+            <Entry Text="{Binding TransactionDescription}"
+                   Placeholder="Enter Transaction Description"
+                   BackgroundColor="Transparent"
+                   Keyboard="Text"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   Margin="8,4,8,0" />
+            <Label Text="Phone Number (Use format: 2547XXXXXXXX)"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   LineHeight="1.4"
+                   Margin="8,0,8,0" />
+            <Entry Text="{Binding PhoneNumber}"
+                   Placeholder="Enter Phone Number: 2547XXXXXXXX"
+                   BackgroundColor="Transparent"
+                   Keyboard="Telephone"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   Margin="8,4,8,0" />
+            <Button Text="Initiate Mpesa Payment"
+                    TextTransform="None"
+                    Command="{Binding MpesaStkCommand}"
+                    TextColor="White"
+                    FontSize="13"
+                    FontAttributes="Bold"
+                    CornerRadius="30"
+                    Margin="8,8,8,0"
+                    Padding="20,19">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="#097985" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="#E6E6E6" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+            <ActivityIndicator Color="Blue"
+                               IsRunning="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

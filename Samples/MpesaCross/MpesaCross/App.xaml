@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<dryioc:PrismApplication xmlns:dryioc="http://prismlibrary.com" 
-                         xmlns="http://xamarin.com/schemas/2014/forms"
-                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                         x:Class="MpesaCross.App">
-    <Application.Resources>
-
-    </Application.Resources>
-</dryioc:PrismApplication>
