@@ -442,5 +442,23 @@ namespace MpesaSdk.Interfaces
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
 		BillManagerResponse BillManagerUpdateInvoice(BillManagerInvoicingRequest billManagerInvoicingRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// B2B(UssdPush to Till) is a product for enabling merchants to initiate USSD Push to Till enabling their fellow merchants to pay from their owned till numbers to the vendor's paybill.
+        /// </summary>
+        /// <param name="b2BExpressCheckoutRequest"></param>
+        /// <param name="accesstoken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<B2BExpressCheckoutResponse> B2BExpressCheckoutAsync(B2BExpressCheckoutRequest b2BExpressCheckoutRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// B2B(UssdPush to Till) is a product for enabling merchants to initiate USSD Push to Till enabling their fellow merchants to pay from their owned till numbers to the vendor's paybill.
+        /// </summary>
+        /// <param name="b2BExpressCheckoutRequest"></param>
+        /// <param name="accesstoken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        B2BExpressCheckoutResponse B2BExpressCheckout(B2BExpressCheckoutRequest b2BExpressCheckoutRequest, string accesstoken, CancellationToken cancellationToken = default);
 	}
 }

@@ -110,6 +110,8 @@ namespace MpesaSdk
 		/// <summary>
 		/// Update invoice API allows you to alter invoice items by using the external reference previously used to create the invoice you want to update. Any other update on the invoice can be done by using the Cancel Invoice API which will recall the invoice, then a new invoice can be created.
 		/// </summary>
-		public static string BusinessManagerSingleInvoicingUpdate { get; set; } = "/v1/billmanager-invoice/update/single-invoicing";
+		public static string BusinessManagerSingleInvoicingUpdate { get; set; } = "v1/billmanager-invoice/update/single-invoicing";
+
+        public static string B2BExpressCheckout { get; set; } = "v1/ussdpush/get-msisdn";
 	}
 }

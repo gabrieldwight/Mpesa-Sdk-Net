@@ -90,7 +90,28 @@ namespace MpesaSdk
 			_client = client;
 		}
 
-		public async Task<BillManagerResponse> BillManagerOnboardingAsync(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default)
+		public async Task<B2BExpressCheckoutResponse> B2BExpressCheckoutAsync(B2BExpressCheckoutRequest b2BExpressCheckoutRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new B2BExpressCheckoutValidator();
+			var results = await validator.ValidateAsync(b2BExpressCheckoutRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<B2BExpressCheckoutResponse>(b2BExpressCheckoutRequest, accesstoken, MpesaRequestEndpoint.B2BExpressCheckout, cancellationToken);
+		}
+
+        public B2BExpressCheckoutResponse B2BExpressCheckout(B2BExpressCheckoutRequest b2BExpressCheckoutRequest, string accesstoken, CancellationToken cancellationToken = default)
+        {
+            var validator = new B2BExpressCheckoutValidator();
+            var results = validator.Validate(b2BExpressCheckoutRequest);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : MpesaPostRequestAsync<B2BExpressCheckoutResponse>(b2BExpressCheckoutRequest, accesstoken, MpesaRequestEndpoint.B2BExpressCheckout, cancellationToken).GetAwaiter().GetResult();
+        }
+
+
+        public async Task<BillManagerResponse> BillManagerOnboardingAsync(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default)
 		{
 			var validator = new BillManagerOnboardingValidator();
 			var results = await validator.ValidateAsync(billManagerOnboardingRequest, cancellationToken);
