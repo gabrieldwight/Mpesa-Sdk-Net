@@ -30,9 +30,9 @@ namespace MpesaSdk.Callbacks
         public string TransactionId { get; set; }
 
         [JsonProperty("ResultParameters")]
-        public BaseResultCallbackMetadata TaxRemittanceCallbackMetadata { get; set; }
+        public BaseResultCallbackMetadata ResultCallbackMetadata { get; set; }
 
         [JsonProperty("ReferenceData")]
-        public BaseReferenceCallbackMetadata TaxReferenceCallbackMetadata { get; set; }
+        public BaseReferenceCallbackMetadata ReferenceCallbackMetadata { get; set; }
     }
 }

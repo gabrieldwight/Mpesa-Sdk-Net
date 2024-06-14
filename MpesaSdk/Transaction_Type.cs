@@ -99,5 +99,10 @@
         /// PayTaxToKRA Command ID
         /// </summary>
         public const string PayTaxToKRA = "PayTaxToKRA";
+
+        /// <summary>
+        /// BusinessPayToBulk Command ID
+        /// </summary>
+        public const string BusinessPayToBulk = "BusinessPayToBulk";
     }
 }

@@ -113,5 +113,8 @@ namespace MpesaSdk
 		public static string BusinessManagerSingleInvoicingUpdate { get; set; } = "v1/billmanager-invoice/update/single-invoicing";
 
         public static string B2BExpressCheckout { get; set; } = "v1/ussdpush/get-msisdn";
-	}
+
+        public static string B2CAccountTopUp { get; set; } = "mpesa/b2b/v1/paymentrequest";
+
+    }
 }

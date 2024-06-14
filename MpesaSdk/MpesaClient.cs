@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MpesaSdk.Dtos;
 using MpesaSdk.Exceptions;
 using MpesaSdk.Interfaces;
@@ -21,10 +20,10 @@ using System.Threading.Tasks;
 
 namespace MpesaSdk
 {
-	/// <summary>
-	/// Mpesa client class provides all the implemented interface methods that make the different API calls to MPESA Server
-	/// </summary>
-	public class MpesaClient : IMpesaClient
+    /// <summary>
+    /// Mpesa client class provides all the implemented interface methods that make the different API calls to MPESA Server
+    /// </summary>
+    public class MpesaClient : IMpesaClient
 	{
 		private readonly HttpClient _client;
 		readonly Random jitterer = new Random();
@@ -110,6 +109,25 @@ namespace MpesaSdk
                 : MpesaPostRequestAsync<B2BExpressCheckoutResponse>(b2BExpressCheckoutRequest, accesstoken, MpesaRequestEndpoint.B2BExpressCheckout, cancellationToken).GetAwaiter().GetResult();
         }
 
+		public async Task<MpesaResponse> B2CAccountTopUpAsync(B2CAccountTopUpRequest b2CAccountTopUpRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+            var validator = new B2CAccountTopUpValidator();
+            var results = await validator.ValidateAsync(b2CAccountTopUpRequest, cancellationToken);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : await MpesaPostRequestAsync<MpesaResponse>(b2CAccountTopUpRequest, accesstoken, MpesaRequestEndpoint.B2CAccountTopUp, cancellationToken);
+        }
+
+		public MpesaResponse B2CAccountTopUp(B2CAccountTopUpRequest b2CAccountTopUpRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new B2CAccountTopUpValidator();
+			var results = validator.Validate(b2CAccountTopUpRequest);
+
+            return !results.IsValid
+                ? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+                : MpesaPostRequestAsync<MpesaResponse>(b2CAccountTopUpRequest, accesstoken, MpesaRequestEndpoint.B2CAccountTopUp, cancellationToken).GetAwaiter().GetResult();
+        }
 
         public async Task<BillManagerResponse> BillManagerOnboardingAsync(BillManagerOnboardingRequest billManagerOnboardingRequest, string accesstoken, CancellationToken cancellationToken = default)
 		{

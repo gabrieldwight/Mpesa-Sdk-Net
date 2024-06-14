@@ -460,5 +460,23 @@ namespace MpesaSdk.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         B2BExpressCheckoutResponse B2BExpressCheckout(B2BExpressCheckoutRequest b2BExpressCheckoutRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// This API enables you to load funds to a B2C shortcode directly for disbursement. The transaction moves money from your MMF/Working account to the recipient’s utility account.
+        /// </summary>
+        /// <param name="b2CAccountTopUpRequest"></param>
+        /// <param name="accesstoken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<MpesaResponse> B2CAccountTopUpAsync(B2CAccountTopUpRequest b2CAccountTopUpRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// This API enables you to load funds to a B2C shortcode directly for disbursement. The transaction moves money from your MMF/Working account to the recipient’s utility account.
+        /// </summary>
+        /// <param name="b2CAccountTopUpRequest"></param>
+        /// <param name="accesstoken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        MpesaResponse B2CAccountTopUp(B2CAccountTopUpRequest b2CAccountTopUpRequest, string accesstoken, CancellationToken cancellationToken = default);
 	}
 }
