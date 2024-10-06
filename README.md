@@ -1,5 +1,5 @@
 # Mpesa-Sdk-Net
-This is a M-Pesa SDK to allow you to integrate Safaricom M-Pesa API in net framework, .NetCore, NET5 and Net Standard projects. 
+This is an M-Pesa SDK that allows you to integrate Safaricom's M-Pesa API in Net Framework, NetCore, NET5, and Net Standard projects. 
 [![Build status](https://gabrieldwight.visualstudio.com/MpesaSdk/_apis/build/status/MpesaSdk-CI)](https://gabrieldwight.visualstudio.com/MpesaSdk/_build/latest?definitionId=6)
 [![NuGet version (MpesaSdk)](https://img.shields.io/nuget/v/MpesaSdk.svg?style=flat-square)](https://www.nuget.org/packages/MpesaSdk/)
  
@@ -12,6 +12,7 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 ## Required API Products Need To be enabled by api support to your mpesa applications
 - Pull Transaction API
 - Dynamic Mpesa QR
+- Mpesa Ratiba
 
 ## Supported Platforms
 
@@ -23,14 +24,14 @@ A .NET Standard M-PESA API Helper Library for .NET Developers.
 - PackageManager: ```PM> Install-Package MpesaSdk```
 - DotNetCLI: ```> dotnet add package MpesaSdk```
 
-## Setting yourself for successful mpesa integration
-Before you proceed kindly aquaint yourself with Mpesa Apis by going through the Docs in Safaricom's developer portal or Daraja if you like.
+## Setting yourself up for successful Mpesa integration
+Before proceeding, kindly acquaint yourself with Mpesa Apis by going through the Docs in Safaricom's developer portal or Daraja if you like.
 
 1.  Obtain consumerKey, consumerSecret and Passkey (for Lipa Na Mpesa Online APIs) from daraja portal.
 
-2.  Ensure your project is running on the minimun supported versions of .Net 
+2.  Ensure your project is running on the minimum supported versions of .Net 
 
-3.  MpesaSdk is dependency injection (DI) friendly and can be readily injected into your classes. You can read more on DI in Asp.Net core [**here**](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0). If you can't use DI you can always manually create a new instance of MpesaClient and pass in an httpClient instance in it's constructor. eg.
+3.  MpesaSdk is dependency injection (DI) friendly and can be readily injected into your classes. You can read more on DI in Asp.Net core [**here**](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0). If you can't use DI you can always manually create a new instance of MpesaClient and pass in an httpClient instance in its constructor. eg.
 
 ```c#
 // When Dependency Injection is not possible...
