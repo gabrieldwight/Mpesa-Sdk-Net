@@ -478,5 +478,23 @@ namespace MpesaSdk.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         MpesaResponse B2CAccountTopUp(B2CAccountTopUpRequest b2CAccountTopUpRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This API is intended for businesses who wish to integrate with standing orders for the automation of recurring revenue collection.
+		/// </summary>
+		/// <param name="standingOrderRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<StandingOrderResponse> MpesaRatibaAsync(StandingOrderRequest standingOrderRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// This API is intended for businesses who wish to integrate with standing orders for the automation of recurring revenue collection.
+		/// </summary>
+		/// <param name="standingOrderRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		StandingOrderResponse MpesaRatiba(StandingOrderRequest standingOrderRequest, string accesstoken, CancellationToken cancellationToken = default);
 	}
 }

@@ -483,6 +483,40 @@ namespace MpesaSdk
 		}
 
 		/// <summary>
+		/// This API is intended for businesses who wish to integrate with standing orders for the automation of recurring revenue collection.
+		/// </summary>
+		/// <param name="standingOrderRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public StandingOrderResponse MpesaRatiba(StandingOrderRequest standingOrderRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new StandingOrderValidator();
+			var results = validator.Validate(standingOrderRequest);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<StandingOrderResponse>(standingOrderRequest, accesstoken, MpesaRequestEndpoint.MpesaRatiba, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		/// <summary>
+		/// This API is intended for businesses who wish to integrate with standing orders for the automation of recurring revenue collection.
+		/// </summary>
+		/// <param name="standingOrderRequest"></param>
+		/// <param name="accesstoken"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<StandingOrderResponse> MpesaRatibaAsync(StandingOrderRequest standingOrderRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new StandingOrderValidator();
+			var results = await validator.ValidateAsync(standingOrderRequest, cancellationToken);
+
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<StandingOrderResponse>(standingOrderRequest, accesstoken, MpesaRequestEndpoint.MpesaRatiba, cancellationToken);
+		}
+
+		/// <summary>
 		/// Queries MPESA Paybill Account balance.
 		/// </summary>
 		/// <param name="accountBalance">Account balance query data transfer object.</param>

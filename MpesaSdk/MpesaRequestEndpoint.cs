@@ -116,5 +116,7 @@ namespace MpesaSdk
 
         public static string B2CAccountTopUp { get; set; } = "mpesa/b2b/v1/paymentrequest";
 
+        public static string MpesaRatiba { get; set; } = "standingorder/v1/createStandingOrderExternal";
+
     }
 }
