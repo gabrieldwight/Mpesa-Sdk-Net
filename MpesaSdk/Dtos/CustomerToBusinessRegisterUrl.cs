@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -10,8 +10,9 @@ namespace MpesaSdk.Dtos
         /// <summary>
         /// The short code of the organization. 
         /// </summary>      
-        [JsonProperty("ShortCode")]
-        public string ShortCode { get; private set; }
+        [JsonPropertyName("ShortCode")]
+		[JsonInclude]
+		public string ShortCode { get; private set; }
 
         /// <summary>
         /// This parameter specifies what is to happen if for any reason the validation URL is nor reachable. 
@@ -23,22 +24,25 @@ namespace MpesaSdk.Dtos
         /// Cancelled means MPesa will automatically cancel the transaction, in the event MPesa is unable to 
         /// reach your Validation URL.
         /// </summary>
-        [JsonProperty("ResponseType")]
-        public string ResponseType { get; private set; }
+        [JsonPropertyName("ResponseType")]
+		[JsonInclude]
+		public string ResponseType { get; private set; }
 
         /// <summary>
         /// This is the URL that receives the confirmation request from API upon payment completion.
         /// </summary>
-        [JsonProperty("ConfirmationURL")]
-        public string ConfirmationURL { get; private set; }
+        [JsonPropertyName("ConfirmationURL")]
+		[JsonInclude]
+		public string ConfirmationURL { get; private set; }
 
         /// <summary>
         /// This is the URL that receives the validation request from API upon payment submission. 
         /// The validation URL is only called if the external validation on the registered shortcode is enabled. 
         /// (By default External Validation is dissabled, contact MPESA API team if you want this enbaled for your app)
         /// </summary>
-        [JsonProperty("ValidationURL")]
-        public string ValidationURL { get; private set; }
+        [JsonPropertyName("ValidationURL")]
+		[JsonInclude]
+		public string ValidationURL { get; private set; }
 
         /// <summary>
         /// C2B Register URLs data transfer object

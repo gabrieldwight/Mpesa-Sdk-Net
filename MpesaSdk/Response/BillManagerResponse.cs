@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
 	public class BillManagerResponse
 	{
-		[JsonProperty("app_key")]
+		[JsonPropertyName("app_key")]
 		public string AppKey { get; set; }
 
-		[JsonProperty("resmsg")]
+		[JsonPropertyName("resmsg")]
 		public string Resmsg { get; set; }
 
-		[JsonProperty("rescode")]
+		[JsonPropertyName("rescode")]
 		public string Rescode { get; set; }
 
-		[JsonProperty("Status_Message")]
+		[JsonPropertyName("Status_Message")]
 		public string StatusMessage { get; set; }
 	}
 }

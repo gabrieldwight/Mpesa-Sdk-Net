@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class ReferenceItem
     {
-        [JsonProperty("Key")]
+        [JsonPropertyName("Key")]
         public string Key { get; set; }
-        [JsonProperty("Value")]
+        [JsonPropertyName("Value")]
         public string Value { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
@@ -11,15 +11,15 @@ namespace MpesaSdk.Callbacks
         /// <summary>
         /// This is a JSON Array, within the CallbackMetadata, that holds additional transaction details in JSON objects. Since this array is returned under the CallbackMetadata, it is only returned for Successful transaction.
         /// </summary>
-        [JsonProperty("Item")]
+        [JsonPropertyName("Item")]
         public List<CallbackMetadataItem> ResultParameter { get; set; }
     }
 
     public class CallbackMetadataItem
     {
-        [JsonProperty("Name")]
+        [JsonPropertyName("Name")]
         public string Key { get; set; }
-        [JsonProperty("Value")]
+        [JsonPropertyName("Value")]
         public string Value { get; set; }
     }
 }

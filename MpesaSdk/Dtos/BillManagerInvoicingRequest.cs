@@ -1,36 +1,45 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
 	public class BillManagerInvoicingRequest
 	{
-		[JsonProperty("externalReference")]
+		[JsonPropertyName("externalReference")]
+		[JsonInclude]
 		public string ExternalReference { get; private set; }
 
-		[JsonProperty("billedFullName")]
+		[JsonPropertyName("billedFullName")]
+		[JsonInclude]
 		public string BilledFullName { get; private set; }
 
-		[JsonProperty("billedPhoneNumber")]
+		[JsonPropertyName("billedPhoneNumber")]
+		[JsonInclude]
 		public string BilledPhoneNumber { get; private set; }
 
-		[JsonProperty("billedPeriod")]
+		[JsonPropertyName("billedPeriod")]
+		[JsonInclude]
 		public string BilledPeriod { get; private set; }
 
-		[JsonProperty("invoiceName")]
+		[JsonPropertyName("invoiceName")]
+		[JsonInclude]
 		public string InvoiceName { get; private set; }
 
-		[JsonProperty("dueDate")]
+		[JsonPropertyName("dueDate")]
+		[JsonInclude]
 		public string DueDate { get; private set; }
 
-		[JsonProperty("accountReference")]
+		[JsonPropertyName("accountReference")]
+		[JsonInclude]
 		public string AccountReference { get; private set; }
 
-		[JsonProperty("amount")]
+		[JsonPropertyName("amount")]
+		[JsonInclude]
 		public string Amount { get; private set; }
 
-		[JsonProperty("invoiceItems")]
+		[JsonPropertyName("invoiceItems")]
+		[JsonInclude]
 		public List<InvoiceItem> InvoiceItems { get; private set; }
 
 		public BillManagerInvoicingRequest(string externalReference, string billedFullName, string billedPhoneNumber, string billedPeriod, string invoiceName, DateTime dueDate, string accountReference, string amount, List<InvoiceItem> invoiceItems)
@@ -49,10 +58,10 @@ namespace MpesaSdk.Dtos
 
 	public class InvoiceItem
 	{
-		[JsonProperty("itemName")]
+		[JsonPropertyName("itemName")]
 		public string ItemName { get; set; }
 
-		[JsonProperty("amount")]
+		[JsonPropertyName("amount")]
 		public string Amount { get; set; }
 	}
 }

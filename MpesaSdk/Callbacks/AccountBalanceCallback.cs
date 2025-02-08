@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class AccountBalanceCallback
     {
-        [JsonProperty("Result")]
+        [JsonPropertyName("Result")]
         public AccountBalanceResult Result { get; set; }
     }
 }

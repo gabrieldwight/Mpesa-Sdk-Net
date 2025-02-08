@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class BaseReferenceCallbackMetadata
     {
-        [JsonProperty("ReferenceItem")]
+        [JsonPropertyName("ReferenceItem")]
         public List<BaseReferenceCallbackMetadataItem> ReferenceItem { get; set; }
     }
 
     public class BaseReferenceCallbackMetadataItem
     {
-        [JsonProperty("Name")]
+        [JsonPropertyName("Name")]
         public string Key { get; set; }
-        [JsonProperty("Value")]
+        [JsonPropertyName("Value")]
         public string Value { get; set; }
     }
 }

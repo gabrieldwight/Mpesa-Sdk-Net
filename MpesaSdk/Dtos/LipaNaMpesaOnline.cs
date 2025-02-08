@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -14,26 +14,29 @@ namespace MpesaSdk.Dtos
         /// This is organizations shortcode (Paybill or Buygoods - A 5 to 6 digit account number) 
         /// used to identify an organization and receive the transaction.
         /// </summary>
-        [JsonProperty("BusinessShortCode")]
-        public string BusinessShortCode { get; private set; }
+        [JsonPropertyName("BusinessShortCode")]
+		[JsonInclude]
+		public string BusinessShortCode { get; private set; }
 
         /// <summary>
         /// This is the Timestamp of the transaction, 
         /// normaly in the formart of YEAR+MONTH+DATE+HOUR+MINUTE+SECOND (YYYYMMDDHHMMSS) 
         /// Each part should be atleast two digits apart from the year which takes four digits.        
         /// </summary>
-        [JsonProperty("Timestamp")]
-        public string Timestamp { get; private set; } = DateTime.Now.ToString("yyyyMMddHHmmss");
+        [JsonPropertyName("Timestamp")]
+		[JsonInclude]
+		public string Timestamp { get; private set; } = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         /// <summary>
         /// This is the transaction type that is used to identify the transaction when sending the request to M-Pesa. 
         /// The transaction type for M-Pesa Express is "CustomerPayBillOnline" 
         /// </summary>
 #if DEBUG
-        [JsonProperty("TransactionType")]
-        public string TransactionType { get; private set; } = Transaction_Type.CustomerPayBillOnline;
+        [JsonPropertyName("TransactionType")]
+		[JsonInclude]
+		public string TransactionType { get; private set; } = Transaction_Type.CustomerPayBillOnline;
 #else
-        [JsonProperty("TransactionType")]
+        [JsonPropertyName("TransactionType")]
         public string TransactionType { get; private set; }
 #endif
 
@@ -41,36 +44,41 @@ namespace MpesaSdk.Dtos
         /// This is the Amount transacted, normally a numeric value. Money that customer pays to the Shorcode. 
         /// Only whole numbers are supported.
         /// </summary>
-        [JsonProperty("Amount")]
-        public string Amount { get; private set; }
+        [JsonPropertyName("Amount")]
+		[JsonInclude]
+		public string Amount { get; private set; }
 
         /// <summary>
         /// The phone number sending money. The parameter expected is a Valid Safaricom Mobile Number 
         /// that is M-Pesa registered in the format 2547XXXXXXXX
         /// </summary>
-        [JsonProperty("PartyA")]
-        public string PartyA { get; private set; }
+        [JsonPropertyName("PartyA")]
+		[JsonInclude]
+		public string PartyA { get; private set; }
 
         /// <summary>
         /// The organization receiving the funds. The parameter expected is a 5 to 6 digit.
         /// This can be the same as BusinessShortCode value.
         /// </summary>
-        [JsonProperty("PartyB")]
-        public string PartyB { get; private set; }
+        [JsonPropertyName("PartyB")]
+		[JsonInclude]
+		public string PartyB { get; private set; }
 
         /// <summary>
         /// The Mobile Number to receive the STK Pin Prompt. 
         /// This number can be the same as PartyA value.
         /// </summary>
-        [JsonProperty("PhoneNumber")]
-        public string PhoneNumber { get; private set; }
+        [JsonPropertyName("PhoneNumber")]
+		[JsonInclude]
+		public string PhoneNumber { get; private set; }
 
         /// <summary>
         /// A CallBack URL is a valid secure URL that is used to receive notifications from M-Pesa API. 
         /// It is the endpoint to which the results will be sent by M-Pesa API.
         /// </summary>
-        [JsonProperty("CallBackURL")]
-        public string CallBackURL { get; private set; }
+        [JsonPropertyName("CallBackURL")]
+		[JsonInclude]
+		public string CallBackURL { get; private set; }
 
         /// <summary>
         /// Account Reference: This is an Alpha-Numeric parameter that is defined by your system as an Identifier 
@@ -78,15 +86,17 @@ namespace MpesaSdk.Dtos
         /// this value is also displayed to the customer in the STK PIN Prompt message. 
         /// Maximum of 12 characters.
         /// </summary>
-        [JsonProperty("AccountReference")]
-        public string AccountReference { get; private set; }
+        [JsonPropertyName("AccountReference")]
+		[JsonInclude]
+		public string AccountReference { get; private set; }
 
         /// <summary>
         /// This is any additional information/comment that can be sent along with the request from your system. 
         /// Maximum of 13 Characters.
         /// </summary>
-        [JsonProperty("TransactionDesc")]
-        public string TransactionDesc { get; private set; }
+        [JsonPropertyName("TransactionDesc")]
+		[JsonInclude]
+		public string TransactionDesc { get; private set; }
 
         /// <summary>
         /// Lipa Na Mpesa Online PassKey
@@ -100,8 +110,9 @@ namespace MpesaSdk.Dtos
         /// The Defualt value is set by a private method that creates the necessary base64 encoded string
         /// Don't set this property if you have set the passKey property.
         /// </summary>
-        [JsonProperty("Password")]
-        public string Password { get; private set; }
+        [JsonPropertyName("Password")]
+		[JsonInclude]
+		public string Password { get; private set; }
 
         #endregion
 

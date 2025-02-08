@@ -1,11 +1,12 @@
 ﻿using MpesaSdk.Enums;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
 	public class BusinessPayBillRequest : BusinessToBusiness
 	{
-		[JsonProperty("Requester")]
+		[JsonPropertyName("Requester")]
+		[JsonInclude]
 		public string Requester { get; private set; }
 
 		public BusinessPayBillRequest(string initiator, string securityCredential, string amount, string partyA, string partyB, string accountReference, string remarks, string queueTimeoutUrl, string resultUrl, string requester)

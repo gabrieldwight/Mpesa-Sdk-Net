@@ -1,37 +1,37 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
 	public class StandingOrderResponse
 	{
-		[JsonProperty("ResponseHeader")]
+		[JsonPropertyName("ResponseHeader")]
 		public ResponseHeader ResponseHeader { get; set; }
 
-		[JsonProperty("ResponseBody")]
+		[JsonPropertyName("ResponseBody")]
 		public ResponseBody ResponseBody { get; set; }
 	}
 
 	public class ResponseBody
 	{
-		[JsonProperty("responseDescription")]
+		[JsonPropertyName("responseDescription")]
 		public string ResponseDescription { get; set; }
 
-		[JsonProperty("responseCode")]
+		[JsonPropertyName("responseCode")]
 		public string ResponseCode { get; set; }
 	}
 
 	public class ResponseHeader
 	{
-		[JsonProperty("responseRefID")]
+		[JsonPropertyName("responseRefID")]
 		public string ResponseRefId { get; set; }
 
-		[JsonProperty("responseCode")]
+		[JsonPropertyName("responseCode")]
 		public string ResponseCode { get; set; }
 
-		[JsonProperty("responseDescription")]
+		[JsonPropertyName("responseDescription")]
 		public string ResponseDescription { get; set; }
 
-		[JsonProperty("ResultDesc")]
+		[JsonPropertyName("ResultDesc")]
 		public string ResultDesc { get; set; }
 	}
 }

@@ -1,37 +1,37 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class MpesaBaseResult
     {
-        [JsonProperty("ResultType")]
+        [JsonPropertyName("ResultType")]
         public long ResultType { get; set; }
-        [JsonProperty("ResultCode")]
+        [JsonPropertyName("ResultCode")]
         public long ResultCode { get; set; }
-        [JsonProperty("ResultDesc")]
+        [JsonPropertyName("ResultDesc")]
         public string ResultDesc { get; set; }
-        [JsonProperty("OriginatorConversationID")]
+        [JsonPropertyName("OriginatorConversationID")]
         public string OriginatorConversationID { get; set; }
-        [JsonProperty("ConversationID")]
+        [JsonPropertyName("ConversationID")]
         public string ConversationID { get; set; }
-        [JsonProperty("TransactionID")]
+        [JsonPropertyName("TransactionID")]
         public string TransactionID { get; set; }
-        [JsonProperty("ResultParameters")]
+        [JsonPropertyName("ResultParameters")]
         public ResultParameters ResultParameters { get; set; }
     }
 
     public class ResultParameters
     {
-        [JsonProperty("ResultParameter")]
+        [JsonPropertyName("ResultParameter")]
         public List<ResultParameter> ResultParameter { get; set; }
     }
 
     public class ResultParameter
     {
-        [JsonProperty("Key")]
+        [JsonPropertyName("Key")]
         public string Key { get; set; }
-        [JsonProperty("Value")]
+        [JsonPropertyName("Value")]
         public string Value { get; set; }
     }
 }

@@ -1,25 +1,31 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
 	public class BillManagerOnboardingRequest
 	{
-		[JsonProperty("shortcode")]
+		[JsonPropertyName("shortcode")]
+		[JsonInclude]
 		public string Shortcode { get; private set; }
 
-		[JsonProperty("email")]
+		[JsonPropertyName("email")]
+		[JsonInclude]
 		public string Email { get; private set; }
 
-		[JsonProperty("officialContact")]
+		[JsonPropertyName("officialContact")]
+		[JsonInclude]
 		public string OfficialContact { get; private set; }
 
-		[JsonProperty("sendReminders")]
+		[JsonPropertyName("sendReminders")]
+		[JsonInclude]
 		public string SendReminders { get; private set; }
 
-		[JsonProperty("logo")]
+		[JsonPropertyName("logo")]
+		[JsonInclude]
 		public string Logo { get; private set; }
 
-		[JsonProperty("callbackurl")]
+		[JsonPropertyName("callbackurl")]
+		[JsonInclude]
 		public string Callbackurl { get; private set; }
 
 		public BillManagerOnboardingRequest(string shortcode, string email, string officialContact, string sendReminders, string logo, string callbackurl)

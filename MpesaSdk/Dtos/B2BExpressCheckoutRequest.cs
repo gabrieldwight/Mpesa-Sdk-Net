@@ -1,28 +1,28 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
     public class B2BExpressCheckoutRequest
     {
-        [JsonProperty("primaryShortCode")]
+        [JsonPropertyName("primaryShortCode")]
         public string PrimaryShortCode { get; set; }
 
-        [JsonProperty("receiverShortCode")]
+        [JsonPropertyName("receiverShortCode")]
         public string ReceiverShortCode { get; set; }
 
-        [JsonProperty("amount")]
+        [JsonPropertyName("amount")]
         public string Amount { get; set; }
 
-        [JsonProperty("paymentRef")]
+        [JsonPropertyName("paymentRef")]
         public string PaymentRef { get; set; }
 
-        [JsonProperty("callbackUrl")]
+        [JsonPropertyName("callbackUrl")]
         public string CallbackUrl { get; set; }
 
-        [JsonProperty("partnerName")]
+        [JsonPropertyName("partnerName")]
         public string PartnerName { get; set; }
 
-        [JsonProperty("RequestRefID")]
+        [JsonPropertyName("RequestRefID")]
         public string RequestRefId { get; set; }
 
         public B2BExpressCheckoutRequest(string primaryShortCode, string receiverShortCode, string amount, string paymentRef, string callbackUrl, string partnerName, string requestRefId)

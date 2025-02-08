@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class BaseResultCallbackMetadata
     {
-        [JsonProperty("ResultParameter")]
+        [JsonPropertyName("ResultParameter")]
         public List<BaseResultCallbackMetadataItem> ResultParameter { get; set; }
     }
 
     public class BaseResultCallbackMetadataItem
     {
-        [JsonProperty("Name")]
+        [JsonPropertyName("Name")]
         public string Key { get; set; }
-        [JsonProperty("Value")]
+        [JsonPropertyName("Value")]
         public string Value { get; set; }
     }
 }

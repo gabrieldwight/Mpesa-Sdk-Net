@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
@@ -7,31 +7,31 @@ namespace MpesaSdk.Callbacks
     /// </summary>
     public class CustomerToBusinessCallback
     {
-        [JsonProperty("TransactionType")]
+        [JsonPropertyName("TransactionType")]
         public string TransactionType { get; set; }
-        [JsonProperty("TransID")]
+        [JsonPropertyName("TransID")]
         public string TransID { get; set; }
-        [JsonProperty("TransTime")]
+        [JsonPropertyName("TransTime")]
         public string TransTime { get; set; }
-        [JsonProperty("TransAmount")]
+        [JsonPropertyName("TransAmount")]
         public string TransAmount { get; set; }
-        [JsonProperty("BusinessShortCode")]
+        [JsonPropertyName("BusinessShortCode")]
         public string BusinessShortCode { get; set; }
-        [JsonProperty("BillRefNumber")]
+        [JsonPropertyName("BillRefNumber")]
         public string BillRefNumber { get; set; }
-        [JsonProperty("InvoiceNumber")]
+        [JsonPropertyName("InvoiceNumber")]
         public string InvoiceNumber { get; set; }
-        [JsonProperty("OrgAccountBalance")]
+        [JsonPropertyName("OrgAccountBalance")]
         public string OrgAccountBalance { get; set; }
-        [JsonProperty("ThirdPartyTransID")]
+        [JsonPropertyName("ThirdPartyTransID")]
         public string ThirdPartyTransID { get; set; }
-        [JsonProperty("MSISDN")]
+        [JsonPropertyName("MSISDN")]
         public string MSISDN { get; set; }
-        [JsonProperty("FirstName")]
+        [JsonPropertyName("FirstName")]
         public string FirstName { get; set; }
-        [JsonProperty("MiddleName")]
+        [JsonPropertyName("MiddleName")]
         public string MiddleName { get; set; }
-        [JsonProperty("LastName")]
+        [JsonPropertyName("LastName")]
         public string LastName { get; set; }
     }
 }

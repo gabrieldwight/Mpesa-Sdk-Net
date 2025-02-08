@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -13,8 +13,9 @@ namespace MpesaSdk.Dtos
         /// This is organizations shortcode (Paybill or Buygoods - A 5 to 6 digit account number) 
         /// used to identify an organization and receive the transaction.
         /// </summary>
-        [JsonProperty("BusinessShortCode")]
-        public string BusinessShortCode { get; private set; }
+        [JsonPropertyName("BusinessShortCode")]
+		[JsonInclude]
+		public string BusinessShortCode { get; private set; }
 
         /// <summary>
         /// Lipa Na Mpesa Online PassKey
@@ -25,8 +26,9 @@ namespace MpesaSdk.Dtos
         /// This is the password used for encrypting the request sent: A base64 encoded string. 
         /// The base64 string is a combination of Shortcode+Passkey+Timestamp
         /// </summary>
-        [JsonProperty("Password")]
-        public string Password { get; private set; }
+        [JsonPropertyName("Password")]
+		[JsonInclude]
+		public string Password { get; private set; }
 
 
         /// <summary>
@@ -34,15 +36,17 @@ namespace MpesaSdk.Dtos
         /// normaly in the formart of YEAR+MONTH+DATE+HOUR+MINUTE+SECOND (YYYYMMDDHHMMSS) 
         /// Each part should be atleast two digits apart from the year which takes four digits.
         /// </summary>
-        [JsonProperty("Timestamp")]
-        public string Timestamp { get; private set; } = DateTime.Now.ToString("yyyyMMddHHmmss");
+        [JsonPropertyName("Timestamp")]
+		[JsonInclude]
+		public string Timestamp { get; private set; } = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         /// <summary>
         /// This is a global unique identifier of the processed checkout transaction request.
         /// e.g ws_CO_DMZ_123212312_2342347678234
         /// </summary>
-        [JsonProperty("CheckoutRequestID")]
-        public string CheckoutRequestID { get; private set; }
+        [JsonPropertyName("CheckoutRequestID")]
+		[JsonInclude]
+		public string CheckoutRequestID { get; private set; }
 
 
 

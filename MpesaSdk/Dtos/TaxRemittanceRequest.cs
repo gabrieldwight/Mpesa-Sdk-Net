@@ -1,44 +1,56 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
     public class TaxRemittanceRequest
     {
-        [JsonProperty("Initiator")]
-        public string Initiator { get; private set; }
+        [JsonPropertyName("Initiator")]
+		[JsonInclude]
+		public string Initiator { get; private set; }
 
-        [JsonProperty("SecurityCredential")]
-        public string SecurityCredential { get; private set; }
+        [JsonPropertyName("SecurityCredential")]
+		[JsonInclude]
+		public string SecurityCredential { get; private set; }
 
-        [JsonProperty("Command ID")]
-        public string CommandId { get; private set; } = Transaction_Type.PayTaxToKRA;
+        [JsonPropertyName("Command ID")]
+		[JsonInclude]
+		public string CommandId { get; private set; } = Transaction_Type.PayTaxToKRA;
 
-        [JsonProperty("SenderIdentifierType")]
-        public string SenderIdentifierType { get; private set; } = "4";
+        [JsonPropertyName("SenderIdentifierType")]
+		[JsonInclude]
+		public string SenderIdentifierType { get; private set; } = "4";
 
-        [JsonProperty("RecieverIdentifierType")]
-        public string RecieverIdentifierType { get; private set; } = "4";
+        [JsonPropertyName("RecieverIdentifierType")]
+		[JsonInclude]
+		public string RecieverIdentifierType { get; private set; } = "4";
 
-        [JsonProperty("Amount")]
-        public string Amount { get; private set; }
+        [JsonPropertyName("Amount")]
+		[JsonInclude]
+		public string Amount { get; private set; }
 
-        [JsonProperty("PartyA")]
-        public string PartyA { get; private set; }
+        [JsonPropertyName("PartyA")]
+		[JsonInclude]
+		public string PartyA { get; private set; }
 
-        [JsonProperty("PartyB")]
-        public string PartyB { get; private set; }
+        [JsonPropertyName("PartyB")]
+		[JsonInclude]
+		public string PartyB { get; private set; }
 
-        [JsonProperty("AccountReference")]
-        public string AccountReference { get; private set; }
+        [JsonPropertyName("AccountReference")]
+		[JsonInclude]
+		public string AccountReference { get; private set; }
 
-        [JsonProperty("Remarks")]
-        public string Remarks { get; private set; }
+        [JsonPropertyName("Remarks")]
+		[JsonInclude]
+		public string Remarks { get; private set; }
 
-        [JsonProperty("QueueTimeOutURL")]
-        public string QueueTimeOutUrl { get; private set; }
+        [JsonPropertyName("QueueTimeOutURL")]
+		[JsonInclude]
+		public string QueueTimeOutUrl { get; private set; }
 
-        [JsonProperty("ResultURL")]
-        public string ResultUrl { get; private set; }
+        [JsonPropertyName("ResultURL")]
+		[JsonInclude]
+		public string ResultUrl { get; private set; }
 
         /// <summary>
         /// This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.

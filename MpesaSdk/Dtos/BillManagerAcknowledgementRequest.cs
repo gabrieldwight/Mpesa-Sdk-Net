@@ -1,31 +1,31 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
 	public class BillManagerAcknowledgementRequest
 	{
-		[JsonProperty("paymentDate")]
+		[JsonPropertyName("paymentDate")]
 		public string PaymentDate { get; set; }
 
-		[JsonProperty("paidAmount")]
+		[JsonPropertyName("paidAmount")]
 		public string PaidAmount { get; set; }
 
-		[JsonProperty("accountReference")]
+		[JsonPropertyName("accountReference")]
 		public string AccountReference { get; set; }
 
-		[JsonProperty("transactionId")]
+		[JsonPropertyName("transactionId")]
 		public string TransactionId { get; set; }
 
-		[JsonProperty("phoneNumber")]
+		[JsonPropertyName("phoneNumber")]
 		public string PhoneNumber { get; set; }
 
-		[JsonProperty("fullName")]
+		[JsonPropertyName("fullName")]
 		public string FullName { get; set; }
 
-		[JsonProperty("invoiceName")]
+		[JsonPropertyName("invoiceName")]
 		public string InvoiceName { get; set; }
 
-		[JsonProperty("externalReference")]
+		[JsonPropertyName("externalReference")]
 		public string ExternalReference { get; set; }
 	}
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
@@ -11,7 +11,7 @@ namespace MpesaSdk.Response
         /// Gets or sets the response code.
         /// </summary>
         /// <value>The response code.</value>
-        [JsonProperty("ResponseCode")]
+        [JsonPropertyName("ResponseCode")]
         public string ResponseCode { get; set; }
     }
 }

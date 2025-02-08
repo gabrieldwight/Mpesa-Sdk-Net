@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -10,78 +10,90 @@ namespace MpesaSdk.Dtos
         /// <summary>
         /// This is the credential/username used to authenticate the transaction request.
         /// </summary>
-        [JsonProperty("Initiator")]
-        public string Initiator { get; private set; }
+        [JsonPropertyName("Initiator")]
+		[JsonInclude]
+		public string Initiator { get; private set; }
 
         /// <summary>
         /// Base64 encoded string of the Security Credential, which is encrypted using M-Pesa public key and 
         /// validates the transaction on M-Pesa Core system.
         /// </summary>
-        [JsonProperty("SecurityCredential")]
-        public string SecurityCredential { get; private set; }
+        [JsonPropertyName("SecurityCredential")]
+		[JsonInclude]
+		public string SecurityCredential { get; private set; }
 
         /// <summary>
         /// Unique command for each transaction type, possible values are: BusinessPayBill, MerchantToMerchantTransfer,
         /// MerchantTransferFromMerchantToWorking, MerchantServicesMMFAccountTransfer, AgencyFloatAdvance
         /// </summary>
-        [JsonProperty("CommandID")]
-        public string CommandID { get; private set; }
+        [JsonPropertyName("CommandID")]
+		[JsonInclude]
+		public string CommandID { get; private set; }
 
         /// <summary>
         /// Type of organization sending the transaction.
         /// </summary>
-        [JsonProperty("SenderIdentifierType")]
-        public string SenderIdentifierType { get; private set; }
+        [JsonPropertyName("SenderIdentifierType")]
+		[JsonInclude]
+		public string SenderIdentifierType { get; private set; }
 
         /// <summary>
         /// Type of organization receiving the funds being transacted.
         /// </summary>
-        [JsonProperty("RecieverIdentifierType")]
-        public string RecieverIdentifierType { get; private set; }
+        [JsonPropertyName("RecieverIdentifierType")]
+		[JsonInclude]
+		public string RecieverIdentifierType { get; private set; }
 
         /// <summary>
         /// The amount being transacted.
         /// </summary>
-        [JsonProperty("Amount")]
-        public string Amount { get; private set; }
+        [JsonPropertyName("Amount")]
+		[JsonInclude]
+		public string Amount { get; private set; }
 
         /// <summary>
         /// Organization’s short code initiating the transaction.
         /// </summary>
-        [JsonProperty("PartyA")]
-        public string PartyA { get; private set; }
+        [JsonPropertyName("PartyA")]
+		[JsonInclude]
+		public string PartyA { get; private set; }
 
         /// <summary>
         /// Organization’s short code receiving the funds being transacted.
         /// </summary>
-        [JsonProperty("PartyB")]
-        public string PartyB { get; private set; }
+        [JsonPropertyName("PartyB")]
+		[JsonInclude]
+		public string PartyB { get; private set; }
 
         /// <summary>
         /// Account Reference mandatory for “BusinessPaybill” CommandID.
         /// </summary>
-        [JsonProperty("AccountReference")]
-        public string AccountReference { get; private set; }
+        [JsonPropertyName("AccountReference")]
+		[JsonInclude]
+		public string AccountReference { get; private set; }
 
         /// <summary>
         /// Comments that are sent along with the transaction.
         /// </summary>
-        [JsonProperty("Remarks")]
-        public string Remarks { get; private set; }
+        [JsonPropertyName("Remarks")]
+		[JsonInclude]
+		public string Remarks { get; private set; }
 
         /// <summary>
         /// The path that stores information of time out transactions. It should be properly validated to 
         /// make sure that it contains the port, URI and domain name or publicly available IP.
         /// </summary>
-        [JsonProperty("QueueTimeOutURL")]
-        public string QueueTimeOutURL { get; private set; }
+        [JsonPropertyName("QueueTimeOutURL")]
+		[JsonInclude]
+		public string QueueTimeOutURL { get; private set; }
 
         /// <summary>
         /// The path that receives results from M-Pesa. It should be properly validated to make sure 
         /// that it contains the port, URI and domain name or publicly available IP.
         /// </summary>
-        [JsonProperty("ResultURL")]
-        public string ResultURL { get; private set; }
+        [JsonPropertyName("ResultURL")]
+		[JsonInclude]
+		public string ResultURL { get; private set; }
 
         /// <summary>
         /// B2B data transfer object

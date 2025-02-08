@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -10,31 +10,36 @@ namespace MpesaSdk.Dtos
 		/// <summary>
 		/// Name of the Company/M-Pesa Merchant Name
 		/// </summary>
-		[JsonProperty("MerchantName")]
+		[JsonPropertyName("MerchantName")]
+		[JsonInclude]
 		public string MerchantName { get; private set; }
 
 		/// <summary>
 		/// Transaction Reference
 		/// </summary>
-		[JsonProperty("RefNo")]
+		[JsonPropertyName("RefNo")]
+		[JsonInclude]
 		public string RefNo { get; private set; }
 
 		/// <summary>
 		/// The total amount for the sale/transaction
 		/// </summary>
-		[JsonProperty("Amount")]
+		[JsonPropertyName("Amount")]
+		[JsonInclude]
 		public int Amount { get; private set; }
 
 		/// <summary>
 		/// Transaction Type. The supported types are
 		/// </summary>
-		[JsonProperty("TrxCode")]
+		[JsonPropertyName("TrxCode")]
+		[JsonInclude]
 		public string TrxCode { get; private set; }
 
 		/// <summary>
 		/// Credit Party Identifier. Can be a Mobile Number, Business Number, Agent Till, Paybill or Business number, Merchant Buy Goods.
 		/// </summary>
-		[JsonProperty("CPI")]
+		[JsonPropertyName("CPI")]
+		[JsonInclude]
 		public string CPI { get; private set; }
 
 		public DynamicMpesaQR(string merchantName, string refNo, int amount, string trxCode, string cpi)

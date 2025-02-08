@@ -1,48 +1,48 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
     public class PullTransactionResponse
     {
-        [JsonProperty("ResponseRefID")]
+        [JsonPropertyName("ResponseRefID")]
         public string ResponseRefID { get; set; }
 
-        [JsonProperty("ResponseCode")]
+        [JsonPropertyName("ResponseCode")]
         public string ResponseCode { get; set; }
 
-        [JsonProperty("ResponseMessage")]
+        [JsonPropertyName("ResponseMessage")]
         public string ResponseMessage { get; set; }
 
-        [JsonProperty("Response")]
+        [JsonPropertyName("Response")]
         public List<List<PullTransactionDetails>> Response { get; set; }
     }
 
     public class PullTransactionDetails
     {
-        [JsonProperty("transactionId")]
+        [JsonPropertyName("transactionId")]
         public string transactionId { get; set; }
 
-        [JsonProperty("trxDate")]
+        [JsonPropertyName("trxDate")]
         public DateTime trxDate { get; set; }
 
-        [JsonProperty("msisdn")]
+        [JsonPropertyName("msisdn")]
         public long msisdn { get; set; }
 
-        [JsonProperty("sender")]
+        [JsonPropertyName("sender")]
         public string sender { get; set; }
 
-        [JsonProperty("transactiontype")]
+        [JsonPropertyName("transactiontype")]
         public string transactiontype { get; set; }
 
-        [JsonProperty("billreference")]
+        [JsonPropertyName("billreference")]
         public string billreference { get; set; }
 
-        [JsonProperty("amount")]
+        [JsonPropertyName("amount")]
         public string amount { get; set; }
 
-        [JsonProperty("organizationname")]
+        [JsonPropertyName("organizationname")]
         public string organizationname { get; set; }
     }
 }

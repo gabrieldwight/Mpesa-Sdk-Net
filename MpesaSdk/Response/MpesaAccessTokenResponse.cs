@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
@@ -10,13 +10,15 @@ namespace MpesaSdk.Response
         /// <summary>
         /// Access token to access other APIs
         /// </summary>
-        [JsonProperty("access_token")]
-        public string AccessToken { get; private set; }
+        [JsonPropertyName("access_token")]
+		[JsonInclude]
+		public string AccessToken { get; private set; }
 
         /// <summary>
         /// time token expires
         /// </summary>
-        [JsonProperty("expires_in")]
-        public string ExpiresIn { get; private set; }
+        [JsonPropertyName("expires_in")]
+		[JsonInclude]
+		public string ExpiresIn { get; private set; }
     }
 }

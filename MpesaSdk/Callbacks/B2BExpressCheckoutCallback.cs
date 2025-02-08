@@ -1,34 +1,34 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class B2BExpressCheckoutCallback
     {
-        [JsonProperty("resultCode")]
+        [JsonPropertyName("resultCode")]
         public string ResultCode { get; set; }
 
-        [JsonProperty("resultDesc")]
+        [JsonPropertyName("resultDesc")]
         public string ResultDesc { get; set; }
 
-        [JsonProperty("amount")]
+        [JsonPropertyName("amount")]
         public string Amount { get; set; }
 
-        [JsonProperty("requestId")]
+        [JsonPropertyName("requestId")]
         public string RequestId { get; set; }
 
-        [JsonProperty("resultType")]
+        [JsonPropertyName("resultType")]
         public string ResultType { get; set; }
 
-        [JsonProperty("conversationID")]
+        [JsonPropertyName("conversationID")]
         public string ConversationId { get; set; }
 
-        [JsonProperty("transactionId")]
+        [JsonPropertyName("transactionId")]
         public string TransactionId { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("paymentReference")]
+        [JsonPropertyName("paymentReference")]
         public string PaymentReference { get; set; }
     }
 }

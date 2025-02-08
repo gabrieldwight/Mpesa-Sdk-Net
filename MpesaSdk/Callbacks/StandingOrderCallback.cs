@@ -1,43 +1,43 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
 	public class StandingOrderCallback
 	{
-		[JsonProperty("responseHeader")]
+		[JsonPropertyName("responseHeader")]
 		public ResponseHeader ResponseHeader { get; set; }
 
-		[JsonProperty("ResponseBody")]
+		[JsonPropertyName("ResponseBody")]
 		public ResponseBody ResponseBody { get; set; }
 	}
 
 	public class ResponseHeader
 	{
-		[JsonProperty("responseRefID")]
+		[JsonPropertyName("responseRefID")]
 		public string ResponseRefId { get; set; }
 
-		[JsonProperty("requestRefID")]
+		[JsonPropertyName("requestRefID")]
 		public string RequestRefId { get; set; }
 
-		[JsonProperty("responseCode")]
+		[JsonPropertyName("responseCode")]
 		public long ResponseCode { get; set; }
 
-		[JsonProperty("responseDescription")]
+		[JsonPropertyName("responseDescription")]
 		public string ResponseDescription { get; set; }
 	}
 
 	public class ResponseBody
 	{
-		[JsonProperty("responseData")]
+		[JsonPropertyName("responseData")]
 		public List<StandingOrderCallbackMetadataItem> ResponseData { get; set; }
 	}
 
 	public class StandingOrderCallbackMetadataItem
 	{
-		[JsonProperty("name")]
+		[JsonPropertyName("name")]
 		public string Name { get; set; }
-		[JsonProperty("value")]
+		[JsonPropertyName("value")]
 		public string Value { get; set; }
 	}
 }

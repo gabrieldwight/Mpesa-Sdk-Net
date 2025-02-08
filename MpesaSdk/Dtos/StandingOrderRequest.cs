@@ -1,45 +1,45 @@
 ﻿using MpesaSdk.Enums;
-using Newtonsoft.Json;
 using System;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
 	public class StandingOrderRequest
 	{
-		[JsonProperty("StandingOrderName")]
+		[JsonPropertyName("StandingOrderName")]
 		public string StandingOrderName { get; set; }
 
-		[JsonProperty("StartDate")]
+		[JsonPropertyName("StartDate")]
 		public string StartDate { get; set; }
 
-		[JsonProperty("EndDate")]
+		[JsonPropertyName("EndDate")]
 		public string EndDate { get; set; }
 
-		[JsonProperty("BusinessShortCode")]
+		[JsonPropertyName("BusinessShortCode")]
 		public string BusinessShortCode { get; set; }
 
-		[JsonProperty("TransactionType")]
+		[JsonPropertyName("TransactionType")]
 		public string TransactionType { get; set; }
 
-		[JsonProperty("ReceiverPartyIdentifierType")]
+		[JsonPropertyName("ReceiverPartyIdentifierType")]
 		public string ReceiverPartyIdentifierType { get; set; }
 
-		[JsonProperty("Amount")]
+		[JsonPropertyName("Amount")]
 		public string Amount { get; set; }
 
-		[JsonProperty("PartyA")]
+		[JsonPropertyName("PartyA")]
 		public string PartyA { get; set; }
 
-		[JsonProperty("CallBackURL")]
+		[JsonPropertyName("CallBackURL")]
 		public string CallBackUrl { get; set; }
 
-		[JsonProperty("AccountReference")]
+		[JsonPropertyName("AccountReference")]
 		public string AccountReference { get; set; }
 
-		[JsonProperty("TransactionDesc")]
+		[JsonPropertyName("TransactionDesc")]
 		public string TransactionDesc { get; set; }
 
-		[JsonProperty("Frequency")]
+		[JsonPropertyName("Frequency")]
 		public string Frequency { get; set; }
 
 		/// <summary>

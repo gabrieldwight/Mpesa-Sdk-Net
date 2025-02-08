@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class LipaNaMpesaBody
     {
-        [JsonProperty("StkCallback")]
+        [JsonPropertyName("StkCallback")]
         public StkCallback StkCallback { get; set; }
     }
 }

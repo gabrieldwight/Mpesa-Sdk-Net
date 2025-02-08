@@ -1,38 +1,38 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class BaseCallback
     {
-        [JsonProperty("Result")]
+        [JsonPropertyName("Result")]
         public Result Result { get; set; }
     }
 
     public class Result
     {
-        [JsonProperty("ResultType")]
+        [JsonPropertyName("ResultType")]
         public string ResultType { get; set; }
 
-        [JsonProperty("ResultCode")]
+        [JsonPropertyName("ResultCode")]
         public string ResultCode { get; set; }
 
-        [JsonProperty("ResultDesc")]
+        [JsonPropertyName("ResultDesc")]
         public string ResultDesc { get; set; }
 
-        [JsonProperty("OriginatorConversationID")]
+        [JsonPropertyName("OriginatorConversationID")]
         public Guid OriginatorConversationId { get; set; }
 
-        [JsonProperty("ConversationID")]
+        [JsonPropertyName("ConversationID")]
         public string ConversationId { get; set; }
 
-        [JsonProperty("TransactionID")]
+        [JsonPropertyName("TransactionID")]
         public string TransactionId { get; set; }
 
-        [JsonProperty("ResultParameters")]
+        [JsonPropertyName("ResultParameters")]
         public BaseResultCallbackMetadata ResultCallbackMetadata { get; set; }
 
-        [JsonProperty("ReferenceData")]
+        [JsonPropertyName("ReferenceData")]
         public BaseReferenceCallbackMetadata ReferenceCallbackMetadata { get; set; }
     }
 }

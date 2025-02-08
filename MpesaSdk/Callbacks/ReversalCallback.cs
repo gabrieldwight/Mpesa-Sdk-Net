@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class ReversalCallback
     {
-        [JsonProperty("Result")]
+        [JsonPropertyName("Result")]
         public ReversalResult Result { get; set; }
     }
 }

@@ -1,26 +1,32 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
 	public class BillManagerPaymentReconcilliationRequest
 	{
-		[JsonProperty("transactionId")]
+		[JsonPropertyName("transactionId")]
+		[JsonInclude]
 		public string TransactionId { get; private set; }
 
-		[JsonProperty("paidAmount")]
+		[JsonPropertyName("paidAmount")]
+		[JsonInclude]
 		public string PaidAmount { get; private set; }
 
-		[JsonProperty("msisdn")]
+		[JsonPropertyName("msisdn")]
+		[JsonInclude]
 		public string Msisdn { get; private set; }
 
-		[JsonProperty("dateCreated")]
+		[JsonPropertyName("dateCreated")]
+		[JsonInclude]
 		public string DateCreated { get; private set; }
 
-		[JsonProperty("accountReference")]
+		[JsonPropertyName("accountReference")]
+		[JsonInclude]
 		public string AccountReference { get; private set; }
 
-		[JsonProperty("shortCode")]
+		[JsonPropertyName("shortCode")]
+		[JsonInclude]
 		public string ShortCode { get; private set; }
 
 		public BillManagerPaymentReconcilliationRequest(string transactionId, string paidAmount, string msisdn, DateTime dateCreated, string accountReference, string shortCode)

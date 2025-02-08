@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
     public class BusinessToBusinessResult : MpesaBaseResult
     {
-        [JsonProperty("ReferenceData")]
+        [JsonPropertyName("ReferenceData")]
         public BusinessToBusinessReferenceData ReferenceData { get; set; }
     }
 }

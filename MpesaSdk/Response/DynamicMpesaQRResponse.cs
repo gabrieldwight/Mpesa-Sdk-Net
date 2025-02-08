@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
 	public class DynamicMpesaQRResponse
 	{
-		[JsonProperty("ResponseCode")]
+		[JsonPropertyName("ResponseCode")]
 		public string ResponseCode { get; set; }
 
-		[JsonProperty("RequestID")]
+		[JsonPropertyName("RequestID")]
 		public string RequestID { get; set; }
 
-		[JsonProperty("ResponseDescription")]
+		[JsonPropertyName("ResponseDescription")]
 		public string ResponseDescription { get; set; }
 
-		[JsonProperty("QRCode")]
+		[JsonPropertyName("QRCode")]
 		public string QRCode { get; set; }
 
 		[JsonIgnore]

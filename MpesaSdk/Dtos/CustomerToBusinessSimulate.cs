@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -10,8 +10,9 @@ namespace MpesaSdk.Dtos
         /// <summary>
         /// This is the Short Code receiving the amount being transacted.
         /// </summary>
-        [JsonProperty("ShortCode")]
-        public string ShortCode { get; private set; }
+        [JsonPropertyName("ShortCode")]
+		[JsonInclude]
+		public string ShortCode { get; private set; }
 
         /// <summary>
         /// This is a unique identifier of the transaction type: There are two types of these Identifiers:
@@ -19,27 +20,31 @@ namespace MpesaSdk.Dtos
         /// CustomerBuyGoodsOnline: This is used for Buy Goods shortcodes.
         /// Buy Default this property is set to CustomerPayBillOnline
         /// </summary>
-        [JsonProperty("CommandID")]
-        public string CommandID { get; private set; }
+        [JsonPropertyName("CommandID")]
+		[JsonInclude]
+		public string CommandID { get; private set; }
 
         /// <summary>
         /// This is the amount being transacted. The parameter expected is a numeric value.
         /// </summary>
-        [JsonProperty("Amount")]
-        public string Amount { get; private set; }
+        [JsonPropertyName("Amount")]
+		[JsonInclude]
+		public string Amount { get; private set; }
 
         /// <summary>
         /// This is the phone number initiating the C2B transaction.(format: 2547XXXXXXXX)
         /// </summary>
-        [JsonProperty("Msisdn")]
-        public string Msisdn { get; private set; }
+        [JsonPropertyName("Msisdn")]
+		[JsonInclude]
+		public string Msisdn { get; private set; }
 
         /// <summary>
         /// This is used on CustomerPayBillOnline option only. 
         /// This is where a customer is expected to enter a unique bill identifier, e.g an Account Number. 
         /// </summary>
-        [JsonProperty("BillRefNumber")]
-        public string BillRefNumber { get; private set; }
+        [JsonPropertyName("BillRefNumber")]
+		[JsonInclude]
+		public string BillRefNumber { get; private set; }
 
 
         /// <summary>

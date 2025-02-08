@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -11,40 +11,46 @@ namespace MpesaSdk.Dtos
         /// The name of Initiator to initiating  the request.
         /// This is the credential/username used to authenticate the transaction request.
         /// </summary>
-        [JsonProperty("Initiator")]
-        public string Initiator { get; private set; }
+        [JsonPropertyName("Initiator")]
+		[JsonInclude]
+		public string Initiator { get; private set; }
 
         /// <summary>
         /// Encrypted password for the initiator to authenticate the transaction request.
         /// Use <c>Credentials.EncryptPassword</c> method available under MpesaLib.Helpers to encrypt the password.
         /// </summary>
-        [JsonProperty("SecurityCredential")]
-        public string SecurityCredential { get; private set; }
+        [JsonPropertyName("SecurityCredential")]
+		[JsonInclude]
+		public string SecurityCredential { get; private set; }
 
         /// <summary>
         /// Takes only 'TransactionStatusQuery' command id
         /// The default value has been set to that so you don't have to set this property.
         /// </summary>
-        [JsonProperty("CommandID")]
-        public string CommandID { get; private set; } = Transaction_Type.TransactionStatusQuery;
+        [JsonPropertyName("CommandID")]
+		[JsonInclude]
+		public string CommandID { get; private set; } = Transaction_Type.TransactionStatusQuery;
 
         /// <summary>
         /// Unique identifier to identify a transaction on M-Pesa. e.g LKXXXX1234
         /// </summary>
-        [JsonProperty("TransactionID")]
-        public string TransactionID { get; private set; }
+        [JsonPropertyName("TransactionID")]
+		[JsonInclude]
+		public string TransactionID { get; private set; }
 
         /// <summary>
         /// This is a global unique identifier for the transaction request returned by the API proxy upon successful request submission. If you don’t have the M-PESA transaction ID you can use this to query.
         /// </summary>
-        [JsonProperty("OriginatorConversationID")]
-        public string OriginatorConversationID { get; private set; }
+        [JsonPropertyName("OriginatorConversationID")]
+		[JsonInclude]
+		public string OriginatorConversationID { get; private set; }
 
         /// <summary>
         /// Organization/MSISDN receiving the transaction
         /// </summary>
-        [JsonProperty("PartyA")]
-        public string PartyA { get; private set; }
+        [JsonPropertyName("PartyA")]
+		[JsonInclude]
+		public string PartyA { get; private set; }
 
         /// <summary>
         /// Type of organization receiving the transaction
@@ -52,32 +58,37 @@ namespace MpesaSdk.Dtos
         /// 2 – Till Number
         /// 4 – Organization short code
         /// </summary>
-        [JsonProperty("IdentifierType")]
-        public string IdentifierType { get; private set; }
+        [JsonPropertyName("IdentifierType")]
+		[JsonInclude]
+		public string IdentifierType { get; private set; }
 
         /// <summary>
         /// Comments that are sent along with the transaction
         /// </summary>
-        [JsonProperty("Remarks")]
-        public string Remarks { get; private set; }
+        [JsonPropertyName("Remarks")]
+		[JsonInclude]
+		public string Remarks { get; private set; }
 
         /// <summary>
         /// The path that stores information of time out transaction. https://ip or domain:port/path
         /// </summary>
-        [JsonProperty("QueueTimeOutURL")]
-        public string QueueTimeOutURL { get; private set; }
+        [JsonPropertyName("QueueTimeOutURL")]
+		[JsonInclude]
+		public string QueueTimeOutURL { get; private set; }
 
         /// <summary>
         /// The path that stores information of transaction. https://ip or domain:port/path
         /// </summary>
-        [JsonProperty("ResultURL")]
-        public string ResultURL { get; private set; }
+        [JsonPropertyName("ResultURL")]
+		[JsonInclude]
+		public string ResultURL { get; private set; }
 
         /// <summary>
         /// Optional Parameter. (upto 100 characters)
         /// </summary>
-        [JsonProperty("Occasion")]
-        public string Occasion { get; private set; }
+        [JsonPropertyName("Occasion")]
+		[JsonInclude]
+		public string Occasion { get; private set; }
 
         /// <summary>
         /// Mpesa Transaction Status Query data transfer object

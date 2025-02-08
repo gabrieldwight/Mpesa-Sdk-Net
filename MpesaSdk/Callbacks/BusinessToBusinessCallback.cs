@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
 {
@@ -7,7 +7,7 @@ namespace MpesaSdk.Callbacks
     /// </summary>
     public class BusinessToBusinessCallback
     {
-        [JsonProperty("Result")]
+        [JsonPropertyName("Result")]
         public BusinessToBusinessResult Result { get; set; }
     }
 }

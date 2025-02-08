@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Response
 {
     public class PullTransactionRegisterResponse
     {
-        [JsonProperty("ResponseRefID")]
+        [JsonPropertyName("ResponseRefID")]
         public string ResponseRefID { get; set; }
 
-        [JsonProperty("ResponseStatus")]
+        [JsonPropertyName("ResponseStatus")]
         public string ResponseStatus { get; set; }
 
-        [JsonProperty("ShortCode")]
+        [JsonPropertyName("ShortCode")]
         public string ShortCode { get; set; }
 
-        [JsonProperty("ResponseDescription")]
+        [JsonPropertyName("ResponseDescription")]
         public string ResponseDescription { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Dtos
 {
@@ -10,27 +10,31 @@ namespace MpesaSdk.Dtos
         /// <summary>
         /// The name of Initiator to initiating  the request
         /// </summary>
-        [JsonProperty("Initiator")]
-        public string Initiator { get; private set; }
+        [JsonPropertyName("Initiator")]
+		[JsonInclude]
+		public string Initiator { get; private set; }
 
         /// <summary>
         /// Encrypted password for the initiator to authenticate the transaction request.
         /// Use <c>Credentials.EncryptPassword</c> method available under MpesaLib.Helpers to encrypt the password.
         /// </summary>
-        [JsonProperty("SecurityCredential")]
-        public string SecurityCredential { get; private set; }
+        [JsonPropertyName("SecurityCredential")]
+		[JsonInclude]
+		public string SecurityCredential { get; private set; }
 
         /// <summary>
         /// Takes only 'TransactionReversal' Command id.
         /// The default value has been set to that so you don't have to set this property.
         /// </summary>
-        [JsonProperty("CommandID")]
+        [JsonPropertyName("CommandID")]
+        [JsonInclude]
         public string CommandID { get; private set; } = Transaction_Type.TransactionReversal;
 
         /// <summary>
         /// Unique identifier to identify a transaction on M-Pesa. e.g LKXXXX1234
         /// </summary>
-        [JsonProperty("TransactionID")]
+        [JsonPropertyName("TransactionID")]
+        [JsonInclude]
         public string TransactionID { get; private set; }
 
 
@@ -38,45 +42,52 @@ namespace MpesaSdk.Dtos
 		/// This is the Amount transacted, normally a numeric value. Money that customer pays to the Shorcode. 
 		/// Only whole numbers are supported.
 		/// </summary>
-		[JsonProperty("Amount")]
+		[JsonPropertyName("Amount")]
+		[JsonInclude]
 		public string Amount { get; private set; }
 
 		/// <summary>
 		/// Organization receiving the transaction (Shortcode)
 		/// </summary>
-		[JsonProperty("ReceiverParty")]
-        public string ReceiverParty { get; private set; }
+		[JsonPropertyName("ReceiverParty")]
+		[JsonInclude]
+		public string ReceiverParty { get; private set; }
 
         /// <summary>
         /// Type of organization receiving the transaction.
         /// 11 - Organization Identifier on M-Pesa
         /// </summary>
-        [JsonProperty("RecieverIdentifierType")]
-        public string RecieverIdentifierType { get; private set; }
+        [JsonPropertyName("RecieverIdentifierType")]
+		[JsonInclude]
+		public string RecieverIdentifierType { get; private set; }
 
         /// <summary>
         /// Comments that are sent along with the transaction. (Upto 100 characters)
         /// </summary>
-        [JsonProperty("Remarks")]
-        public string Remarks { get; private set; }
+        [JsonPropertyName("Remarks")]
+		[JsonInclude]
+		public string Remarks { get; private set; }
 
         /// <summary>
         /// The path that stores information of time out transaction.
         /// </summary>
-        [JsonProperty("QueueTimeOutURL")]
-        public string QueueTimeOutURL { get; private set; }
+        [JsonPropertyName("QueueTimeOutURL")]
+		[JsonInclude]
+		public string QueueTimeOutURL { get; private set; }
 
         /// <summary>
         /// The path that stores information of transaction 
         /// </summary>
-        [JsonProperty("ResultURL")]
-        public string ResultURL { get; private set; }
+        [JsonPropertyName("ResultURL")]
+		[JsonInclude]
+		public string ResultURL { get; private set; }
 
         /// <summary>
         /// Optional Parameter (upto 100 characters)
         /// </summary>
-        [JsonProperty("Occasion")]
-        public string Occasion { get; private set; }
+        [JsonPropertyName("Occasion")]
+		[JsonInclude]
+		public string Occasion { get; private set; }
 
         /// <summary>
         /// Transaction reversal data transfer object
