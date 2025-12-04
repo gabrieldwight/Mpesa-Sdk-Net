@@ -496,5 +496,70 @@ namespace MpesaSdk.Interfaces
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
 		StandingOrderResponse MpesaRatiba(StandingOrderRequest standingOrderRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		MpesaResponse BusinessToPochi(BusinessToPochiRequest businessToPochiRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<MpesaResponse> BusinessToPochiAsync(BusinessToPochiRequest businessToPochiRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SwapResponse Swap(SwapRequest swapRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SwapResponse> SwapAsync(SwapRequest swapRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		IMSIResponse IMSI(IMSIRequest imsiRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<IMSIResponse> IMSIAsync(IMSIRequest imsiRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		// Sim management
+		SimManagementBaseResponse GetAllSims(SimRequest simRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> GetAllSimsAsync(SimRequest simRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse QueryLifeCycleStatus(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> QueryLifeCycleStatusAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse QueryCustomerInfo(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> QueryCustomerInfoAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse SimActivation(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> SimActivationAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse GetActivationTrends(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> GetActivationTrendsAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse RenameAsset(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> RenameAssetAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse SuspendOrUnsuspendSubscriber(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> SuspendOrUnsuspendSubscriberAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse SearchMessage(MessageBaseRequest messageBaseRequest, string accesstoken, int pageNumber = 1, int pageSize = 50, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> SearchMessageAsync(MessageBaseRequest messageBaseRequest, string accesstoken, int pageNumber = 1, int pageSize = 50, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse FilterMessage(FilterMessageRequest filterMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> FilterMessageAsync(FilterMessageRequest filterMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse DeleteMessageThread(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> DeleteMessageThreadAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse GetAllMessages(GetAllMessageRequest getAllMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> GetAllMessagesAsync(GetAllMessageRequest getAllMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse SendSingleMessage(SendMessageRequest sendMessageRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> SendSingleMessageAsync(SendMessageRequest sendMessageRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		SimManagementBaseResponse DeleteMessage(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<SimManagementBaseResponse> DeleteMessageAsync(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default);
 	}
 }

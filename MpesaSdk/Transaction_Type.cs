@@ -114,5 +114,7 @@
 		/// Standing Order Transaction Type
 		/// </summary>
 		public const string StandingOrderTillNumber = "Standing Order Customer Pay Merchant";
+
+        public const string BusinessPayToPochi = "BusinessPayToPochi";
 	}
 }

@@ -289,6 +289,24 @@ namespace MpesaSdk
 				: await MpesaPostRequestAsync<MpesaResponse>(businessBuyGoodsRequest, accesstoken, MpesaRequestEndpoint.BusinessToBusiness, cancellationToken);
 		}
 
+		public MpesaResponse BusinessToPochi(BusinessToPochiRequest businessToPochiRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BusinessToPochiValidator();
+			var results = validator.Validate(businessToPochiRequest);
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<MpesaResponse>(businessToPochiRequest, accesstoken, MpesaRequestEndpoint.BusinessToPochi, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<MpesaResponse> BusinessToPochiAsync(BusinessToPochiRequest businessToPochiRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new BusinessToPochiValidator();
+			var results = await validator.ValidateAsync(businessToPochiRequest, cancellationToken);
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<MpesaResponse>(businessToPochiRequest, accesstoken, MpesaRequestEndpoint.BusinessToPochi, cancellationToken);
+		}
+
 		public DynamicMpesaQRResponse GenerateDynamicMpesaQR(DynamicMpesaQR dynamicMpesaQR, string accesstoken, CancellationToken cancellationToken = default)
 		{
 			var validator = new DynamicMpesaQRValidator();
@@ -332,6 +350,24 @@ namespace MpesaSdk
 		public async Task<string> GetAuthTokenAsync(string consumerKey, string consumerSecret, CancellationToken cancellationToken = default)
 		{
 			return await RequestAccessTokenAsync(consumerKey, consumerSecret, MpesaRequestEndpoint.AuthToken, cancellationToken);
+		}
+
+		public IMSIResponse IMSI(IMSIRequest imsiRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new IMSIValidator();
+			var results = validator.Validate(imsiRequest);
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<IMSIResponse>(imsiRequest, accesstoken, MpesaRequestEndpoint.IMSI, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<IMSIResponse> IMSIAsync(IMSIRequest imsiRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new IMSIValidator();
+			var results = await validator.ValidateAsync(imsiRequest, cancellationToken);
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<IMSIResponse>(imsiRequest, accesstoken, MpesaRequestEndpoint.IMSI, cancellationToken);
 		}
 
 		/// <summary>
@@ -772,6 +808,24 @@ namespace MpesaSdk
 				: await MpesaPostRequestAsync<MpesaResponse>(mpesaReversal, accesstoken, MpesaRequestEndpoint.ReverseMpesaTransaction, cancellationToken);
 		}
 
+		public SwapResponse Swap(SwapRequest swapRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new SwapRequestValidator();
+			var results = validator.Validate(swapRequest);
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: MpesaPostRequestAsync<SwapResponse>(swapRequest, accesstoken, MpesaRequestEndpoint.Swap, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SwapResponse> SwapAsync(SwapRequest swapRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			var validator = new SwapRequestValidator();
+			var results = await validator.ValidateAsync(swapRequest, cancellationToken);
+			return !results.IsValid
+				? throw new MpesaAPIException(HttpStatusCode.BadRequest, string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage.ToString())))
+				: await MpesaPostRequestAsync<SwapResponse>(swapRequest, accesstoken, MpesaRequestEndpoint.Swap, cancellationToken);
+		}
+
 		/// <summary>
 		/// Makes HttpRequest to mpesa api server
 		/// </summary>
@@ -875,6 +929,178 @@ namespace MpesaSdk
 #endif
 			}
 			return result.AccessToken;
+		}
+
+		public SimManagementBaseResponse GetAllSims(SimRequest simRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(simRequest, accesstoken, MpesaRequestEndpoint.AllSims, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> GetAllSimsAsync(SimRequest simRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(simRequest, accesstoken, MpesaRequestEndpoint.AllSims, cancellationToken);
+		}
+
+		public SimManagementBaseResponse QueryLifeCycleStatus(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.LifeCycleStatus, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> QueryLifeCycleStatusAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.LifeCycleStatus, cancellationToken);
+		}
+
+		public SimManagementBaseResponse QueryCustomerInfo(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.QueryCustomerInfo, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> QueryCustomerInfoAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.QueryCustomerInfo, cancellationToken);
+		}
+
+		public SimManagementBaseResponse SimActivation(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.SimActivation, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> SimActivationAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.SimActivation, cancellationToken);
+		}
+
+		public SimManagementBaseResponse GetActivationTrends(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.GetActivationTrends, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> GetActivationTrendsAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.GetActivationTrends, cancellationToken);
+		}
+
+		public SimManagementBaseResponse RenameAsset(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.RenameAsset, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> RenameAssetAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.RenameAsset, cancellationToken);
+		}
+
+		public SimManagementBaseResponse SuspendOrUnsuspendSubscriber(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.SuspendOrUnsuspendSubscriber, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> SuspendOrUnsuspendSubscriberAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.SuspendOrUnsuspendSubscriber, cancellationToken);
+		}
+
+		public SimManagementBaseResponse SearchMessage(MessageBaseRequest messageBaseRequest, string accesstoken, int pageNumber = 1, int pageSize = 50, CancellationToken cancellationToken = default)
+		{
+			var builder = new StringBuilder();
+
+			builder.Append(MpesaRequestEndpoint.SearchMessages);
+			builder.Replace("{{page}}", pageNumber.ToString());
+			builder.Replace("{{size}}", pageSize.ToString());
+
+			var formattedMpesaEndpoint = builder.ToString();
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(messageBaseRequest, accesstoken, formattedMpesaEndpoint, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> SearchMessageAsync(MessageBaseRequest messageBaseRequest, string accesstoken, int pageNumber = 1, int pageSize = 50, CancellationToken cancellationToken = default)
+		{
+			var builder = new StringBuilder();
+
+			builder.Append(MpesaRequestEndpoint.SearchMessages);
+			builder.Replace("{{page}}", pageNumber.ToString());
+			builder.Replace("{{size}}", pageSize.ToString());
+
+			var formattedMpesaEndpoint = builder.ToString();
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(messageBaseRequest, accesstoken, formattedMpesaEndpoint, cancellationToken);
+		}
+
+		public SimManagementBaseResponse FilterMessage(FilterMessageRequest filterMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+		{
+			var builder = new StringBuilder();
+
+			builder.Append(MpesaRequestEndpoint.FilterMessages);
+			builder.Replace("{{page}}", pageNumber.ToString());
+			builder.Replace("{{size}}", pageSize.ToString());
+
+			var formattedMpesaEndpoint = builder.ToString();
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(filterMessageRequest, accesstoken, formattedMpesaEndpoint, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> FilterMessageAsync(FilterMessageRequest filterMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+		{
+			var builder = new StringBuilder();
+
+			builder.Append(MpesaRequestEndpoint.FilterMessages);
+			builder.Replace("{{page}}", pageNumber.ToString());
+			builder.Replace("{{size}}", pageSize.ToString());
+
+			var formattedMpesaEndpoint = builder.ToString();
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(filterMessageRequest, accesstoken, formattedMpesaEndpoint, cancellationToken);
+		}
+
+		public SimManagementBaseResponse DeleteMessageThread(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.DeleteMessageThread, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> DeleteMessageThreadAsync(CustomerQueryBaseRequest customerQueryBaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(customerQueryBaseRequest, accesstoken, MpesaRequestEndpoint.DeleteMessageThread, cancellationToken);
+		}
+
+		public SimManagementBaseResponse GetAllMessages(GetAllMessageRequest getAllMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+		{
+			var builder = new StringBuilder();
+
+			builder.Append(MpesaRequestEndpoint.GetAllMessages);
+			builder.Replace("{{page}}", pageNumber.ToString());
+			builder.Replace("{{size}}", pageSize.ToString());
+
+			var formattedMpesaEndpoint = builder.ToString();
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(getAllMessageRequest, accesstoken, formattedMpesaEndpoint, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> GetAllMessagesAsync(GetAllMessageRequest getAllMessageRequest, string accesstoken, int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+		{
+			var builder = new StringBuilder();
+
+			builder.Append(MpesaRequestEndpoint.GetAllMessages);
+			builder.Replace("{{page}}", pageNumber.ToString());
+			builder.Replace("{{size}}", pageSize.ToString());
+
+			var formattedMpesaEndpoint = builder.ToString();
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(getAllMessageRequest, accesstoken, formattedMpesaEndpoint, cancellationToken);
+		}
+
+		public SimManagementBaseResponse SendSingleMessage(SendMessageRequest sendMessageRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(sendMessageRequest, accesstoken, MpesaRequestEndpoint.SendSingleMessage, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> SendSingleMessageAsync(SendMessageRequest sendMessageRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(sendMessageRequest, accesstoken, MpesaRequestEndpoint.SendSingleMessage, cancellationToken);
+		}
+
+		public SimManagementBaseResponse DeleteMessage(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<SimManagementBaseResponse>(deleteMessageRequest, accesstoken, MpesaRequestEndpoint.DeleteMessage, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<SimManagementBaseResponse> DeleteMessageAsync(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<SimManagementBaseResponse>(deleteMessageRequest, accesstoken, MpesaRequestEndpoint.DeleteMessage, cancellationToken);
 		}
 	}
 }

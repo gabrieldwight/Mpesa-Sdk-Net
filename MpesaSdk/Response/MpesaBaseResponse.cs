@@ -29,6 +29,8 @@ namespace MpesaSdk.Response
 		/// Gets or Set the Request Id
 		/// </summary>
 		/// <value>Generated Id from the application implementation used to track the response</value>
+		[JsonPropertyName("RequestId")]
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		public string RequestId { get; set; }
 	}
 }

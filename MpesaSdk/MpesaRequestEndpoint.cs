@@ -118,5 +118,39 @@ namespace MpesaSdk
 
         public static string MpesaRatiba { get; set; } = "standingorder/v1/createStandingOrderExternal";
 
-    }
+        public static string BusinessToPochi { get; set; } = "mpesa/b2pochi/v1/paymentrequest";
+
+        public static string Swap { get; set; } = "imsi/v2/checkATI";
+
+        public static string IMSI { get; set; } = "imsi/v1/checkATI";
+
+		// SIM Operations Apis
+
+		public static string AllSims { get; set; } = "simportal/v1/allsims";
+
+        public static string LifeCycleStatus { get; set; } = "simportal/v1/queryLifeCycleStatus";
+
+        public static string QueryCustomerInfo { get; set; } = "simportal/v1/querycustomerinfo";
+
+        public static string SimActivation { get; set; } = "simportal/v1/simactivation";
+
+        public static string GetActivationTrends { get; set; } = "simportal/v1/getactivationtrends";
+
+        public static string RenameAsset { get; set; } = "simportal/v1/renameasset";
+
+        public static string SuspendOrUnsuspendSubscriber { get; set; } = "simportal/v1/suspend_unsuspend_sub";
+
+        // Messaging Apis
+        public static string SearchMessages { get; set; } = "simportal/v1/searchmessages?pageNo={{page}}&pageSize={{size}}";
+
+        public static string FilterMessages { get; set; } = "simportal/v1/filtermessages?pageNo={{page}}&pageSize={{size}}";
+
+        public static string DeleteMessageThread { get; set; } = "simportal/v1/deleteMessageThread";
+
+        public static string GetAllMessages { get; set; } = "simportal/v1/getallmessages?pageNo={{page}}&pageSize={{size}}";
+
+        public static string SendSingleMessage { get; set; } = "simportal/v1/sendsinglemessage";
+
+        public static string DeleteMessage { get; set; } = "simportal/v1/deletemessage";
+	}
 }
