@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MpesaSdk.Converters;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace MpesaSdk.Callbacks
@@ -32,6 +33,7 @@ namespace MpesaSdk.Callbacks
         [JsonPropertyName("Key")]
         public string Key { get; set; }
         [JsonPropertyName("Value")]
-        public string Value { get; set; }
+		[JsonConverter(typeof(FlexibleStringConverter))]
+		public string Value { get; set; }
     }
 }
