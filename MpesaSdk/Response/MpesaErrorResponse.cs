@@ -11,7 +11,12 @@ namespace MpesaSdk.Response
         /// This is a unique requestID for the payment request
         /// </summary>
         [JsonPropertyName("requestId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string RequestId { get; set; }
+
+        [JsonPropertyName("responseId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string ResponseId { get; set; }
 
         /// <summary>
         /// This is a predefined code that indicates the reason for request failure. This are defined in the Response Error Details below. The error codes maps to specific error message as illustrated in the Response Error Details below.

@@ -152,5 +152,23 @@ namespace MpesaSdk
         public static string SendSingleMessage { get; set; } = "simportal/v1/sendsinglemessage";
 
         public static string DeleteMessage { get; set; } = "simportal/v1/deletemessage";
+
+		// Lipa Na Bonga Apis
+        public static string CalculateBongaPoints { get; set; } = "v1/lipa/na/bonga/calculate-points";
+		public static string RedeemBongaPoints { get; set; } = "v1/lipa/na/bonga/redeem-paybill";
+
+		// B2B Hakikisha Apis
+		public static string B2BHakikisha { get; set; } = "sfcverify/v1/query/info";
+
+		// Mobile Number Validation Apis
+        public static string ValidateMobileNumber { get; set; } = "v1/KYC-validation/validateID";
+
+		// Age on Network Apis
+        public static string GetMobileNumberDate { get; set; } = "registration/v1/checkATI";
+
+		// Mobile Data Bundles Apis
+        public static string FetchDataBundlesOffers { get; set; } = "v1/dynamic-offers/fetch?msisdn={{msisdn}}";
+        public static string PurchaseDataBundleOffer { get; set; } = "v1/dynamic-offers/facebook-bundle/purchase";
+        public static string CheckDataBundleStatus { get; set; } = "v2/bundles/get/status?id={{id}}&serviceAccountId={{serviceAccountId}}";
 	}
 }

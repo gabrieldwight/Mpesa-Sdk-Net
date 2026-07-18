@@ -879,6 +879,54 @@ namespace MpesaSdk
 			return result;
 		}
 
+		private async Task<T> MpesaGetAsync<T>(string mpesaEndpoint, string accessToken, CancellationToken cancellationToken = default, bool isHeaderAccessTokenProvided = true) where T : new()
+		{
+			if (isHeaderAccessTokenProvided)
+			{
+				_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+			}
+
+			T result = new();
+			cancellationToken.ThrowIfCancellationRequested();
+
+			var response = await _client.GetAsync(mpesaEndpoint, cancellationToken).ConfigureAwait(false);
+
+			if (response.IsSuccessStatusCode)
+			{
+#if NET5_0_OR_GREATER
+				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+				{
+					result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+				}
+#endif
+#if NETSTANDARD2_0_OR_GREATER || NET472
+				using (var stream = await response.Content.ReadAsStreamAsync())
+				{
+					result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+				}
+#endif
+			}
+			else
+			{
+				MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
+#if NET5_0_OR_GREATER
+				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+				{
+					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+				}
+				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+#endif
+#if NETSTANDARD2_0_OR_GREATER || NET472
+				using (var stream = await response.Content.ReadAsStreamAsync())
+				{
+					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+				}
+				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+#endif
+			}
+			return result;
+		}
+
 		/// <summary>
 		/// Method makes the accesstoken request to mpesa api
 		/// </summary>
@@ -1101,6 +1149,94 @@ namespace MpesaSdk
 		public async Task<SimManagementBaseResponse> DeleteMessageAsync(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default)
 		{
 			return await MpesaPostRequestAsync<SimManagementBaseResponse>(deleteMessageRequest, accesstoken, MpesaRequestEndpoint.DeleteMessage, cancellationToken);
+		}
+
+		public LipaNaBongaResponse CalculatePoints(LipaNaBongaCalculateRequest lipaNaBongaCalculateRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<LipaNaBongaResponse>(lipaNaBongaCalculateRequest, accesstoken, MpesaRequestEndpoint.CalculateBongaPoints, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<LipaNaBongaResponse> CalculatePointsAsync(LipaNaBongaCalculateRequest lipaNaBongaCalculateRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<LipaNaBongaResponse>(lipaNaBongaCalculateRequest, accesstoken, MpesaRequestEndpoint.CalculateBongaPoints, cancellationToken);
+
+		}
+
+		public LipaNaBongaResponse RedeemPoints(LipaNaBongaRedeemRequest lipaNaBongaRedeemRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<LipaNaBongaResponse>(lipaNaBongaRedeemRequest, accesstoken, MpesaRequestEndpoint.RedeemBongaPoints, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<LipaNaBongaResponse> RedeemPointsAsync(LipaNaBongaRedeemRequest lipaNaBongaRedeemRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<LipaNaBongaResponse>(lipaNaBongaRedeemRequest, accesstoken, MpesaRequestEndpoint.RedeemBongaPoints, cancellationToken);
+		}
+
+		public B2BHakikishaResponse B2BHakikisha(B2BHakikishaRequest b2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<B2BHakikishaResponse>(b2BHakikishaRequest, accesstoken, MpesaRequestEndpoint.B2BHakikisha, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<B2BHakikishaResponse> B2BHakikishaAsync(B2BHakikishaRequest b2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<B2BHakikishaResponse>(b2BHakikishaRequest, accesstoken, MpesaRequestEndpoint.B2BHakikisha, cancellationToken);
+
+		}
+
+		public MobileNumberValidationResponse ValidateMobileNumber(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<MobileNumberValidationResponse>(mobileNumberValidationRequest, accesstoken, MpesaRequestEndpoint.ValidateMobileNumber, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<MobileNumberValidationResponse> ValidateMobileNumberAsync(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<MobileNumberValidationResponse>(mobileNumberValidationRequest, accesstoken, MpesaRequestEndpoint.ValidateMobileNumber, cancellationToken);
+		}
+
+		public PhoneNumberAgeResponse GetPhoneNumberAge(PhoneNumberAgeRequest phoneNumberAgeRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<PhoneNumberAgeResponse>(phoneNumberAgeRequest, accesstoken, MpesaRequestEndpoint.GetMobileNumberDate, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<PhoneNumberAgeResponse> GetPhoneNumberAgeAsync(PhoneNumberAgeRequest phoneNumberAgeRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<PhoneNumberAgeResponse>(phoneNumberAgeRequest, accesstoken, MpesaRequestEndpoint.GetMobileNumberDate, cancellationToken);
+		}
+
+		public BundleFetchResponse GetBundleFetchResponse(BundleFetchRequest bundleFetchRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			string formattedEndpoint = MpesaRequestEndpoint.FetchDataBundlesOffers.Replace("{{msisdn}}", bundleFetchRequest.Params.Msisdn);
+			return MpesaGetAsync<BundleFetchResponse>(formattedEndpoint, accesstoken, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BundleFetchResponse> GetBundleFetchResponseAsync(BundleFetchRequest bundleFetchRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			string formattedEndpoint = MpesaRequestEndpoint.FetchDataBundlesOffers.Replace("{{msisdn}}", bundleFetchRequest.Params.Msisdn);
+			return await MpesaGetAsync<BundleFetchResponse>(formattedEndpoint, accesstoken, cancellationToken);
+		}
+
+		public BundleOfferPurchaseResponse GetBundleOfferPurchaseResponse(BundleOfferPurchaseRequest bundleOfferPurchaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<BundleOfferPurchaseResponse>(bundleOfferPurchaseRequest, accesstoken, MpesaRequestEndpoint.PurchaseDataBundleOffer, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BundleOfferPurchaseResponse> GetBundleOfferPurchaseResponseAsync(BundleOfferPurchaseRequest bundleOfferPurchaseRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<BundleOfferPurchaseResponse>(bundleOfferPurchaseRequest, accesstoken, MpesaRequestEndpoint.PurchaseDataBundleOffer, cancellationToken);
+		}
+
+		public BundleCheckStatusResponse GetBundleCheckStatusResponse(BundleCheckStatusRequest bundleCheckStatusRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			string formattedEndpoint = MpesaRequestEndpoint.CheckDataBundleStatus.Replace("{{id}}", bundleCheckStatusRequest.Params.Id)
+																			   .Replace("{{serviceAccountId}}", bundleCheckStatusRequest.Params.ServiceAccountId);
+			return MpesaGetAsync<BundleCheckStatusResponse>(formattedEndpoint, accesstoken, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<BundleCheckStatusResponse> GetBundleCheckStatusResponseAsync(BundleCheckStatusRequest bundleCheckStatusRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			string formattedEndpoint = MpesaRequestEndpoint.CheckDataBundleStatus.Replace("{{id}}", bundleCheckStatusRequest.Params.Id)
+																			   .Replace("{{serviceAccountId}}", bundleCheckStatusRequest.Params.ServiceAccountId);
+			return await MpesaGetAsync<BundleCheckStatusResponse>(formattedEndpoint, accesstoken, cancellationToken);
 		}
 	}
 }

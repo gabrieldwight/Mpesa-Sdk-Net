@@ -561,5 +561,36 @@ namespace MpesaSdk.Interfaces
 		SimManagementBaseResponse DeleteMessage(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default);
 
 		Task<SimManagementBaseResponse> DeleteMessageAsync(DeleteMessageRequest deleteMessageRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		// Lipa Na Bonga APIs
+		LipaNaBongaResponse CalculatePoints(LipaNaBongaCalculateRequest lipaNaBongaCalculateRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<LipaNaBongaResponse> CalculatePointsAsync(LipaNaBongaCalculateRequest lipaNaBongaCalculateRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		LipaNaBongaResponse RedeemPoints(LipaNaBongaRedeemRequest lipaNaBongaRedeemRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		Task<LipaNaBongaResponse> RedeemPointsAsync(LipaNaBongaRedeemRequest lipaNaBongaRedeemRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		// B2B Hakikisha APIs
+		B2BHakikishaResponse B2BHakikisha(B2BHakikishaRequest b2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<B2BHakikishaResponse> B2BHakikishaAsync(B2BHakikishaRequest b2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		// Mobile Number Validation APIs
+		MobileNumberValidationResponse ValidateMobileNumber(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<MobileNumberValidationResponse> ValidateMobileNumberAsync(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		// Age On Network APIs
+		PhoneNumberAgeResponse GetPhoneNumberAge(PhoneNumberAgeRequest phoneNumberAgeRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<PhoneNumberAgeResponse> GetPhoneNumberAgeAsync(PhoneNumberAgeRequest phoneNumberAgeRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		// Mobile Data Bundles APIS
+		BundleFetchResponse GetBundleFetchResponse(BundleFetchRequest bundleFetchRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<BundleFetchResponse> GetBundleFetchResponseAsync(BundleFetchRequest bundleFetchRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		BundleOfferPurchaseResponse GetBundleOfferPurchaseResponse(BundleOfferPurchaseRequest bundleOfferPurchaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<BundleOfferPurchaseResponse> GetBundleOfferPurchaseResponseAsync(BundleOfferPurchaseRequest bundleOfferPurchaseRequest, string accesstoken, CancellationToken cancellationToken = default);
+
+		BundleCheckStatusResponse GetBundleCheckStatusResponse(BundleCheckStatusRequest bundleCheckStatusRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<BundleCheckStatusResponse> GetBundleCheckStatusResponseAsync(BundleCheckStatusRequest bundleCheckStatusRequest, string accesstoken, CancellationToken cancellationToken = default);
 	}
 }
