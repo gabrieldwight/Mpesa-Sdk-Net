@@ -1,0 +1,16 @@
+{
+  "catalog": [
+    {
+      "alias": "Authorization",
+      "name": "Authorization",
+      "operation": "GET",
+      "endpoint": "https://sandbox.safaricom.co.ke/oauth/v2/generate?grant_type=client_credentials"
+    },
+    {
+      "alias": "MiniApps",
+      "name": "Mini Apps",
+      "operation": "POST",
+      "endpoint": "https://sandbox.safaricom.co.ke/miniapps/v1/create"
+    }
+  ]
+}

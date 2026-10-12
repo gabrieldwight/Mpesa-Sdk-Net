@@ -1,0 +1,10 @@
+{
+  "catalog": [
+    {
+      "alias": "Authorization",
+      "name": "Authorization",
+      "operation": "GET",
+      "endpoint": "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    }
+  ]
+}

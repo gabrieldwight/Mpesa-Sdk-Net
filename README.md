@@ -136,6 +136,17 @@ var accesstoken = await _mpesaClient.GetAuthTokenAsync(ConsumerKey, ConsumerSecr
 
 Note that you have to pass in a consusmerKey, ConsumerSecret provided by Mpesa.
 
+For convenience, import `MpesaSdk.Extensions` to use the authentication overloads. They fetch a token with Basic authentication and pass it to the selected request; explicit-token overloads remain available when you manage token caching yourself.
+
+```c#
+using MpesaSdk.Extensions;
+
+var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(
+    MpesaExpressObject,
+    ConsumerKey,
+    ConsumerSecret);
+```
+
 
 ## C2B Register Urls Request
 ```c#

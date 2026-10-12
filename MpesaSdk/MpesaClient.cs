@@ -836,93 +836,100 @@ namespace MpesaSdk
 		/// <returns>Mpesa API response based on the API requests made.</returns>
 		private async Task<T> MpesaPostRequestAsync<T>(object mpesaDto, string accessToken, string mpesaEndpoint, CancellationToken cancellationToken = default) where T : new()
 		{
-			_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 			T result = new();
 			string json = JsonSerializer.Serialize(mpesaDto);
-			var content = new StringContent(json, Encoding.UTF8, "application/json");
-			cancellationToken.ThrowIfCancellationRequested();
-			var response = await _client.PostAsync(mpesaEndpoint, content, cancellationToken).ConfigureAwait(false);
-
-			if (response.IsSuccessStatusCode)
+			using (var request = new HttpRequestMessage(HttpMethod.Post, mpesaEndpoint))
 			{
-#if NET5_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+				request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+				request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+				cancellationToken.ThrowIfCancellationRequested();
+				using (var response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false))
 				{
-					result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
-				}
+					if (response.IsSuccessStatusCode)
+					{
+#if NET5_0_OR_GREATER
+						using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+						{
+							result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+						}
 #endif
 #if NETSTANDARD2_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				{
-					result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
-				}
+						using (var stream = await response.Content.ReadAsStreamAsync())
+						{
+							result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+						}
 #endif
-			}
-			else
-			{
-				MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
+					}
+					else
+					{
+						MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
 #if NET5_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
-				{
-					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
-				}
-				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+						using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+						{
+							mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+						}
+						throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
 #endif
 #if NETSTANDARD2_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				{
-					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
-				}
-				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+						using (var stream = await response.Content.ReadAsStreamAsync())
+						{
+							mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+						}
+						throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
 #endif
+					}
+				}
 			}
 			return result;
 		}
 
 		private async Task<T> MpesaGetAsync<T>(string mpesaEndpoint, string accessToken, CancellationToken cancellationToken = default, bool isHeaderAccessTokenProvided = true) where T : new()
 		{
-			if (isHeaderAccessTokenProvided)
-			{
-				_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-			}
-
 			T result = new();
 			cancellationToken.ThrowIfCancellationRequested();
-
-			var response = await _client.GetAsync(mpesaEndpoint, cancellationToken).ConfigureAwait(false);
-
-			if (response.IsSuccessStatusCode)
+			using (var request = new HttpRequestMessage(HttpMethod.Get, mpesaEndpoint))
 			{
-#if NET5_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+				if (isHeaderAccessTokenProvided)
 				{
-					result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+					request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 				}
+
+				using (var response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false))
+				{
+					if (response.IsSuccessStatusCode)
+					{
+#if NET5_0_OR_GREATER
+						using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+						{
+							result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+						}
 #endif
 #if NETSTANDARD2_0_OR_GREATER || NET472
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				{
-					result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
-				}
+						using (var stream = await response.Content.ReadAsStreamAsync())
+						{
+							result = await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
+						}
 #endif
-			}
-			else
-			{
-				MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
+					}
+					else
+					{
+						MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
 #if NET5_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
-				{
-					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
-				}
-				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+						using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+						{
+							mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+						}
+						throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
 #endif
 #if NETSTANDARD2_0_OR_GREATER || NET472
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				{
-					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
-				}
-				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+						using (var stream = await response.Content.ReadAsStreamAsync())
+						{
+							mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+						}
+						throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
 #endif
+					}
+				}
 			}
 			return result;
 		}
@@ -939,42 +946,47 @@ namespace MpesaSdk
 		{
 			var keyBytes = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{consumerKey}:{consumerSecret}"));
 
-			_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", keyBytes);
 			MpesaAccessTokenResponse result = new MpesaAccessTokenResponse();
 			cancellationToken.ThrowIfCancellationRequested();
-			var response = await _client.GetAsync(mpesaRequestEndpoint, cancellationToken).ConfigureAwait(false);
-			if (response.IsSuccessStatusCode)
+			using (var request = new HttpRequestMessage(HttpMethod.Get, mpesaRequestEndpoint))
 			{
-#if NET5_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+				request.Headers.Authorization = new AuthenticationHeaderValue("Basic", keyBytes);
+				using (var response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false))
 				{
-					result = await JsonSerializer.DeserializeAsync<MpesaAccessTokenResponse>(stream, cancellationToken: cancellationToken);
-				}
+					if (response.IsSuccessStatusCode)
+					{
+#if NET5_0_OR_GREATER
+						using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+						{
+							result = await JsonSerializer.DeserializeAsync<MpesaAccessTokenResponse>(stream, cancellationToken: cancellationToken);
+						}
 #endif
 #if NETSTANDARD2_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				{
-					result = await JsonSerializer.DeserializeAsync<MpesaAccessTokenResponse>(stream, cancellationToken: cancellationToken);
-				}
+						using (var stream = await response.Content.ReadAsStreamAsync())
+						{
+							result = await JsonSerializer.DeserializeAsync<MpesaAccessTokenResponse>(stream, cancellationToken: cancellationToken);
+						}
 #endif
-			}
-			else
-			{
-				MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
+					}
+					else
+					{
+						MpesaErrorResponse mpesaErrorResponse = new MpesaErrorResponse();
 #if NET5_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
-				{
-					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
-				}
-				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+						using (var stream = await response.Content.ReadAsStreamAsync(cancellationToken))
+						{
+							mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+						}
+						throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
 #endif
 #if NETSTANDARD2_0_OR_GREATER
-				using (var stream = await response.Content.ReadAsStreamAsync())
-				{
-					mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
-				}
-				throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
+						using (var stream = await response.Content.ReadAsStreamAsync())
+						{
+							mpesaErrorResponse = await JsonSerializer.DeserializeAsync<MpesaErrorResponse>(stream, cancellationToken: cancellationToken);
+						}
+						throw new MpesaAPIException(new HttpRequestException(mpesaErrorResponse.ErrorMessage), response.StatusCode, mpesaErrorResponse);
 #endif
+					}
+				}
 			}
 			return result.AccessToken;
 		}

@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "portal": "https://developer.safaricom.co.ke/apis",
+  "graphQlEndpoint": "https://developer.safaricom.co.ke/api/graphql",
+  "headerProfiles": {
+    "oauth": ["Authorization"],
+    "bearer": ["Authorization", "Content-Type"]
+  },
+  "targetAliasGroups": [
+    { "suite": "Authorization", "aliases": ["Authorization"] },
+    { "suite": "M-Pesa Express", "aliases": ["MpesaExpress"] },
+    { "suite": "C2B", "aliases": ["CustomerToBusiness"] },
+    { "suite": "B2C", "aliases": ["BusinessToCustomer"] },
+    { "suite": "B2B", "aliases": ["BusinessPayBill", "BusinessBuyGoods", "TaxRemittance"] },
+    { "suite": "Transaction Status", "aliases": ["TransactionStatus"] },
+    { "suite": "Account Balance", "aliases": ["AccountBalance"] },
+    { "suite": "Reversal", "aliases": ["Reversal"] },
+    { "suite": "Dynamic QR Code", "aliases": ["DynamicQRCode"] },
+    { "suite": "Pull Transactions", "canonicalAlias": "PullTransactions", "aliases": ["PullTransaction", "PullTransactions"] },
+    { "suite": "Bill Manager", "aliases": ["BillManager"] }
+  ],
+  "scopeGaps": [
+    "Mini Apps are presented on a separate portal page and are not represented by the public getApis catalog; no machine-readable endpoint/schema source has been verified for that suite."
+  ],
+  "apis": [
+    {
+      "alias": "Authorization",
+      "name": "Authorization",
+      "method": "GET",
+      "endpoint": "oauth/v1/generate?grant_type=client_credentials",
+      "endpointConstant": "AuthToken",
+      "headersProfile": "oauth",
+      "implementation": "MpesaSdk.MpesaClient.GetAuthTokenAsync",
+      "requestType": null,
+      "responseType": "MpesaSdk.Response.MpesaAccessTokenResponse"
+    },
+    {
+      "alias": "MpesaExpress",
+      "name": "M-Pesa Express",
+      "method": "POST",
+      "endpoint": "mpesa/stkpush/v1/processrequest",
+      "endpointConstant": "LipaNaMpesaOnline",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.MakeLipaNaMpesaOnlinePaymentAsync",
+      "requestType": "MpesaSdk.Dtos.LipaNaMpesaOnline",
+      "responseType": "MpesaSdk.Response.LipaNaMpesaOnlinePushStkResponse",
+      "callbackType": "MpesaSdk.Callbacks.LipaNaMpesaCallback"
+    },
+    {
+      "alias": "CustomerToBusiness",
+      "name": "Customer to Business",
+      "method": "POST",
+      "endpoint": "mpesa/c2b/v1/registerurl",
+      "endpointConstant": "RegisterC2BUrl",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.RegisterC2BUrlAsync",
+      "requestType": "MpesaSdk.Dtos.CustomerToBusinessRegisterUrl",
+      "callbackType": "MpesaSdk.Callbacks.CustomerToBusinessCallback"
+    },
+    {
+      "alias": "BusinessToCustomer",
+      "name": "Business to Customer",
+      "method": "POST",
+      "endpoint": "mpesa/b2c/v1/paymentrequest",
+      "endpointConstant": "BusinessToCustomer",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.MakeB2CPaymentAsync",
+      "requestType": "MpesaSdk.Dtos.BusinessToCustomer",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.BusinessToCustomerCallback"
+    },
+    {
+      "alias": "BusinessToBusiness",
+      "name": "Business to Business",
+      "method": "POST",
+      "endpoint": "mpesa/b2b/v1/paymentrequest",
+      "endpointConstant": "BusinessToBusiness",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.MakeB2BPaymentAsync",
+      "requestType": "MpesaSdk.Dtos.BusinessToBusiness",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.BusinessToBusinessCallback"
+    },
+    {
+      "alias": "BusinessPayBill",
+      "name": "Business Pay Bill",
+      "method": "POST",
+      "endpoint": "mpesa/b2b/v1/paymentrequest",
+      "endpointConstant": "BusinessToBusiness",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.BusinessPayBillAsync",
+      "requestType": "MpesaSdk.Dtos.BusinessPayBillRequest",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.BusinessToBusinessCallback"
+    },
+    {
+      "alias": "BusinessBuyGoods",
+      "name": "Business Buy Goods",
+      "method": "POST",
+      "endpoint": "mpesa/b2b/v1/paymentrequest",
+      "endpointConstant": "BusinessToBusiness",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.BusinessBuyGoodsAsync",
+      "requestType": "MpesaSdk.Dtos.BusinessBuyGoodsRequest",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.BusinessToBusinessCallback"
+    },
+    {
+      "alias": "TaxRemittance",
+      "name": "Tax Remittance",
+      "method": "POST",
+      "endpoint": "mpesa/b2b/v1/remittax",
+      "endpointConstant": "TaxRemittance",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.RemitTaxAsync",
+      "requestType": "MpesaSdk.Dtos.TaxRemittanceRequest",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.TaxRemittanceCallback"
+    },
+    {
+      "alias": "TransactionStatus",
+      "name": "Transaction Status",
+      "method": "POST",
+      "endpoint": "mpesa/transactionstatus/v1/query",
+      "endpointConstant": "QueryMpesaTransactionStatus",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.QueryMpesaTransactionStatusAsync",
+      "requestType": "MpesaSdk.Dtos.MpesaTransactionStatus",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.TransactionStatusCallback"
+    },
+    {
+      "alias": "AccountBalance",
+      "name": "Account Balance",
+      "method": "POST",
+      "endpoint": "mpesa/accountbalance/v1/query",
+      "endpointConstant": "QueryAccountBalance",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.QueryAccountBalanceAsync",
+      "requestType": "MpesaSdk.Dtos.AccountBalance",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.AccountBalanceCallback"
+    },
+    {
+      "alias": "Reversal",
+      "name": "Reversal",
+      "method": "POST",
+      "endpoint": "mpesa/reversal/v1/request",
+      "endpointConstant": "ReverseMpesaTransaction",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.ReverseMpesaTransactionAsync",
+      "requestType": "MpesaSdk.Dtos.MpesaReversal",
+      "responseType": "MpesaSdk.Response.MpesaResponse",
+      "callbackType": "MpesaSdk.Callbacks.ReversalCallback"
+    },
+    {
+      "alias": "DynamicQRCode",
+      "name": "Dynamic QR Code",
+      "method": "POST",
+      "endpoint": "mpesa/qrcode/v1/generate",
+      "endpointConstant": "DynamicMpesaQR",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.GenerateDynamicMpesaQRAsync",
+      "requestType": "MpesaSdk.Dtos.DynamicMpesaQR",
+      "responseType": "MpesaSdk.Response.DynamicMpesaQRResponse"
+    },
+    {
+      "alias": "PullTransactions",
+      "name": "Pull Transactions",
+      "method": "POST",
+      "endpoint": "pulltransactions/v1/query",
+      "endpointConstant": "PullMpesaTransaction",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.QueryPullTransactionAsync",
+      "requestType": "MpesaSdk.Dtos.PullTransactionQuery",
+      "responseType": "MpesaSdk.Response.PullTransactionResponse"
+    },
+    {
+      "alias": "BillManager",
+      "name": "Bill Manager",
+      "method": "POST",
+      "endpoint": "v1/billmanager-invoice/optin",
+      "endpointConstant": "BusinessManagerOnboarding",
+      "headersProfile": "bearer",
+      "implementation": "MpesaSdk.MpesaClient.BillManagerOnboardingAsync",
+      "requestType": "MpesaSdk.Dtos.BillManagerOnboardingRequest",
+      "responseType": "MpesaSdk.Response.BillManagerResponse"
+    },
+    {
+      "alias": "MiniApps",
+      "name": "Mini Apps",
+      "method": "",
+      "endpoint": "",
+      "implementation": null,
+      "requestType": null,
+      "responseType": null
+    }
+  ]
+}

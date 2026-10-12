@@ -1,0 +1,95 @@
+name: Daraja API change scan
+
+on:
+  schedule:
+    - cron: "23 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: daraja-api-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Verify SDK authentication overloads
+        run: dotnet run --project tools/daraja-scanner/smoke/MpesaSdkSmoke.csproj
+
+      - name: Test scanner
+        run: python -m unittest discover -s tools/daraja-scanner/tests -v
+
+      - name: Scan Daraja APIs
+        id: scan
+        run: |
+          set +e
+          python tools/daraja-scanner/daraja-api-scan.py
+          result=$?
+          set -e
+
+          if [[ "$result" -eq 2 ]]; then
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [[ "$result" -ne 0 ]]; then
+            exit "$result"
+          fi
+
+          echo "verified=true" >> "$GITHUB_OUTPUT"
+
+      - name: Build SDK and sample
+        if: success()
+        run: |
+          dotnet build MpesaSdk/MpesaSdk.csproj
+          dotnet build Samples/MpesaSdk.Web/MpesaSdk.Web.csproj
+
+      - name: Open or update pull request
+        if: success() && steps.scan.outputs.verified == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ -z "$(git status --porcelain -- docs/CHANGELOG_DARAJA.md MpesaSdk tools/daraja-scanner/daraja-spec.json)" ]]; then
+            echo "No verified SDK or changelog changes; no PR created."
+            exit 0
+          fi
+
+          branch="automation/daraja-api-updates"
+          base="$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add docs/CHANGELOG_DARAJA.md MpesaSdk tools/daraja-scanner/daraja-spec.json
+          git commit -m "chore: update Daraja API integration"
+          git push --force origin "$branch"
+
+          if gh pr view "$branch" --json number >/dev/null 2>&1; then
+            gh pr edit "$branch" \
+              --title "chore: update Daraja API integration" \
+              --body "Automated, schema-verified Daraja API changes. Review the generated SDK and changelog before merging."
+          else
+            gh pr create \
+              --head "$branch" \
+              --base "$base" \
+              --title "chore: update Daraja API integration" \
+              --body "Automated, schema-verified Daraja API changes. Review the generated SDK and changelog before merging."
+          fi
