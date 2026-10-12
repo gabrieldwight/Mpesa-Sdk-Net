@@ -160,8 +160,11 @@ namespace MpesaSdk
 		// B2B Hakikisha Apis
 		public static string B2BHakikisha { get; set; } = "sfcverify/v1/query/info";
 
+		// C2B Hakikisha Apis
+		public static string C2BHakikisha { get; set; } = "c2b_hakikisha/v1/notify";
+
 		// Mobile Number Validation Apis
-        public static string ValidateMobileNumber { get; set; } = "v1/KYC-validation/validateID";
+		public static string ValidateMobileNumber { get; set; } = "v1/KYC-validation/validateID";
 
 		// Age on Network Apis
         public static string GetMobileNumberDate { get; set; } = "registration/v1/checkATI";

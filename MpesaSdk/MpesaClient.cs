@@ -1183,6 +1183,16 @@ namespace MpesaSdk
 
 		}
 
+		public C2BHakikishaResponse C2BHakikisha(C2BHakikishaRequest c2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return MpesaPostRequestAsync<C2BHakikishaResponse>(c2BHakikishaRequest, accesstoken, MpesaRequestEndpoint.C2BHakikisha, cancellationToken).GetAwaiter().GetResult();
+		}
+
+		public async Task<C2BHakikishaResponse> C2BHakikishaAsync(C2BHakikishaRequest c2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default)
+		{
+			return await MpesaPostRequestAsync<C2BHakikishaResponse>(c2BHakikishaRequest, accesstoken, MpesaRequestEndpoint.C2BHakikisha, cancellationToken);
+		}
+
 		public MobileNumberValidationResponse ValidateMobileNumber(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default)
 		{
 			return MpesaPostRequestAsync<MobileNumberValidationResponse>(mobileNumberValidationRequest, accesstoken, MpesaRequestEndpoint.ValidateMobileNumber, cancellationToken).GetAwaiter().GetResult();

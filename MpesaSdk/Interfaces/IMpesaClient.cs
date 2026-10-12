@@ -575,6 +575,10 @@ namespace MpesaSdk.Interfaces
 		B2BHakikishaResponse B2BHakikisha(B2BHakikishaRequest b2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default);
 		Task<B2BHakikishaResponse> B2BHakikishaAsync(B2BHakikishaRequest b2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default);
 
+		// C2B Hakikisha APIs
+		C2BHakikishaResponse C2BHakikisha(C2BHakikishaRequest c2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default);
+		Task<C2BHakikishaResponse> C2BHakikishaAsync(C2BHakikishaRequest c2BHakikishaRequest, string accesstoken, CancellationToken cancellationToken = default);
+
 		// Mobile Number Validation APIs
 		MobileNumberValidationResponse ValidateMobileNumber(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default);
 		Task<MobileNumberValidationResponse> ValidateMobileNumberAsync(MobileNumberValidationRequest mobileNumberValidationRequest, string accesstoken, CancellationToken cancellationToken = default);
