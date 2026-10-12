@@ -168,12 +168,12 @@
       "alias": "PullTransactions",
       "name": "Pull Transactions",
       "method": "POST",
-      "endpoint": "pulltransactions/v1/query",
-      "endpointConstant": "PullMpesaTransaction",
+      "endpoint": "pulltransactions/v1/register",
+      "endpointConstant": "PullMpesaTransactionRegisterUrl",
       "headersProfile": "bearer",
-      "implementation": "MpesaSdk.MpesaClient.QueryPullTransactionAsync",
-      "requestType": "MpesaSdk.Dtos.PullTransactionQuery",
-      "responseType": "MpesaSdk.Response.PullTransactionResponse"
+      "implementation": "MpesaSdk.MpesaClient.RegisterPullTransactionAsync",
+      "requestType": "MpesaSdk.Dtos.PullTransactionRegisterUrl",
+      "responseType": "MpesaSdk.Response.PullTransactionRegisterResponse"
     },
     {
       "alias": "BillManager",

@@ -9,7 +9,6 @@
 |---|---|---:|---|
 | Business To Customer (B2C) (`BusinessToCustomer`) - `mpesa/b2c/v3/paymentrequest` | MODIFIED_ENDPOINT | POST | endpoint: `mpesa/b2c/v1/paymentrequest` -> `mpesa/b2c/v3/paymentrequest` |
 | Customer To Business (C2B) (`CustomerToBusiness`) - `mpesa/c2b/v2/registerurl` | MODIFIED_ENDPOINT | POST | endpoint: `mpesa/c2b/v1/registerurl` -> `mpesa/c2b/v2/registerurl` |
-| Pull Transactions (`PullTransactions`) - `pulltransactions/v1/register` | MODIFIED_ENDPOINT | POST | endpoint: `pulltransactions/v1/query` -> `pulltransactions/v1/register` |
 
 ### Scan notes
 
