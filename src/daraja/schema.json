@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "description": "Repository-derived endpoint inventory. Paths and fields reflect the current MpesaSdk implementation and have not yet been verified against current Safaricom portal schemas.",
+  "portalSource": "https://developer.safaricom.co.ke/apis",
+  "endpoints": [
+    {
+      "name": "Authorization token",
+      "method": "GET",
+      "path": "oauth/v1/generate",
+      "auth": "Basic",
+      "headers": [],
+      "queryFields": ["grant_type"],
+      "requestFields": [],
+      "responseFields": ["access_token", "expires_in"],
+      "mapping": { "requestType": null, "responseType": "MpesaAccessTokenResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "M-Pesa Express STK Push",
+      "method": "POST",
+      "path": "mpesa/stkpush/v1/processrequest",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["BusinessShortCode", "Timestamp", "TransactionType", "Amount", "PartyA", "PartyB", "PhoneNumber", "CallBackURL", "AccountReference", "TransactionDesc", "Password"],
+      "responseFields": ["ResponseCode", "CheckoutRequestID", "CustomerMessage", "MerchantRequestID", "PhoneNumber"],
+      "callbackFields": ["Body", "StkCallback", "MerchantRequestID", "CheckoutRequestID", "ResultCode", "ResultDesc", "CallbackMetadata", "Item", "Name", "Value"],
+      "mapping": { "requestType": "LipaNaMpesaOnline", "responseType": "LipaNaMpesaOnlinePushStkResponse", "callbackDtos": ["LipaNaMpesaCallback"] }
+    },
+    {
+      "name": "M-Pesa Express STK Push query",
+      "method": "POST",
+      "path": "mpesa/stkpushquery/v1/query",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["BusinessShortCode", "Password", "Timestamp", "CheckoutRequestID"],
+      "responseFields": ["ResponseCode", "ResponseDescription", "MerchantRequestID", "CheckoutRequestID", "ResultCode", "ResultDesc"],
+      "mapping": { "requestType": "LipaNaMpesaQuery", "responseType": "LipaNaMpesaQueryStkResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "C2B Register URL",
+      "method": "POST",
+      "path": "mpesa/c2b/v1/registerurl",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["ShortCode", "ResponseType", "ConfirmationURL", "ValidationURL"],
+      "responseFields": ["ResponseCode"],
+      "callbackFields": ["TransactionType", "TransID", "TransTime", "TransAmount", "BusinessShortCode", "BillRefNumber", "InvoiceNumber", "OrgAccountBalance", "ThirdPartyTransID", "MSISDN", "FirstName", "MiddleName", "LastName"],
+      "mapping": { "requestType": "CustomerToBusinessRegisterUrl", "responseType": "MpesaResponse", "callbackDtos": ["CustomerToBusinessCallback", "CustomerToBusinessValidationCallback"] }
+    },
+    {
+      "name": "C2B Simulate",
+      "method": "POST",
+      "path": "mpesa/c2b/v1/simulate",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["ShortCode", "CommandID", "Amount", "Msisdn", "BillRefNumber"],
+      "responseFields": ["ResponseCode"],
+      "mapping": { "requestType": "CustomerToBusinessSimulate", "responseType": "MpesaResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "B2C payment",
+      "method": "POST",
+      "path": "mpesa/b2c/v1/paymentrequest",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["InitiatorName", "SecurityCredential", "CommandID", "Amount", "PartyA", "PartyB", "Remarks", "QueueTimeOutURL", "ResultURL", "Occasion"],
+      "responseFields": ["ResponseCode"],
+      "callbackFields": ["Result", "ResultType", "ResultCode", "ResultDesc", "OriginatorConversationID", "ConversationID", "TransactionID", "ResultParameters", "ReferenceData", "ReferenceItem", "Name", "Value"],
+      "mapping": { "requestType": "BusinessToCustomer", "responseType": "MpesaResponse", "callbackDtos": ["BusinessToCustomerCallback"] }
+    },
+    {
+      "name": "B2B payment",
+      "method": "POST",
+      "path": "mpesa/b2b/v1/paymentrequest",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["Initiator", "SecurityCredential", "CommandID", "SenderIdentifierType", "RecieverIdentifierType", "Amount", "PartyA", "PartyB", "AccountReference", "Remarks", "QueueTimeOutURL", "ResultURL"],
+      "responseFields": ["ResponseCode"],
+      "callbackFields": ["Result", "ResultType", "ResultCode", "ResultDesc", "OriginatorConversationID", "ConversationID", "TransactionID", "ResultParameters", "ReferenceData", "ReferenceItem", "Name", "Value"],
+      "mapping": { "requestType": "BusinessToBusiness", "responseType": "MpesaResponse", "callbackDtos": ["BusinessToBusinessCallback"] }
+    },
+    {
+      "name": "Account balance",
+      "method": "POST",
+      "path": "mpesa/accountbalance/v1/query",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["Initiator", "SecurityCredential", "CommandID", "PartyA", "IdentifierType", "Remarks", "QueueTimeOutURL", "ResultURL"],
+      "responseFields": ["ResponseCode"],
+      "callbackFields": ["Result", "ResultType", "ResultCode", "ResultDesc", "OriginatorConversationID", "ConversationID", "TransactionID", "ResultParameters", "ReferenceData", "ReferenceItem", "Name", "Value"],
+      "mapping": { "requestType": "AccountBalance", "responseType": "MpesaResponse", "callbackDtos": ["AccountBalanceCallback"] }
+    },
+    {
+      "name": "Transaction status",
+      "method": "POST",
+      "path": "mpesa/transactionstatus/v1/query",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["Initiator", "SecurityCredential", "CommandID", "TransactionID", "OriginatorConversationID", "PartyA", "IdentifierType", "Remarks", "QueueTimeOutURL", "ResultURL", "Occasion"],
+      "responseFields": ["ResponseCode"],
+      "callbackFields": ["Result", "ResultType", "ResultCode", "ResultDesc", "OriginatorConversationID", "ConversationID", "TransactionID", "ResultParameters", "ReferenceData", "ReferenceItem", "Name", "Value"],
+      "mapping": { "requestType": "MpesaTransactionStatus", "responseType": "MpesaResponse", "callbackDtos": ["TransactionStatusCallback"] }
+    },
+    {
+      "name": "Reversal",
+      "method": "POST",
+      "path": "mpesa/reversal/v1/request",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["Initiator", "SecurityCredential", "CommandID", "TransactionID", "Amount", "ReceiverParty", "RecieverIdentifierType", "Remarks", "QueueTimeOutURL", "ResultURL", "Occasion"],
+      "responseFields": ["ResponseCode"],
+      "callbackFields": ["Result", "ResultType", "ResultCode", "ResultDesc", "OriginatorConversationID", "ConversationID", "TransactionID", "ResultParameters", "ReferenceData", "ReferenceItem", "Name", "Value"],
+      "mapping": { "requestType": "MpesaReversal", "responseType": "MpesaResponse", "callbackDtos": ["ReversalCallback"] }
+    },
+    {
+      "name": "Dynamic QR",
+      "method": "POST",
+      "path": "mpesa/qrcode/v1/generate",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["MerchantName", "RefNo", "Amount", "TrxCode", "CPI"],
+      "responseFields": ["ResponseCode", "RequestID", "ResponseDescription", "QRCode"],
+      "mapping": { "requestType": "DynamicMpesaQR", "responseType": "DynamicMpesaQRResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Pull Transactions register URL",
+      "method": "POST",
+      "path": "pulltransactions/v1/register",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["ShortCode", "RequestType", "NominatedNumber", "CallBackURL"],
+      "responseFields": ["ResponseRefID", "ResponseStatus", "ShortCode", "ResponseDescription"],
+      "mapping": { "requestType": "PullTransactionRegisterUrl", "responseType": "PullTransactionRegisterResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Pull Transactions query",
+      "method": "POST",
+      "path": "pulltransactions/v1/query",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["ShortCode", "StartDate", "EndDate", "OffSetValue"],
+      "responseFields": ["ResponseRefID", "ResponseCode", "ResponseMessage", "Response", "Response.transactionId", "Response.trxDate", "Response.msisdn", "Response.sender", "Response.transactiontype", "Response.billreference", "Response.amount", "Response.organizationname"],
+      "mapping": { "requestType": "PullTransactionQuery", "responseType": "PullTransactionResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Bill Manager onboarding",
+      "method": "POST",
+      "path": "v1/billmanager-invoice/optin",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["shortcode", "email", "officialContact", "sendReminders", "logo", "callbackurl"],
+      "responseFields": ["app_key", "resmsg", "rescode", "Status_Message"],
+      "mapping": { "requestType": "BillManagerOnboardingRequest", "responseType": "BillManagerResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Bill Manager single invoice",
+      "method": "POST",
+      "path": "v1/billmanager-invoice/single-invoicing",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["externalReference", "billedFullName", "billedPhoneNumber", "billedPeriod", "invoiceName", "dueDate", "accountReference", "amount", "invoiceItems", "invoiceItems.itemName", "invoiceItems.amount"],
+      "responseFields": ["app_key", "resmsg", "rescode", "Status_Message"],
+      "mapping": { "requestType": "BillManagerInvoicingRequest", "responseType": "BillManagerResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Bill Manager bulk invoice",
+      "method": "POST",
+      "path": "v1/billmanager-invoice/bulk-invoicing",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["externalReference", "billedFullName", "billedPhoneNumber", "billedPeriod", "invoiceName", "dueDate", "accountReference", "amount", "invoiceItems", "invoiceItems.itemName", "invoiceItems.amount"],
+      "responseFields": ["app_key", "resmsg", "rescode", "Status_Message"],
+      "mapping": { "requestType": "List<BillManagerInvoicingRequest>", "responseType": "BillManagerResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Bill Manager reconciliation",
+      "method": "POST",
+      "path": "v1/billmanager-invoice/reconciliation",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["transactionId", "paidAmount", "msisdn", "dateCreated", "accountReference", "shortCode"],
+      "responseFields": ["app_key", "resmsg", "rescode", "Status_Message"],
+      "mapping": { "requestType": "BillManagerPaymentReconcilliationRequest", "responseType": "BillManagerResponse", "callbackDtos": [] }
+    },
+    {
+      "name": "Bill Manager invoice update",
+      "method": "POST",
+      "path": "v1/billmanager-invoice/update/single-invoicing",
+      "auth": "Bearer",
+      "headers": [],
+      "queryFields": [],
+      "requestFields": ["externalReference", "billedFullName", "billedPhoneNumber", "billedPeriod", "invoiceName", "dueDate", "accountReference", "amount", "invoiceItems", "invoiceItems.itemName", "invoiceItems.amount"],
+      "responseFields": ["app_key", "resmsg", "rescode", "Status_Message"],
+      "mapping": { "requestType": "BillManagerInvoicingRequest", "responseType": "BillManagerResponse", "callbackDtos": [] }
+    }
+  ]
+}
